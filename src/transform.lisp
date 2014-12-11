@@ -48,17 +48,17 @@
               :ref-title (attr a "ref-title"))
         children))
 
-(define-transform "section" (a children)
-  (list :section
-        (list :title (attr a "title")
-              :ref (attr a "ref"))
-        children))
+(defmacro define-section-transform (name keyword)
+  `(define-transform ,name (a children)
+     (list ,keyword
+           (list :title (attr a "title")
+                 :ref (attr a "ref"))
+           children)))
 
-(define-transform "subsection" (a children)
-  (list :subsection
-        (list :title (attr a "title")
-              :ref (attr a "ref"))
-        children))
+(define-section-transform "section" :section)
+(define-section-transform "subsection" :subsection)
+(define-section-transform "subsubsection" :subsubsection)
+(define-section-transform "subsubsubsection" :subsubsubsection)
 
 ;;; References
 

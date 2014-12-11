@@ -44,35 +44,43 @@
 
 ;;; Sections
 
-(define-filter "\\\\beginSection{([^}]+)}[^\\\\]*\\\\DefineSection{([^}]+)}"
-    (lambda (match &rest regs)
-      (declare (ignore match))
-      (format nil "\\section[title='~A', ref='~A']{"
-              (first regs)
-              (second regs))))
+(defmacro define-section-filter (sub-level)
+  `(progn
+     (define-filter (concatenate 'string
+                                 "\\\\begin"
+                                 ,sub-level
+                                 "Section{([^}]+)}[^\\\\]*\\\\DefineSection{([^}]+)}")
+         (lambda (match &rest regs)
+           (declare (ignore match))
+           (format nil (concatenate 'string
+                                    "\\"
+                                    ,sub-level
+                                    "section[title='~A', ref='~A']{")
+                   (first regs)
+                   (second regs))))
 
-(define-filter "\\\\beginSection{([^}]+)}"
-    (lambda (match &rest regs)
-      (declare (ignore match))
-      (format nil "\\section[title='~A']{" (first regs))))
+     (define-filter (concatenate 'string
+                                 "\\\\begin"
+                                 ,sub-level
+                                 "Section{([^}]+)}")
+         (lambda (match &rest regs)
+           (declare (ignore match))
+           (format nil (concatenate 'string
+                                    "\\"
+                                    ,sub-level
+                                    "section[title='~A']{")
+                   (first regs))))
 
-(define-tag-filter "endSection" "}")
+     (define-tag-filter (concatenate 'string
+                                     "end"
+                                     ,sub-level
+                                     "Section")
+       "}")))
 
-;;; Sub-sections
-
-(define-filter "\\\\beginsubSection{([^}]+)}[^\\\\]*\\\\DefineSection{([^}]+)}"
-    (lambda (match &rest regs)
-      (declare (ignore match))
-      (format nil "\\subsection[title='~A', ref='~A']{"
-              (first regs)
-              (second regs))))
-
-(define-filter "\\\\beginsubSection{([^}]+)}"
-    (lambda (match &rest regs)
-      (declare (ignore match))
-      (format nil "\\subsection[title='~A']{" (first regs))))
-
-(define-tag-filter "endsubSection" "}")
+(define-section-filter "")
+(define-section-filter "sub")
+(define-section-filter "subsub")
+(define-section-filter "subsubsub")
 
 ;;; Lists
 

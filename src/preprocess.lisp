@@ -72,6 +72,20 @@
 
 (define-tag-filter "endsubSection" "}")
 
+;;; Lists
+
+(define-tag-filter "beginlist" "\\list{")
+(define-tag-filter "endlist" "}")
+
+(define-tag-filter "bull" "\\bullet{}")
+
+;;; References
+
+(define-tag-filter "seesection\\\\(\\w+)"
+  (lambda (match &rest regs)
+    (declare (ignore match))
+    (format nil "\\refsection{~A}" (first regs))))
+
 ;;; Quotes
 
 (define-filter "``" "\\quote{")
@@ -115,7 +129,6 @@
                                     (declare (ignore match))
                                     (include-file (first regs)))
                                 :simple-calls t)))
-
 
 (defun preprocess (string)
   (filter

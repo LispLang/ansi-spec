@@ -10,11 +10,13 @@
   :depends-on (:plump-tex
                :cl-ppcre
                :uiop
-               :log4cl)
+               :log4cl
+               :split-sequence)
   :components ((:module "src"
                 :components
                 ((:file "basic")
                  (:file "include")
+                 (:file "comments")
                  (:file "parser")
                  (:file "interface"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."

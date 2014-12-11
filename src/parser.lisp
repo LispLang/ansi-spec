@@ -11,7 +11,7 @@
 (defun parse-chapter (pathname)
   (log:info "Parsing chapter ~S" pathname)
   (let* ((content (uiop:read-file-string pathname))
-         (full-content (include-inputs content)))
+         (full-content (remove-comments (include-inputs content))))
     (make-instance '<chapter>
                    :pathname pathname
                    :content full-content)))

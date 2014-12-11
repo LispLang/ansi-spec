@@ -9,6 +9,6 @@
   (ensure-output-directory)
   (loop for chapter-pathname in +chapter-files+ do
     (let* ((chapter (parse-chapter chapter-pathname))
-           (filtered (filter (chapter-content chapter))))
+           (filtered (tex2xml (chapter-node chapter))))
       (print filtered)
       t)))

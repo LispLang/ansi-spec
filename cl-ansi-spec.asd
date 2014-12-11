@@ -7,18 +7,17 @@
   :version "0.1"
   :author "Fernando Borretti"
   :license "MIT"
-  :depends-on (:uiop
+  :depends-on (:plump-tex
+               :uiop
                :cl-ppcre
                :log4cl
-               :split-sequence
-               :plump)
+               :split-sequence)
   :components ((:module "src"
                 :components
                 ((:file "basic")
-                 (:file "include")
-                 (:file "comments")
+                 (:file "preprocess")
                  (:file "parser")
-                 (:file "filter")
+                 (:file "tex-to-xml")
                  (:file "interface"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description

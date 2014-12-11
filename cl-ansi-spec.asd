@@ -13,7 +13,10 @@
                :log4cl)
   :components ((:module "src"
                 :components
-                ((:file "cl-ansi-spec"))))
+                ((:file "basic")
+                 (:file "include")
+                 (:file "parser")
+                 (:file "interface"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description
   #.(uiop:read-file-string

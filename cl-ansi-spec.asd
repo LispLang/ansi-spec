@@ -15,6 +15,7 @@
   :components ((:module "src"
                 :components
                 ((:file "basic")
+                 (:file "abbreviations")
                  (:file "preprocess")
                  (:file "parser")
                  (:file "tex-to-xml")

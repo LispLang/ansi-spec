@@ -12,7 +12,7 @@
 
 (defmethod initialize-instance :after ((chapter <chapter>) &key)
   (setf (chapter-node chapter)
-        (plump:parse (chapter-content chapter))))
+        (plump-tex:parse (chapter-content chapter))))
 
 (defun parse-chapter (pathname)
   (log:info "Parsing chapter ~S" pathname)

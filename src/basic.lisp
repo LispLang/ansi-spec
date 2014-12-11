@@ -1,6 +1,6 @@
 (in-package :cl-user)
 (defpackage cl-ansi-spec
-  (:use :cl)
+  (:use :cl :anaphora)
   (:export :generate-spec))
 (in-package :cl-ansi-spec)
 

@@ -11,14 +11,15 @@
                :uiop
                :cl-ppcre
                :log4cl
-               :split-sequence)
+               :split-sequence
+               :anaphora)
   :components ((:module "src"
                 :components
                 ((:file "basic")
                  (:file "abbreviations")
                  (:file "preprocess")
                  (:file "parser")
-                 (:file "tex-to-xml")
+                 (:file "transform")
                  (:file "interface"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description

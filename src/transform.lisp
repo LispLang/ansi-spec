@@ -69,3 +69,6 @@
 
 (define-transform "doublequotes" (a children)
   (list :double-quotes (first children)))
+
+(define-transform "code" (a children)
+  (list :code (first children)))

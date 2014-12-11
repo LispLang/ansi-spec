@@ -111,6 +111,11 @@
 (define-filter "``" "\\doublequotes{")
 (define-filter "''" "}")
 
+;;; Code
+
+(define-tag-filter "code" "\\code{")
+(define-tag-filter "endcode" "}")
+
 ;;; Simple removals
 
 (define-tag-filter "input setup" "")

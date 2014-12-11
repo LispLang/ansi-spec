@@ -30,9 +30,15 @@
 
 (defun attr (attrs name)
   (let ((attribute (gethash name attrs)))
-    (if attribute
-        (let ((seq (subseq attribute 1)))
-          (subseq seq 0 (1- (length seq)))))))
+    (when attribute
+      (when (char= (elt attribute 0) #\')
+        (setf attribute (subseq attribute 1)))
+      (when (char= (elt attribute (1- (length attribute)))
+                   #\')
+        (setf attribute (subseq attribute 0 (1- (length attribute)))))
+      attribute)))
+
+;;; Sections
 
 (define-transform "chapter" (a children)
   (list :chapter
@@ -53,3 +59,13 @@
         (list :title (attr a "title")
               :ref (attr a "ref"))
         children))
+
+;;; References
+
+(define-transform "term" (a children)
+  (list :term (first children)))
+
+;;; Markup
+
+(define-transform "doublequotes" (a children)
+  (list :double-quotes (first children)))

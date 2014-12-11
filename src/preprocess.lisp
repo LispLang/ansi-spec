@@ -100,7 +100,7 @@
 
 ;;; Quotes
 
-(define-filter "``" "\\quote{")
+(define-filter "``" "\\doublequotes{")
 (define-filter "''" "}")
 
 ;;; Simple removals

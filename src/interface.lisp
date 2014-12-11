@@ -9,6 +9,6 @@
   (ensure-output-directory)
   (loop for chapter-pathname in +chapter-files+ do
     (let* ((chapter (parse-chapter chapter-pathname))
-           (filtered (filter (chapter-node chapter))))
-      (plump:serialize (chapter-node chapter))
+           (filtered (filter (chapter-content chapter))))
+      (print filtered)
       t)))

@@ -6,13 +6,7 @@
              :type pathname)
    (content :reader chapter-content
             :initarg :content
-            :type string)
-   (node :accessor chapter-node
-         :type plump:node)))
-
-(defmethod initialize-instance :after ((chapter <chapter>) &key)
-  (setf (chapter-node chapter)
-        (plump-tex:parse (chapter-content chapter))))
+            :type string)))
 
 (defun parse-chapter (pathname)
   (log:info "Parsing chapter ~S" pathname)

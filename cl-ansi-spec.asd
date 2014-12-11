@@ -7,11 +7,11 @@
   :version "0.1"
   :author "Fernando Borretti"
   :license "MIT"
-  :depends-on (:plump-tex
+  :depends-on (:uiop
                :cl-ppcre
-               :uiop
                :log4cl
-               :split-sequence)
+               :split-sequence
+               :plump)
   :components ((:module "src"
                 :components
                 ((:file "basic")

@@ -25,5 +25,6 @@
   (cl-ppcre:regex-replace-all +input-tag-regexp+
                               string
                               #'(lambda (match &rest regs)
+                                  (declare (ignore match))
                                   (include-file (first regs)))
                               :simple-calls t))

@@ -18,6 +18,7 @@
                  (:file "include")
                  (:file "comments")
                  (:file "parser")
+                 (:file "filter")
                  (:file "interface"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description

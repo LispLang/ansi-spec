@@ -8,4 +8,7 @@
   "Parse the spec into JSON files from sources."
   (ensure-output-directory)
   (loop for chapter-pathname in +chapter-files+ do
-    (parse-chapter chapter-pathname)))
+    (let* ((chapter (parse-chapter chapter-pathname))
+           (filtered (filter (chapter-node chapter))))
+      (plump:serialize (chapter-node chapter))
+      t)))

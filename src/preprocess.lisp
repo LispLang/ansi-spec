@@ -118,9 +118,14 @@
 
 ;;; Simple removals
 
-(define-tag-filter "input setup" "")
-(define-tag-filter "%-*- Mode: TeX -*-" "")
-(define-tag-filter "bye" "")
+(defmacro define-null-tag (regexp)
+  `(define-tag-filter ,regexp ""))
+
+(define-null-tag "input setup")
+(define-null-tag "%-*- Mode: TeX -*-")
+(define-null-tag "bye")
+(define-null-tag "vfill")
+(define-null-tag "eject")
 
 ;;; Comments
 

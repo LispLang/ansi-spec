@@ -7,9 +7,7 @@
 (defun generate-spec ()
   "Parse the spec into JSON files from sources."
   (ensure-output-directory)
-  (let ((chapter (parse-chapter (third +chapter-files+))))
-    (print (chapter-content chapter)))
-  t
+  (format t "~A" (preprocess (uiop:read-file-string (third +chapter-files+))))
   ;(loop for chapter-pathname in +chapter-files+ do
   ;  (let* ((chapter (parse-chapter chapter-pathname))
   ;         (filtered (tex2xml (chapter-node chapter))))

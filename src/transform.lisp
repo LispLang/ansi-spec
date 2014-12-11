@@ -29,8 +29,10 @@
          (format t "Could not find transform for tag '~A'~%" name))))
 
 (defun attr (attrs name)
-  (let ((seq (subseq (gethash name attrs) 1)))
-    (subseq seq 0 (1- (length seq)))))
+  (let ((attribute (gethash name attrs)))
+    (if attribute
+        (let ((seq (subseq attribute 1)))
+          (subseq seq 0 (1- (length seq)))))))
 
 (define-transform "chapter" (a children)
   (list :chapter
@@ -38,4 +40,16 @@
               :title (attr a "title")
               :chap-id (attr a "chap-id")
               :ref-title (attr a "ref-title"))
+        children))
+
+(define-transform "section" (a children)
+  (list :section
+        (list :title (attr a "title")
+              :ref (attr a "ref"))
+        children))
+
+(define-transform "subsection" (a children)
+  (list :subsection
+        (list :title (attr a "title")
+              :ref (attr a "ref"))
         children))

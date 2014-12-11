@@ -29,7 +29,7 @@
   "\\\\beginchapter{([^}]+)}{([^}]+)}{([^}]+)}{([^}]+)}")
 
 (defparameter +begin-chapter-fmt+
-  "\\chapter[number='~A', title='~A', chap-id='~A', ref-title='~A']{")
+  "\\chapter[index='~A', title='~A', chap-id='~A', ref-title='~A']{")
 
 (define-filter "\\\\beginchapter{([^}]+)}{([^}]+)}{([^}]+)}{([^}]+)}"
     (lambda (match &rest regs)
@@ -39,6 +39,8 @@
               (second regs)
               (third regs)
               (fourth regs))))
+
+(define-tag-filter "endchapter" "}")
 
 ;;; Sections
 
@@ -118,21 +120,21 @@
 
 (defun include-inputs (string)
   "Replace all instances of '\input file-name' with the contents of 'file-name.tex'."
-  (flet ((valid-input-p (file-name)
-           (and (not (search "fig" file-name))
-                (not (search ".tc" file-name))
-                (not (equal file-name "index.idx"))))
-         (include-file (name)
-           (let ((input-pathname
-                   (make-pathname :name name
-                                  :type "tex"
-                                  :defaults +tex-directory+)))
-             ;; Ignore figures
-             (if (valid-input-p name)
-                 (progn
-                   (log:info "Including path ~S" input-pathname)
-                   (uiop:read-file-string input-pathname))
-                 ""))))
+  (labels ((valid-input-p (file-name)
+             (and (not (search "fig" file-name))
+                  (not (search ".tc" file-name))
+                  (not (equal file-name "index.idx"))))
+           (include-file (name)
+             (let ((input-pathname
+                     (make-pathname :name name
+                                    :type "tex"
+                                    :defaults +tex-directory+)))
+               ;; Ignore figures
+               (if (valid-input-p name)
+                   (progn
+                     (log:info "Including path ~S" input-pathname)
+                     (uiop:read-file-string input-pathname))
+                   ""))))
     (cl-ppcre:regex-replace-all "\\input ([^ \\n]+)\\n"
                                 string
                                 #'(lambda (match &rest regs)

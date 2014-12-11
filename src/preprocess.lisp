@@ -84,7 +84,17 @@
 (define-tag-filter "seesection\\\\(\\w+)"
   (lambda (match &rest regs)
     (declare (ignore match))
-    (format nil "\\refsection{~A}" (first regs))))
+    (format nil "\\seesection{~A}" (first regs))))
+
+(define-tag-filter "seefigure\\\\(\\w+)"
+  (lambda (match &rest regs)
+    (declare (ignore match))
+    (format nil "\\seefigure{~A}" (first regs))))
+
+(define-tag-filter "seechapter\\\\(\\w+)"
+  (lambda (match &rest regs)
+    (declare (ignore match))
+    (format nil "\\seechapter{~A}" (first regs))))
 
 ;;; Quotes
 

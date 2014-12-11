@@ -6,25 +6,11 @@
 (defun define-abbrev (name expansion)
   (push (cons name expansion) *abbreviations*))
 
-(defun replace-all (string part replacement)
-  "replace-all from the CL cookbook, with modifications."
-  (with-output-to-string (out)
-    (loop with part-length = (length part)
-          for old-pos = 0 then (+ pos part-length)
-          for pos = (search part string
-                            :start2 old-pos
-                            :test #'char=)
-          do (write-string string out
-                           :start old-pos
-                           :end (or pos (length string)))
-          when pos do (write-string replacement out)
-          while pos)))
-
 (defun expand-abbreviations (string)
   (let ((final-string string))
     (loop for (name . expansion) in *abbreviations* do
       (setf final-string
-            (cl-ppcre:regex-replace-all (format nil "\\~A" name)
+            (cl-ppcre:regex-replace-all (format nil "\\\\~A" name)
                                         final-string
                                         expansion)))
     final-string))

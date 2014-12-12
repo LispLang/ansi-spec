@@ -70,14 +70,10 @@
 
 ;;; References
 
-(define-transform "term" (a children)
-  (declare (ignore a))
-  (list :term (first children)))
-
 (defmacro define-ref-transform (name)
   `(define-transform ,name (a children)
      (declare (ignore a))
-     (list ,(intern (string-upcase name) :keyword)
+     (list :clref ;,(intern (string-upcase name) :keyword)
            (first children))))
 
 (define-ref-transform "funref")
@@ -89,6 +85,12 @@
 (define-ref-transform "secref")
 (define-ref-transform "chapref")
 (define-ref-transform "figref")
+(define-ref-transform "misc")
+(define-ref-transform "miscref")
+
+(define-transform "term" (a children)
+  (declare (ignore a))
+  (list :term (first children)))
 
 (define-transform "param" (a children)
   (declare (ignore a))
@@ -181,6 +183,14 @@
 (define-transform "neq" (a children)
   (declare (ignore a children))
   (list :neq))
+
+(define-transform "vert" (a children)
+  (declare (ignore a children))
+  (list :pipe))
+
+(define-transform "ldots" (a children)
+  (declare (ignore a children))
+  (list :ellipsis))
 
 ;;; Interface
 

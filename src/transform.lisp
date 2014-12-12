@@ -74,6 +74,26 @@
   (declare (ignore a))
   (list :term (first children)))
 
+(defmacro define-ref-transform (name)
+  `(define-transform ,name (a children)
+     (declare (ignore a))
+     (list ,(intern (string-upcase name) :keyword)
+           (first children))))
+
+(define-ref-transform "funref")
+(define-ref-transform "specref")
+(define-ref-transform "macref")
+(define-ref-transform "varref")
+(define-ref-transform "typeref")
+(define-ref-transform "miscref")
+(define-ref-transform "secref")
+(define-ref-transform "chapref")
+(define-ref-transform "figref")
+
+(define-transform "param" (a children)
+  (declare (ignore a))
+  (list :param (first children)))
+
 ;;; Markup
 
 (define-transform "b" (a children)
@@ -128,6 +148,10 @@
   (declare (ignore a))
   (list :sub (first children)))
 
+(define-transform "sup" (a children)
+  (declare (ignore a))
+  (list :sup (first children)))
+
 ;;; Tables
 
 (define-transform "table" (a children)
@@ -149,6 +173,16 @@
 (define-transform "div" (a children)
   (declare (ignore a))
   children)
+
+(define-transform "leq" (a children)
+  (declare (ignore a children))
+  (list :leq))
+
+(define-transform "neq" (a children)
+  (declare (ignore a children))
+  (list :neq))
+
+;;; Interface
 
 (defun remove-nil (atom-or-list)
   (if (atom atom-or-list)

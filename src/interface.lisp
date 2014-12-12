@@ -9,5 +9,5 @@
   (ensure-output-directory)
   (loop for chapter-pathname in (list (third +chapter-files+)) do
     (let* ((chapter (parse-chapter chapter-pathname))
-           (filtered (transform (chapter-node chapter))))
+           (filtered (tex->lisp (chapter-node chapter))))
       (print filtered))))

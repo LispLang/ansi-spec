@@ -3,8 +3,12 @@
 
 (defparameter *abbreviations* (list))
 
-(defun define-abbrev (name expansion)
-  (push (cons name expansion) *abbreviations*))
+(defmacro define-abbrev (name expansion)
+  (if (atom name)
+      `(push (cons ,name ,expansion) *abbreviations*)
+      `(progn
+         ,@(loop for abbrev in name collecting
+             `(define-abbrev ,abbrev ,expansion)))))
 
 (defun expand-abbreviations (string)
   (let ((final-string string))
@@ -130,3 +134,51 @@
   "object system")
 (define-abbrev "OS"
   "object system")
+
+;;; Characters
+
+(define-abbrev "NewlineChar"
+  "\\ang{Newline}")
+(define-abbrev "SpaceChar"
+  "\\ang{Space}")
+(define-abbrev "TabChar"
+  "\\ang{Tab}")
+(define-abbrev "ReturnChar"
+  "\\ang{Return}")
+(define-abbrev "LinefeedChar"
+  "\\ang{Linefeed}")
+(define-abbrev "BackspaceChar"
+  "\\ang{Backspace}")
+(define-abbrev "PageChar"
+  "\\ang{Page}")
+(define-abbrev "RuboutChar"
+  "\\ang{Rubout}")
+(define-abbrev "WhitespaceChar"
+  "\\ang{Whitespace}")
+
+(define-abbrev "bq"
+  "`")
+
+;;; Subscripts
+
+(define-abbrev "ssso"
+  "\\sub{1}")
+(define-abbrev "ssst"
+  "\\sub{2}")
+(define-abbrev "ssse"
+  "\\sub{8}")
+(define-abbrev "ssss"
+  "\\sub{16}")
+
+(define-abbrev "sssi"
+  "\\sub{i}")
+(define-abbrev "sssk"
+  "\\sub{k}")
+(define-abbrev "sssn"
+  "\\sub{n}")
+(define-abbrev "sssx"
+  "\\sub{x}")
+(define-abbrev "sssy"
+  "\\sub{y}")
+(define-abbrev "sssz"
+  "\\sub{z}")

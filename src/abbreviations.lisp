@@ -80,7 +80,7 @@
 (define-abbrev "CLOSPaper"
   "Common Lisp Object System Specification")
 
-;;; Terms Languages, Operating Systems, etc.
+;;; Languages, Operating Systems, etc.
 
 (define-abbrev "clisp"
   "\\rm{Common Lisp}")
@@ -116,6 +116,31 @@
   "\\tt{TOPS-20}")
 
 ;;; Important Names
+
+(define-abbrev "t"
+  "\\misc{t}")
+(define-abbrev "nil"
+  "\\misc{nil}")
+(define-abbrev "empty"
+  "\\tt{()}")
+(define-abbrev "allowotherkeys"
+  "\\keyword{&allow-other-keys}")
+(define-abbrev "aux"
+  "\\keyword{&aux}")
+(define-abbrev "body"
+  "\\keyword{&body}")
+(define-abbrev "environment"
+  "\\keyword{&environment}")
+(define-abbrev "key"
+  "\\keyword{&key}")
+(define-abbrev "opt"
+  "\\keyword{&optional}")
+(define-abbrev "opt"
+  "\\keyword{&optional}")
+(define-abbrev "rest"
+  "\\keyword{&rest}")
+(define-abbrev "whole"
+  "\\keyword{&whole}")
 
 ;;; General Phrases
 
@@ -182,3 +207,14 @@
   "\\sub{y}")
 (define-abbrev "sssz"
   "\\sub{z}")
+
+;;; Misc
+
+(define-abbrev "symbolnamedesignator"
+  "string designator")
+(define-abbrev "symbolnamedesignators"
+  "string designators")
+(define-abbrev "packagenamedesignator"
+  "string designator")
+(define-abbrev "packagenamedesignators"
+  "string designators")

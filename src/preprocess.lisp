@@ -25,16 +25,11 @@
 
 ;;; Chapters
 
-(defparameter +begin-chapter-regexp+
-  "\\\\beginchapter{([^}]+)}{([^}]+)}{([^}]+)}{([^}]+)}")
 
-(defparameter +begin-chapter-fmt+
-  "\\chapter[index='~A', title='~A', chap-id='~A', ref-title='~A']{")
-
-(define-filter "\\\\beginchapter{([^}]+)}{([^}]+)}{([^}]+)}{([^}]+)}"
+(define-tag-filter "beginchapter{([^}]+)}{([^}]+)}{([^}]+)}{([^}]+)}"
     (lambda (match &rest regs)
       (declare (ignore match))
-      (format nil +begin-chapter-fmt+
+      (format nil "\\chapter[index='~A', title='~A', chap-id='~A', ref-title='~A']{"
               (first regs)
               (second regs)
               (third regs)
@@ -49,7 +44,7 @@
      (define-filter (concatenate 'string
                                  "\\\\begin"
                                  ,sub-level
-                                 "Section{([^}]+)}[^\\\\]*\\\\DefineSection{([^}]+)}")
+                                 "[Ss]ection{([^}]+)}[^\\\\]*\\\\DefineSection{([^}]+)}")
          (lambda (match &rest regs)
            (declare (ignore match))
            (format nil (concatenate 'string
@@ -62,7 +57,7 @@
      (define-filter (concatenate 'string
                                  "\\\\begin"
                                  ,sub-level
-                                 "Section{([^}]+)}")
+                                 "[Ss]ection{([^}]+)}")
          (lambda (match &rest regs)
            (declare (ignore match))
            (format nil (concatenate 'string
@@ -74,13 +69,14 @@
      (define-tag-filter (concatenate 'string
                                      "end"
                                      ,sub-level
-                                     "Section")
+                                     "[Ss]ection")
        "}")))
 
 (define-section-filter "")
 (define-section-filter "sub")
 (define-section-filter "subsub")
 (define-section-filter "subsubsub")
+(define-section-filter "subsubsubsub")
 
 ;;; Lists
 
@@ -88,6 +84,30 @@
 (define-tag-filter "endlist" "}")
 
 (define-tag-filter "bull" "\\bullet{}")
+
+;;; Tables
+
+(defun create-table (title body)
+  (let* ((lines (cl-ppcre:split "\\\\cr\\n" body))
+         (content (loop for line in lines collecting
+                    (cl-ppcre:split "&" line))))
+    (format nil "\\table[title='~A']{~{\\row{~{\\cell{~A}~}}~}}"
+            title
+            content)))
+
+(defmacro define-table-filter (column-count)
+  `(define-tag-filter (concatenate 'string
+                                   "display"
+                                   ,column-count
+                                   "{([^}]+)}{([^}]+)}")
+       (lambda (match &rest regs)
+         (declare (ignore match))
+         (create-table (first regs) (second regs)))))
+
+(define-table-filter "two")
+(define-table-filter "three")
+(define-table-filter "four")
+(define-table-filter "five")
 
 ;;; References
 
@@ -126,13 +146,66 @@
 (define-null-tag "bye")
 (define-null-tag "vfill")
 (define-null-tag "eject")
+(define-null-tag "vtop")
+(define-null-tag "hbox")
+(define-null-tag "cr")
+(define-null-tag "Vskip")
+(define-null-tag "hfil")
 
 ;;; Comments
 
 (define-filter "([^\\\\])%.*"
-    (lambda (match &rest regs)
-      (declare (ignore match))
-      (first regs)))
+  (lambda (match &rest regs)
+    (declare (ignore match))
+    (first regs)))
+
+;;; Document-related Shorthand
+
+(defmacro define-doc-filter (regexp arg &rest body)
+  `(define-tag-filter ,(format nil "[~A~A]~A{([^}]+)}"
+                               (char-upcase (elt regexp 0))
+                               (char-downcase (elt regexp 0))
+                               (subseq regexp 1))
+       (lambda (match &rest regs)
+         (declare (ignore match))
+         (let ((,arg (first regs)))
+           ,@body))))
+
+(define-doc-filter "seefun" ref
+  (format nil "See the \\term{function} \\funref{~A}" ref))
+
+(define-doc-filter "seefuns" ref
+  (format nil "See the \\term{functions} \\funref{~A}" ref))
+
+(define-doc-filter "seespec" ref
+  (format nil "See the \\term{special operator} \\specref{~A}" ref))
+
+(define-doc-filter "seemac" ref
+  (format nil "See the \\term{macro} \\macref{~A}" ref))
+
+(define-doc-filter "seevar" ref
+  (format nil "See the \\term{variable} \\varref{~A}" ref))
+
+(define-doc-filter "seetype" ref
+  (format nil "See the \\term{type} \\typeref{~A}" ref))
+
+(define-doc-filter "seemisc" ref
+  (format nil "See \\miscref{~A}" ref))
+
+(define-doc-filter "seesection" ref
+  (format nil "See \\secref{~A}" ref))
+
+(define-doc-filter "seechapter" ref
+  (format nil "See \\chapref{~A}" ref))
+
+(define-doc-filter "seefigure" ref
+  (format nil "See \\figref{~A}" ref))
+
+(define-doc-filter "seeterm" ref
+  (format nil "See \\term{~A}" ref))
+
+(define-doc-filter "seetermAlso" ref
+  (format nil "See also \\term{~A}" ref))
 
 ;;; Include files
 

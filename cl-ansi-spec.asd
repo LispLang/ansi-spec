@@ -15,10 +15,9 @@
                :anaphora)
   :components ((:module "src"
                 :components
-                ((:file "basic")
+                ((:file "parser")
                  (:file "abbreviations")
                  (:file "preprocess")
-                 (:file "parser")
                  (:file "transform")
                  (:file "interface"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."

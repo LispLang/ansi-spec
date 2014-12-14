@@ -164,9 +164,9 @@
   (declare (ignore a))
   `(:list-item ,@children))
 
-(define-transform "bullet" (a children)
+(define-transform "itemitem" (a children)
   (declare (ignore a))
-  nil)
+  `(:list-item ,@children))
 
 ;;; Tables
 
@@ -211,6 +211,16 @@
 (define-transform "t" (a children)
   (declare (ignore a children))
   (list :clref "t"))
+
+;;; Removals
+
+(defmacro define-null-transform (name)
+  `(define-transform ,name (a children)
+     (declare (ignore a children))
+     nil))
+
+(define-null-transform "bullet")
+(define-null-transform "noindent")
 
 ;;; Interface
 

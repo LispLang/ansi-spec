@@ -154,6 +154,20 @@
   (declare (ignore a))
   (list :sup (first children)))
 
+;;; Lists
+
+(define-transform "list" (a children)
+  (declare (ignore a))
+  `(:list ,@children))
+
+(define-transform "item" (a children)
+  (declare (ignore a))
+  `(:list-item ,@children))
+
+(define-transform "bullet" (a children)
+  (declare (ignore a))
+  nil)
+
 ;;; Tables
 
 (define-transform "table" (a children)
@@ -191,6 +205,12 @@
 (define-transform "ldots" (a children)
   (declare (ignore a children))
   (list :ellipsis))
+
+;;; Abbreviations
+
+(define-transform "t" (a children)
+  (declare (ignore a children))
+  (list :clref "t"))
 
 ;;; Interface
 

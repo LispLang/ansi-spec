@@ -117,8 +117,6 @@
 
 ;;; Important Names
 
-(define-abbrev "t"
-  "\\misc{t}")
 (define-abbrev "nil"
   "\\misc{nil}")
 (define-abbrev "empty"

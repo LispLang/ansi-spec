@@ -158,6 +158,225 @@
 (define-abbrev "OS"
   "object system")
 
+(define-abbrev "HairyDefault"
+  "Complicated defaulting behavior; see below")
+
+(defmacro define-term (name arity expansion)
+  `(define-abbrev ,name
+     (lambda (match &rest regs)
+       (declare (ignore match))
+       (format nil ,expansion
+               ,@(cond
+                   ((eql arity 1)
+                    `((first regs)))
+                   ((eql arity 2)
+                    `((first regs) (second regs)))
+                   ((eql arity 3)
+                    `((first regs) (second regs) (third regs))))))))
+
+(define-term "SETFof" 1
+  "\\macref{setf} of \\misc{~A}")
+(define-term "objectoftype " 1
+  "\\term{object} of \\term{type} \\f{~A}")
+(define-term "objectsoftype " 1
+  "\\term{objects} of \\term{type} \\f{~A}")
+(define-term "Objectsoftype " 1
+  "\\term{Objects} of \\term{type} \\f{~A}")
+(define-term "oftype " 1
+  "of \\term{type} \\typeref{~A}")
+(define-term "ofclass " 1
+  "of \\term{class} \\typeref{~A}")
+(define-term "oftypes " 2
+  "of \\term{type} \\typeref{~A} or a \\term{subtype} of \\term{type} \\typeref{~A}")
+(define-term "ofmetaclass " 1
+  "of \\term{metaclass} \\typeref{~A}")
+(define-term "thetype " 1
+  "the \\term{type} \\typeref{~A}")
+(define-term "Thetype " 1
+  "The \\term{type} \\typeref{~A}")
+(define-term "thetypes " 1
+  "the \\term{types} \\typeref{~A}")
+(define-term "Thetypes " 1
+  "The \\term{types} \\typeref{~A}")
+(define-term "theclass " 1
+  "the \\term{class} \\typeref{~A}")
+(define-term "Theclass " 1
+  "The \\term{class} \\typeref{~A}")
+(define-term "thevariable " 1
+  "the \\term{variable} \\varref{~A}")
+(define-term "Thevariable " 1
+  "The \\term{variable} \\varref{~A}")
+(define-term "thevariables " 1
+  "the \\term{variables} \\varref{~A}")
+(define-term "Thevariables " 1
+  "The \\term{variables} \\varref{~A}")
+(define-term "themacro " 1
+  "the \\funref{~A} \\term{macro}")
+(define-term "Themacro " 1
+  "The \\funref{~A} \\term{macro}")
+(define-term "theinitkeyarg" 1
+  "the \\kwd{~A} initialization argument")
+(define-term "Theinitkeyarg" 1
+  "The \\kwd{~A} initialization argument")
+(define-term "theinitkeyargs" 1
+  "the initialization arguments named \\kwd{~A}")
+(define-term "Theinitkeyargs" 1
+  "The initialization argument named \\kwd{~A}")
+(define-term "thekeyarg" 1
+  "the \\kwd{~A} \\term{argument}")
+(define-term "Thekeyarg" 1
+  "The \\kwd{~A} \\term{argument}")
+(define-term "thefunction " 1
+  "the \\term{function} \\funref{~A}")
+(define-term "Thefunction " 1
+  "The \\term{function} \\funref{~A}")
+(define-term "thefunctions " 1
+  "the \\term{functions} \\funref{~A}")
+(define-term "Thefunctions " 1
+  "The \\term{functions} \\funref{~A}")
+(define-term "thespecform " 1
+  "the \\specref{~A} \\term{special form}")
+(define-term "Thespecform " 1
+  "The \\specref{~A} \\term{special form}")
+(define-term "thespecforms " 1
+  "the \\specref{~A} \\term{special forms}")
+(define-term "Thespecforms " 1
+  "The \\specref{~A} \\term{special forms}")
+(define-term "thespecop " 1
+  "the \\specref{~A} \\term{special operator}")
+(define-term "Thespecop " 1
+  "The \\specref{~A} \\term{special operator}")
+(define-term "Thespecforms " 1
+  "The \\specref{~A} \\term{special forms}")
+(define-term "theGF " 1
+  "the \\term{generic function} \\funref{~A}")
+(define-term "TheGF " 1
+  "The \\term{generic function} \\funref{~A}")
+(define-term "subtypeof " 1
+  "\\term{subtype} of \\term{type} \\typeref{~A}")
+(define-term "subtypesof " 1
+  "\\term{subtypes} of \\term{type} \\typeref{~A}")
+(define-term "Subtypesof " 1
+  "\\term{Subtypes} of \\term{type} \\typeref{~A}")
+(define-term "supertypeof " 1
+  "\\term{supertype} of \\term{type} \\typeref{~A}")
+(define-term "supertypesof " 1
+  "\\term{supertypes} of \\term{type} \\typeref{~A}")
+(define-term "Supertypesof " 1
+  "\\term{Supertypes} of \\term{type} \\typeref{~A}")
+(define-term "subclassof " 1
+  "\\term{subclass} of \\term{class} \\typeref{~A}")
+(define-term "subclassesof " 1
+  "\\term{subclasses} of \\term{class} \\typeref{~A}")
+(define-term "Subclassesof " 1
+  "\\term{Subclasses} of \\term{class} \\typeref{~A}")
+(define-term "superclassof " 1
+  "\\term{superclass} of \\term{class} \\typeref{~A}")
+(define-term "superclassesof " 1
+  "\\term{superclasses} of \\term{class} \\typeref{~A}")
+(define-term "Superclassesof " 1
+  "\\term{Superclasses} of \\term{class} \\typeref{~A}")
+(define-term "therestart " 1
+  "the \\misc{~A} \\term{restart}")
+(define-term "Therestart " 1
+  "The \\misc{~A} \\term{restart}")
+(define-term "thepackage " 1
+  "the \\packref{~A} \\term{package}")
+(define-term "Thepackage " 1
+  "The \\packref{~A} \\term{package}")
+(define-term "instofclass " 1
+  "\\term{instance} of the \\term{class} \\typeref{~A}")
+(define-term "instsofclass " 1
+  "\\term{instances} of the \\term{class} \\typeref{~A}")
+(define-term "Instsofclass " 1
+  "\\term{Instances} of the \\term{class} \\typeref{~A}")
+(define-term "instanceofclasses " 1
+  "\\term{generalized instance} of \\theclass{~A}")
+(define-term "instancesofclasses " 1
+  "\\term{generalized instances} of \\theclass{~A}")
+(define-term "Instancesofclasses " 1
+  "\\term{Generalized instances} of \\theclass{~A}")
+(define-term "Theloopconstruct " 1
+  "The \\macref{loop} \\loopref{~A} construct")
+(define-term "theloopconstruct " 1
+  "the \\macref{loop} \\loopref{~A} construct")
+(define-term "Theloopkeyword " 1
+  "The \\macref{loop} \\loopref{~A} keyword")
+(define-term "theloopkeyword " 1
+  "the \\macref{loop} \\loopref{~A} keyword")
+(define-term "thevalueof " 1
+  "the \\term{value} of \\misc{~A}")
+(define-term "Thevalueof " 1
+  "The \\term{value} of \\misc{~A}")
+(define-term "thevaluesof " 1
+  "the \\term{values} of \\misc{~A}")
+(define-term "Thevaluesof " 1
+  "The \\term{values} of \\misc{~A}")
+(define-term "formatOp" 1
+  "{\\dummy}\\hbox{{\\tt ~~~A}}")
+(define-term "formatdirective" 1
+  "{\\dummy}\\hbox{{\\tt ~~~A}} format directive")
+(define-term "NamedTypePredicate" 3
+  "\\funref{~A} returns \\term{true} if \\param{~A} is \\oftype{~A}; otherwise, it returns \\term{false}.")
+(define-term "TypePredicate" 2
+  "Returns \\term{true} if \\param{~A} is \\oftype{~A}; otherwise, returns \\term{false}.")
+(define-term "NamedPredicate" 3
+  "\\funref{~A} returns \\term{true} if \\param{~A} is ~A; otherwise, returns \\term{false}.")
+(define-term "Predicate" 2
+  "Returns \\term{true} if \\param{~A} is ~A; otherwise, returns \\term{false}.")
+(define-term "StrictPredicate" 2
+  "Returns \\misc{t} if \\param{~A} is ~A; otherwise, returns \\misc{nil}.")
+(define-term "Shouldcheckplus" 1
+  "Should signal an error \\oftype{program-error} if at least one \\param{~A} is not supplied.")
+(define-term "Checktype" 2
+  "Signals an error \\oftype{type-error} if \\param{~A} is not ~A.")
+(define-term "Checktypes" 2
+  "Signals an error \\oftype{type-error} if ~A are not ~A.")
+(define-term "Checknottype" 2
+  "Signals an error \\oftype{type-error} if \\param{~A} is ~A.")
+(define-term "Checknottypes" 2
+  "Signals an error \\oftype{type-error} if ~A are ~A.")
+(define-term "Checkanytype" 2
+  "Signals an error \\oftype{type-error} if any \\param{~A} is not ~A.")
+(define-term "Shouldchecktype" 2
+  "Should signal an error \\oftype{type-error} if \\param{~A} is not ~A.")
+(define-term "Shouldcheckanytype" 2
+  "Should signal an error \\oftype{type-error} if any \\param{~A} is not ~A.")
+(define-term "Lazychecktype" 2
+  "Should be prepared to signal an error \\oftype{type-error} if \\param{~A} is not ~A.")
+(define-term "Lazychecktypes" 2
+  "Should be prepared to signal an error \\oftype{type-error} if ~A are not ~A.")
+(define-term "Lazychecknottype" 2
+  "Should be prepared to signal an error \\oftype{type-error} if \\param{~A} is ~A.")
+(define-term "Lazycheckanytype" 2
+  "Should be prepared to signal an error \\oftype{type-error} if any \\param{~A} is not ~A.")
+(define-term "Lazycheckanynottype" 2
+  "Should be prepared to signal an error \\oftype{type-error} if any \\param{~A} is ~A.")
+(define-term "checktype" 2
+  "signals an error \\oftype{type-error} if \\param{~A} is not ~A.")
+(define-term "checkanytype" 2
+  "signals an error \\oftype{type-error} if any \\param{~A} is not ~A.")
+(define-term "shouldchecktype" 2
+  "should signal an error \\oftype{type-error} if \\param{~A} is not ~A.")
+(define-term "shouldcheckanytype" 2
+  "should signal an error \\oftype{type-error} if any \\param{~A} is not ~A.")
+(define-term "lazychecktype" 2
+  "should be prepared to signal an error \\oftype{type-error} if \\param{~A} is not ~A.")
+(define-term "lazycheckanytype" 2
+  "should be prepared to signal an error \\oftype{type-error} if any \\param{~A} is not ~A.")
+(define-term "Default" 1
+  "The default is ~A.")
+(define-term "DefaultFor" 2
+  "The default for ~A is ~A.")
+(define-term "DefaultIn" 2
+  "The default in ~A is ~A.")
+(define-term "Defaults" 2
+  "The defaults for ~A are ~A, respectively.")
+(define-term "DefaultEach" 2
+  "The defaults for each of ~A is ~A.")
+(define-term "DefaultsIn" 3
+  "The defaults for ~A in ~A are ~A, respectively.")
+
 ;;; Characters
 
 (define-abbrev "NewlineChar"

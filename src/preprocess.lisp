@@ -110,23 +110,6 @@
 (define-table-filter "four")
 (define-table-filter "five")
 
-;;; References
-
-(define-tag-filter "seesection\\\\(\\w+)"
-  (lambda (match &rest regs)
-    (declare (ignore match))
-    (format nil "\\seesection{~A}" (first regs))))
-
-(define-tag-filter "seefigure\\\\(\\w+)"
-  (lambda (match &rest regs)
-    (declare (ignore match))
-    (format nil "\\seefigure{~A}" (first regs))))
-
-(define-tag-filter "seechapter\\\\(\\w+)"
-  (lambda (match &rest regs)
-    (declare (ignore match))
-    (format nil "\\seechapter{~A}" (first regs))))
-
 ;;; Quotes
 
 (define-filter "``" "\\doublequotes{")
@@ -210,6 +193,17 @@
 
 ;;; Include files
 
+(defun explicit-bodies (string)
+  (let ((regex "\\\\(\\w+)\\\\(\\w+)"))
+    (ppcre:regex-replace-all regex
+                             string
+                             (lambda (match &rest regs)
+                               (declare (ignore match))
+                               (let ((op (first regs))
+                                     (body (second regs)))
+                                 (format nil "\\~A{~A}" op body)))
+                             :simple-calls t)))
+
 (defun include-inputs (string)
   "Replace all instances of '\input file-name' with the contents of 'file-name.tex'."
   (labels ((valid-input-p (file-name)
@@ -237,4 +231,5 @@
 (defun preprocess (string)
   (filter
    (expand-abbreviations
-    (include-inputs string))))
+    (explicit-bodies
+     (include-inputs string)))))

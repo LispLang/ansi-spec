@@ -47,12 +47,13 @@
                                  "[Ss]ection{([^}]+)}[^\\\\]*\\\\DefineSection{([^}]+)}")
          (lambda (match &rest regs)
            (declare (ignore match))
-           (format nil (concatenate 'string
-                                    "\\"
-                                    ,sub-level
-                                    "section[title='~A', ref='~A']{")
-                   (first regs)
-                   (second regs))))
+           (let ((title (first regs))
+                 (ref (second regs)))
+             (format nil (concatenate 'string
+                                      "\\"
+                                      ,sub-level
+                                      "section[title='~A', ref='~A']{")
+                     title ref))))
 
      (define-filter (concatenate 'string
                                  "\\\\begin"

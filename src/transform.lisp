@@ -79,20 +79,29 @@
 (defmacro define-ref-transform (name)
   `(define-transform ,name (a children)
      (declare (ignore a))
-     (list :clref ;,(intern (string-upcase name) :keyword)
+     (list :clref (list :type ,(intern (string-upcase name) :keyword))
            (first children))))
 
-(define-ref-transform "funref")
-(define-ref-transform "specref")
-(define-ref-transform "macref")
-(define-ref-transform "varref")
+(define-ref-transform "kwd")
+(define-ref-transform "kwdref")
+(define-ref-transform "packref")
+(define-ref-transform "loopref")
+
+(define-ref-transform "keyref")
+
 (define-ref-transform "typeref")
+(define-ref-transform "misc")
 (define-ref-transform "miscref")
+(define-ref-transform "declref")
+(define-ref-transform "funref")
+(define-ref-transform "macref")
+(define-ref-transform "specref")
+(define-ref-transform "conref")
+(define-ref-transform "varref")
+
 (define-ref-transform "secref")
 (define-ref-transform "chapref")
 (define-ref-transform "figref")
-(define-ref-transform "misc")
-(define-ref-transform "miscref")
 
 (define-transform "term" (a children)
   (declare (ignore a))
@@ -101,6 +110,9 @@
 (define-transform "param" (a children)
   (declare (ignore a))
   (list :param (first children)))
+
+(define-transform "logidx" (a children)
+  `(:logidx (:type ,(attr a "type")) ,(first children)))
 
 ;;; Markup
 

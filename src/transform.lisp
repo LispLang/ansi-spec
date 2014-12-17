@@ -283,7 +283,7 @@
 
 (define-transform "OUT" (a children)
   (declare (ignore a children))
-  (list :output))
+  `(:output))
 
 (define-transform "IN" (a children)
   (declare (ignore a))
@@ -292,49 +292,88 @@
 ;;; BNF notation
 
 (define-transform "more" (a children)
+  (declare (ignore a children))
   `(:bnf-more))
 
 (define-transform "star" (a children)
+  (declare (ignore a))
   `(:bnf-star ,(first children)))
 
 (define-transform "paren" (a children)
+  (declare (ignore a))
   `(:bnf-paren ,@(rest children)))
 
 (define-transform "lparen" (a children)
+  (declare (ignore a children))
   `(:bnf-lparen))
 
 (define-transform "rparen" (a children)
+  (declare (ignore a children))
   `(:bnf-rparen))
 
 (define-transform "xparen" (a children)
-  `(:more (:bnf-lparen)))
+  (declare (ignore a children))
+  `(:bnf-more (:bnf-lparen)))
 
 (define-transform "brac" (a children)
+  (declare (ignore a))
   `(:bnf-brac ,@(rest children)))
 
 (define-transform "lbrac" (a children)
+  (declare (ignore a children))
   `(:bnf-lbrac))
 
 (define-transform "rbrac" (a children)
+  (declare (ignore a children))
   `(:bnf-rbrac))
 
 (define-transform "xbrac" (a children)
-  `(:more (:bnf-lbrac)))
+  (declare (ignore a children))
+  `(:bnf-more (:bnf-lbrac)))
 
 (define-transform "curly" (a children)
+  (declare (ignore a))
   `(:bnf-curly ,@(rest children)))
 
 (define-transform "lcurly" (a children)
+  (declare (ignore a children))
   `(:bnf-lcurly))
 
 (define-transform "rcurly" (a children)
+  (declare (ignore a children))
   `(:bnf-rcurly))
 
 (define-transform "xcurly" (a children)
-  `(:more (:bnf-lcurly)))
+  (declare (ignore a children))
+  `(:bnf-more (:bnf-lcurly)))
 
 (define-transform "down" (a children)
-  `(:down))
+  (declare (ignore a))
+  `(:bnf-down ,(first children)))
+
+(define-transform "plusdown" (a children)
+  (declare (ignore a))
+  `(:bnf-plus (:bnf-curly (:bnf-down ,(first children)))))
+
+(define-transform "plusparam" (a children)
+  (declare (ignore a))
+  `(:bnf-plus (:bnf-curly (:bnf-param ,(first children)))))
+
+(define-transform "plusparen" (a children)
+  (declare (ignore a))
+  `(:bnf-plus (:bnf-curly (:bnf-paren ,(first children)))))
+
+(define-transform "stardown" (a children)
+  (declare (ignore a))
+  `(:bnf-star (:bnf-curly (:bnf-down ,(first children)))))
+
+(define-transform "starparam" (a children)
+  (declare (ignore a))
+  `(:bnf-star (:bnf-curly (:bnf-param ,(first children)))))
+
+(define-transform "starparen" (a children)
+  (declare (ignore a))
+  `(:bnf-star (:bnf-curly (:bnf-paren ,(first children)))))
 
 ;;; Abbreviations
 

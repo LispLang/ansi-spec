@@ -289,6 +289,53 @@
   (declare (ignore a))
   `(:input ,(first children)))
 
+;;; BNF notation
+
+(define-transform "more" (a children)
+  `(:bnf-more))
+
+(define-transform "star" (a children)
+  `(:bnf-star ,(first children)))
+
+(define-transform "paren" (a children)
+  `(:bnf-paren ,@(rest children)))
+
+(define-transform "lparen" (a children)
+  `(:bnf-lparen))
+
+(define-transform "rparen" (a children)
+  `(:bnf-rparen))
+
+(define-transform "xparen" (a children)
+  `(:more (:bnf-lparen)))
+
+(define-transform "brac" (a children)
+  `(:bnf-brac ,@(rest children)))
+
+(define-transform "lbrac" (a children)
+  `(:bnf-lbrac))
+
+(define-transform "rbrac" (a children)
+  `(:bnf-rbrac))
+
+(define-transform "xbrac" (a children)
+  `(:more (:bnf-lbrac)))
+
+(define-transform "curly" (a children)
+  `(:bnf-curly ,@(rest children)))
+
+(define-transform "lcurly" (a children)
+  `(:bnf-lcurly))
+
+(define-transform "rcurly" (a children)
+  `(:bnf-rcurly))
+
+(define-transform "xcurly" (a children)
+  `(:more (:bnf-lcurly)))
+
+(define-transform "down" (a children)
+  `(:down))
+
 ;;; Abbreviations
 
 (define-transform "t" (a children)

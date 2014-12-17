@@ -11,6 +11,7 @@
              `(define-abbrev ,abbrev ,expansion)))))
 
 (defun expand-abbreviations (string)
+  (log:info "Expanding abbreviations")
   (let ((final-string string))
     (loop for (name . expansion) in *abbreviations* do
       (setf final-string

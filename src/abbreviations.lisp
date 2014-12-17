@@ -401,6 +401,18 @@
 (define-abbrev "bq"
   "`")
 
+(define-abbrev "ampersand"
+  "&")
+(define-abbrev "tilde"
+  "~")
+
+(define-abbrev "lbracket"
+  "[")
+(define-abbrev "rbracket"
+  "]")
+(define-abbrev "minussign"
+  "$-$")
+
 ;;; Subscripts
 
 (define-abbrev "ssso"

@@ -146,7 +146,11 @@
 
 (define-transform "ang" (a children)
   (declare (ignore a))
-  (list :angle-brackets (first children)))
+  `(:angle-brackets ,(first children)))
+
+(define-transform "flr" (a children)
+  (declare (ignore a))
+  `(:floor ,(first children)))
 
 (define-transform "code" (a children)
   (declare (ignore a))
@@ -159,6 +163,18 @@
 (define-transform "sup" (a children)
   (declare (ignore a))
   (list :sup (first children)))
+
+(define-transform "underlined" (a children)
+  (declare (ignore a))
+  `(:underlined ,(first children)))
+
+(define-transform "metavar" (a children)
+  (declare (ignore a))
+  `(:metavar ,(first children)))
+
+(define-transform "metaparam" (a children)
+  (declare (ignore a))
+  `(:metaparam ,(first children)))
 
 ;;; Lists
 
@@ -212,7 +228,11 @@
   (declare (ignore a children))
   (list :ellipsis))
 
-;;; Diagrams
+(define-transform "CRLF" (a children)
+  (declare (ignore a children))
+  (list :newline-arrow))
+
+;;; Relations
 
 (define-transform "EV" (a children)
   (declare (ignore a children))
@@ -229,6 +249,16 @@
 (define-transform "EQ" (a children)
   (declare (ignore a children))
   (list :equiv))
+
+;;; Contexts
+
+(define-transform "OUT" (a children)
+  (declare (ignore a children))
+  (list :output))
+
+(define-transform "IN" (a children)
+  (declare (ignore a))
+  `(:input (first children)))
 
 ;;; Abbreviations
 

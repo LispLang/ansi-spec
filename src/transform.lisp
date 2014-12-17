@@ -49,12 +49,11 @@
 ;;; Sections
 
 (define-transform "chapter" (a children)
-  (list :chapter
-        (list :index (attr a "index")
-              :title (attr a "title")
-              :chap-id (attr a "chap-id")
-              :ref-title (attr a "ref-title"))
-        children))
+  `(:chapter (:index ,(attr a "index")
+              :title ,(attr a "title")
+              :chap-id ,(attr a "chap-id")
+              :ref-title ,(attr a "ref-title"))
+             ,@children))
 
 (defmacro define-section-transform (name keyword)
   `(define-transform ,name (a children)
@@ -114,11 +113,11 @@
 
 (define-transform "term" (a children)
   (declare (ignore a))
-  (list :term (first children)))
+  `(:term ,(first children)))
 
 (define-transform "param" (a children)
   (declare (ignore a))
-  (list :param (first children)))
+  `(:param ,(first children)))
 
 (define-transform "logidx" (a children)
   `(:logidx (:type ,(attr a "type")) ,(first children)))
@@ -131,43 +130,43 @@
 
 (define-transform "b" (a children)
   (declare (ignore a))
-  (list :bold (first children)))
+  `(:bold ,(first children)))
 
 (define-transform "i" (a children)
   (declare (ignore a))
-  (list :italic (first children)))
+  `(:italic ,(first children)))
 
 (define-transform "j" (a children)
   (declare (ignore a))
-  (list :italic (first children)))
+  `(:italic, (first children)))
 
 (define-transform "f" (a children)
   (declare (ignore a))
-  (list :teletype (first children)))
+  `(:teletype ,(first children)))
 
 (define-transform "rm" (a children)
   (declare (ignore a))
-  (list :roman (first children)))
+  `(:roman ,(first children)))
 
 (define-transform "it" (a children)
   (declare (ignore a))
-  (list :italic (first children)))
+  `(:italic ,(first children)))
 
 (define-transform "tt" (a children)
   (declare (ignore a))
-  (list :teletype (first children)))
+  `(:teletype ,(first children)))
 
 (define-transform "ital" (a children)
   (declare (ignore a))
-  (list :italic (first children)))
+  `(:italic ,(first children)))
 
 (define-transform "bold" (a children)
   (declare (ignore a))
-  (list :bold (first children)))
+  `(:bold ,(first children)))
 
 (define-transform "doublequotes" (a children)
   (declare (ignore a))
-  (list :double-quotes (first children)))
+  `(:double-quotes ,(first children)))
 
 (define-transform "ang" (a children)
   (declare (ignore a))
@@ -179,15 +178,15 @@
 
 (define-transform "code" (a children)
   (declare (ignore a))
-  (list :code (first children)))
+  `(:code ,(first children)))
 
 (define-transform "sub" (a children)
   (declare (ignore a))
-  (list :sub (first children)))
+  `(:sub ,(first children)))
 
 (define-transform "sup" (a children)
   (declare (ignore a))
-  (list :sup (first children)))
+  `(:sup ,(first children)))
 
 (define-transform "underlined" (a children)
   (declare (ignore a))
@@ -239,23 +238,23 @@
 
 (define-transform "leq" (a children)
   (declare (ignore a children))
-  (list :leq))
+  `(:leq))
 
 (define-transform "neq" (a children)
   (declare (ignore a children))
-  (list :neq))
+  `(:neq))
 
 (define-transform "vert" (a children)
   (declare (ignore a children))
-  (list :pipe))
+  `(:pipe))
 
 (define-transform "ldots" (a children)
   (declare (ignore a children))
-  (list :ellipsis))
+  `(:ellipsis))
 
 (define-transform "CRLF" (a children)
   (declare (ignore a children))
-  (list :newline-arrow))
+  `(:newline-arrow))
 
 (define-transform "keyword" (a children)
   (declare (ignore a))
@@ -265,19 +264,19 @@
 
 (define-transform "EV" (a children)
   (declare (ignore a children))
-  (list :right-arrow))
+  `(:right-arrow))
 
 (define-transform "OV" (a children)
   (declare (ignore a children))
-  (list :or))
+  `(:or))
 
 (define-transform "NV" (a children)
   (declare (ignore a children))
-  (list :not))
+  `(:not))
 
 (define-transform "EQ" (a children)
   (declare (ignore a children))
-  (list :equiv))
+  `(:equiv))
 
 ;;; Contexts
 
@@ -379,7 +378,7 @@
 
 (define-transform "t" (a children)
   (declare (ignore a children))
-  (list :clref "t"))
+  `(:clref "t"))
 
 ;;; Glossary
 

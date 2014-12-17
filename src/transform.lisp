@@ -67,6 +67,7 @@
 (define-section-transform "subsection" :subsection)
 (define-section-transform "subsubsection" :subsubsection)
 (define-section-transform "subsubsubsection" :subsubsubsection)
+(define-section-transform "subsubsubsubsection" :subsubsubsubsection)
 
 ;;; Issues
 
@@ -103,6 +104,14 @@
 (define-ref-transform "chapref")
 (define-ref-transform "figref")
 
+(define-transform "bogusterm" (a children)
+  (declare (ignore a))
+  (first children))
+
+(define-transform "newterm" (a children)
+  (declare (ignore a))
+  `(:newterm ,(first children)))
+
 (define-transform "term" (a children)
   (declare (ignore a))
   (list :term (first children)))
@@ -113,6 +122,10 @@
 
 (define-transform "logidx" (a children)
   `(:logidx (:type ,(attr a "type")) ,(first children)))
+
+;;; Defuns
+
+
 
 ;;; Markup
 
@@ -244,6 +257,10 @@
   (declare (ignore a children))
   (list :newline-arrow))
 
+(define-transform "keyword" (a children)
+  (declare (ignore a))
+  `(:keyword ,(first children)))
+
 ;;; Relations
 
 (define-transform "EV" (a children)
@@ -270,13 +287,19 @@
 
 (define-transform "IN" (a children)
   (declare (ignore a))
-  `(:input (first children)))
+  `(:input ,(first children)))
 
 ;;; Abbreviations
 
 (define-transform "t" (a children)
   (declare (ignore a children))
   (list :clref "t"))
+
+;;; Glossary
+
+(define-transform "meaning" (a children)
+  (declare (ignore a))
+  `(:sub ,(first children)))
 
 ;;; Removals
 

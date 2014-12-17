@@ -203,6 +203,7 @@
 ;;; Include files
 
 (defun explicit-bodies (string)
+  (log:info "Ensuring all TeX commands have explicit bodies")
   (let ((regex "\\\\(\\w+)\\\\(\\w+)"))
     (ppcre:regex-replace-all regex
                              string
@@ -238,6 +239,7 @@
                                 :simple-calls t)))
 
 (defun preprocess (string)
+  (log:info "Preprocessing")
   (filter
    (expand-abbreviations
     (explicit-bodies

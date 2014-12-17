@@ -25,17 +25,25 @@
 
 ;;; Chapters
 
-
 (define-tag-filter "beginchapter{([^}]+)}{([^}]+)}{([^}]+)}{([^}]+)}"
-    (lambda (match &rest regs)
-      (declare (ignore match))
-      (format nil "\\chapter[index='~A', title='~A', chap-id='~A', ref-title='~A']{"
-              (first regs)
-              (second regs)
-              (third regs)
-              (fourth regs))))
+  (lambda (match &rest regs)
+    (declare (ignore match))
+    (format nil "\\chapter[index='~A', title='~A', chap-id='~A', ref-title='~A']{"
+            (first regs)
+            (second regs)
+            (third regs)
+            (fourth regs))))
 
 (define-tag-filter "endchapter" "}")
+
+;;; Issues
+
+(define-tag-filter "issue{([^}]+)}"
+  (lambda (match &rest regs)
+    (declare (ignore match))
+    (format nil "\\issue[name='~A']{" (first regs))))
+
+(define-tag-filter "endissue" "}")
 
 ;;; Sections
 
@@ -126,7 +134,8 @@
   `(define-tag-filter ,regexp ""))
 
 (define-null-tag "input setup")
-(define-null-tag "%-*- Mode: TeX -*-")
+(define-null-tag "\\% -\\*- Mode: TeX -\\*-")
+(define-null-tag "\\%-\\*- Mode: TeX -\\*-")
 (define-null-tag "bye")
 (define-null-tag "vfill")
 (define-null-tag "eject")

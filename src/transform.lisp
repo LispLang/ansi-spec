@@ -68,6 +68,12 @@
 (define-section-transform "subsubsection" :subsubsection)
 (define-section-transform "subsubsubsection" :subsubsubsection)
 
+;;; Issues
+
+(define-transform "issue" (a children)
+  `(:issue (:name ,(attr a "name"))
+           ,@children))
+
 ;;; References
 
 (defmacro define-ref-transform (name)
@@ -205,6 +211,24 @@
 (define-transform "ldots" (a children)
   (declare (ignore a children))
   (list :ellipsis))
+
+;;; Diagrams
+
+(define-transform "EV" (a children)
+  (declare (ignore a children))
+  (list :right-arrow))
+
+(define-transform "OV" (a children)
+  (declare (ignore a children))
+  (list :or))
+
+(define-transform "NV" (a children)
+  (declare (ignore a children))
+  (list :not))
+
+(define-transform "EQ" (a children)
+  (declare (ignore a children))
+  (list :equiv))
 
 ;;; Abbreviations
 

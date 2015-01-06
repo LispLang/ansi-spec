@@ -87,6 +87,8 @@
 (define-section-filter "subsubsub")
 (define-section-filter "subsubsubsub")
 
+;;; Defuns
+
 ;;; Lists
 
 (define-tag-filter "beginlist" "\\list{")

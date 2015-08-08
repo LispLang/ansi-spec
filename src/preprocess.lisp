@@ -29,7 +29,9 @@
                ;; Ignore figures
                (if (valid-input-p name)
                    (progn
-                     (format t "~&Including path ~S" input-pathname)
+                     (format t "~&  Including path '~A.~A'"
+                             (pathname-name input-pathname)
+                             (pathname-type input-pathname))
                      (uiop:read-file-string input-pathname))
                    ""))))
     (cl-ppcre:regex-replace-all "\\input ([^ \\n]+)\\n"

@@ -12,11 +12,21 @@
 
 ;;; Emitting TeX elements
 
-(defgeneric emit-node (name node)
-  (:documentation "Emit a node. Specializes on the node name."))
+(defvar *emitters* (make-hash-table :test #'equal))
 
-(defmethod emit-node ((name t) node)
-  (print node))
+(defmacro define-emitter ((node node-name) &body body)
+  "Define an emitter."
+  `(setf (gethash ,node-name *emitters*)
+         (lambda (,node)
+           ,@body)))
+
+(defun emit-node (name node)
+  (let ((emitter (gethash name *emitters*)))
+    (when emitter
+      (funcall emitter node))))
+
+(define-emitter (node "bye")
+  (print "Bye!"))
 
 ;;; Emitting text
 

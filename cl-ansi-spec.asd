@@ -12,7 +12,8 @@
                 :components
                 ((:file "file")
                  (:file "preprocess")
-                 (:file "traverse"))))
+                 (:file "traverse")
+                 (:file "main"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description
   #.(uiop:read-file-string

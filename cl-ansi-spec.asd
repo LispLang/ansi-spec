@@ -9,6 +9,7 @@
                :split-sequence
                :anaphora)
   :components ((:module "src"
+                :serial t
                 :components
                 ((:file "file")
                  (:file "preprocess")

@@ -6,6 +6,10 @@
                 :before "<b>"
                 :after "</b>")
 
+(define-emitter ("i" :requires-body t)
+                :before "<i>"
+                :after "</i>")
+
 ;;;; Sections
 
 (define-emitter ("beginchapter")
@@ -28,4 +32,4 @@
                 :after "\"")
 
 (define-emitter ("endchapter")
-  :before "</chapter>")
+                :before "</chapter>")

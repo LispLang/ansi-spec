@@ -12,7 +12,7 @@
 
 ;;; Emitting TeX elements
 
-(defparameter *emitters* (make-hash-table :test #'equal))
+(defvar *emitters* (make-hash-table :test #'equal))
 
 (defmacro define-emitter ((node-name &key requires-body) &key before after)
   "Define an emitter."
@@ -31,22 +31,24 @@
 
 (defgeneric %traverse (node))
 
-(defmethod %traverse ((node plump:nesting-node))
+(defmethod %traverse ((node plump:root))
   (loop for child across (plump:children node) do
     (%traverse child)))
 
 (defmethod %traverse ((node plump:element))
-  (let ((emitter (gethash (plump:tag-name node) *emitters*)))
-    (when emitter
+  (let* ((emitter (gethash (plump:tag-name node) *emitters*))
+         (can-emit (if emitter
+                       (if (getf emitter :requires-body)
+                           (if (> (length (plump:children node)) 0)
+                               t
+                               nil)
+                           t)
+                       nil)))
+    (when can-emit
       (funcall (getf emitter :before)))
-    (if (and emitter
-             (getf emitter :requires-body))
-        ;; Only call it if it has an explicit body
-        (when (> (length (plump:children node)) 0)
-          (call-next-method))
-        ;; Go through the children
-        (call-next-method))
-    (when emitter
+    (loop for child across (plump:children node) do
+      (%traverse child))
+    (when can-emit
       (funcall (getf emitter :after)))))
 
 (defmethod %traverse ((node plump:text-node))

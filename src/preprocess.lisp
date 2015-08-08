@@ -5,15 +5,6 @@
   (:documentation "Prepare TeX input for parsing."))
 (in-package :ansi-spec.preprocess)
 
-(defun strip-comments (text)
-  "Remove TeX comments from a string of text."
-  (ppcre:regex-replace-all "([^\\\\])%.*"
-                           text
-                           #'(lambda (match &rest regs)
-                               (declare (ignore match))
-                               (first regs))
-                           :simple-calls t))
-
 (defun include-inputs (text)
   "Replace all instances of '\input file-name' with the contents of
 'file-name.tex'."
@@ -41,6 +32,33 @@
                                     (include-file (first regs)))
                                 :simple-calls t)))
 
-(defun preprocess (string)
-  (include-inputs
-   (strip-comments string)))
+(defun strip-comments (text)
+  "Remove TeX comments from a string of text."
+  (ppcre:regex-replace-all "([^\\\\])%.*"
+                           text
+                           #'(lambda (match &rest regs)
+                               (declare (ignore match))
+                               (first regs))
+                           :simple-calls t))
+
+(defun ampersand-directive (text)
+  "Make the ampersand character into a directive."
+  (ppcre:regex-replace-all "[^\\\\]&" text "\\ampersand"))
+
+(defun simpler-chapter-definition (text)
+  "The \\beginchapter directive has four bodies. We move some of those to attributes."
+  (ppcre:regex-replace-all "beginchapter{([^}]+)}{([^}]+)}{([^}]+)}{([^}]+)}"
+                           text
+                           (lambda (match &rest regs)
+                             (declare (ignore match))
+                             (format nil "\\beginchapter[index='~A', title='~A', chap-id='~A', ref-title='~A']{"
+                                     (first regs)
+                                     (second regs)
+                                     (third regs)
+                                     (fourth regs)))))
+
+(defun preprocess (text)
+  (simpler-chapter-definition
+   (ampersand-directive
+    (strip-comments
+     (include-inputs text)))))

@@ -14,36 +14,6 @@ The TeX sources were obtained from the [CMU AI Archive][cmu]. Specifically, the
 version used was `dpans/dpans3.tgz`. To save space, the `.dvi.Z` files were
 removed.
 
-# Implementation
-
-## Parser
-
-The first stage of the parser is preprocess, which does the following:
-
-1. Strip comments (otherwise these would be interpreted as text by the parser).
-2. Include files. Some files have an `\input` directive, which is used to
-include the contents of others.
-
-## Traversal
-
-After preprocessing, the files are parsed using [plump-tex][plump], and we
-recursively go through the Plump nodes.
-
-This part of the process can be thought of as filtering the semantics of the
-spec from the noise of TeX. For some nodes (those that declare formatting, or
-references, etc.), we emit a corresponding XML to the output file. For some TeX
-directives like `\defineSection`, we only produce an opening XML tag, and the
-`\endSection\ directive adds the closing tag.
-
-The end result is a file, `spec/output.xml`, which has a simpler XML
-representation of the spec.
-
-XML was chosen because:
-
-1. It's easy to write from a context where you don't know the structure around
-   the node you're on.
-2. "muh s-expressions" isn't an argument.
-
 # Tex Sources
 
 ## Structure
@@ -80,6 +50,49 @@ style, characters, BNF notation, and some other things.
 - `setup-tables.tex`: Table-defining macros.
 
 - `setup-terms.tex`: Tons of abbreviations and macros for text.
+
+# Implementation
+
+## Parser
+
+The first stage of the parser is preprocess, which does the following:
+
+1. Strip comments (otherwise these would be interpreted as text by the parser).
+2. Include files. Some files have an `\input` directive, which is used to
+include the contents of others.
+
+## Traversal
+
+After preprocessing, the files are parsed using [plump-tex][plump], and we
+recursively go through the Plump nodes.
+
+This part of the process can be thought of as filtering the semantics of the
+spec from the noise of TeX. For some nodes (those that declare formatting, or
+references, etc.), we emit a corresponding XML to the output file. For some TeX
+directives like `\defineSection`, we only produce an opening XML tag, and the
+`\endSection\ directive adds the closing tag.
+
+The end result is a file, `spec/output.xml`, which has a simpler XML
+representation of the spec.
+
+XML was chosen because:
+
+1. It's easy to write from a context where you don't know the structure around
+   the node you're on.
+2. "muh s-expressions" isn't an argument.
+
+### Parsing Abbreviations
+
+The specification makes liberal use of the TeX directive to define macros. Since
+transcribing those macros to some kind of Lisp for for automatic compilation
+would be quite boring, we use part of the traversal machinery to take define
+macros found in the text and take care of macroexpansion.
+
+Some macros, however, we expand ourselves to have better control.
+
+# XML Output
+
+This section will document the format of the XML output file.
 
 # License
 

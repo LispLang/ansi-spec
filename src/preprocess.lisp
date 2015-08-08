@@ -29,7 +29,7 @@
                ;; Ignore figures
                (if (valid-input-p name)
                    (progn
-                     (log:info "Including path ~S" input-pathname)
+                     (format t "~&Including path ~S" input-pathname)
                      (uiop:read-file-string input-pathname))
                    ""))))
     (cl-ppcre:regex-replace-all "\\input ([^ \\n]+)\\n"
@@ -40,6 +40,5 @@
                                 :simple-calls t)))
 
 (defun preprocess (string)
-  (log:info "Preprocessing")
   (include-inputs
    (strip-comments string)))

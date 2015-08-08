@@ -1,12 +1,7 @@
-(in-package :cl-user)
-(defpackage cl-ansi-spec-asd
-  (:use :cl :asdf))
-(in-package :cl-ansi-spec-asd)
-
 (defsystem cl-ansi-spec
   :version "0.1"
   :author "Fernando Borretti"
-  :homepage "https://github.com/CommonDoc/cl-ansi-spec"
+  :homepage "https://github.com/eudoxia0/cl-ansi-spec"
   :license "MIT"
   :depends-on (:plump-tex
                :uiop
@@ -16,11 +11,8 @@
                :anaphora)
   :components ((:module "src"
                 :components
-                ((:file "parser")
-                 (:file "abbreviations")
-                 (:file "preprocess")
-                 (:file "transform")
-                 (:file "interface"))))
+                ((:file "file")
+                 (:file "preprocess"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description
   #.(uiop:read-file-string

@@ -32,18 +32,22 @@
                                     (include-file (first regs)))
                                 :simple-calls t)))
 
-(defun strip-comments (text)
-  "Remove TeX comments from a string of text."
-  (ppcre:regex-replace-all "([^\\\\])%.*"
-                           text
-                           #'(lambda (match &rest regs)
-                               (declare (ignore match))
-                               (first regs))
-                           :simple-calls t))
+(defun strip-unwanted (text)
+  "Remove TeX we don't want."
+  (let ((regexes (list "([^\\\\]|^)%.*" ;; comments
+                       "\\\\input.*" ;; the input directive
+                       ))
+        (output text))
+    (loop for regex in regexes do
+      (setf output (ppcre:regex-replace-all regex output "")))
+    output))
 
 (defun ampersand-directive (text)
   "Make the ampersand character into a directive."
   (ppcre:regex-replace-all "[^\\\\]&" text "\\ampersand"))
+
+(defparameter +chapter-format+
+"beginchapter{} \\beginchapterindex{~A} \\beginchaptertitle{~A} \\beginchapterid{~A} \\beginchapterreftitle{~A}")
 
 (defun simpler-chapter-definition (text)
   "The \\beginchapter directive has four bodies. We move some of those to attributes."
@@ -51,14 +55,15 @@
                            text
                            (lambda (match &rest regs)
                              (declare (ignore match))
-                             (format nil "\\beginchapter[index='~A', title='~A', chap-id='~A', ref-title='~A']{"
+                             (format nil +chapter-format+
                                      (first regs)
                                      (second regs)
                                      (third regs)
-                                     (fourth regs)))))
+                                     (fourth regs)))
+                           :simple-calls t))
 
 (defun preprocess (text)
   (simpler-chapter-definition
    (ampersand-directive
-    (strip-comments
+    (strip-unwanted
      (include-inputs text)))))

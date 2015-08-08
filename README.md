@@ -14,53 +14,41 @@ The TeX sources were obtained from the [CMU AI Archive][cmu]. Specifically, the
 version used was `dpans/dpans3.tgz`. To save space, the `.dvi.Z` files were
 removed.
 
-# Internals
+# Implementation
 
-The parser has two stages: Preprocessing and transformation. In the
-preprocessing stage, regular expressions are used to:
+## Parser
 
-1. Make some expressions simpler. For example, `beginSection` and `endSection`
-   pairs are turned into a single `section{...}` expression, which makes it
-   easier to handle.
-2. Expand abbreviations and other macros found in the `setup-*.tex` files.
+The first stage of the parser is preprocess, which does the following:
+
+1. Strip comments (otherwise these would be interpreted as text by the parser).
+2. Include files. Some files have an `\input` directive, which is used to
+include the contents of others.
+
+## Traversal
 
 After preprocessing, the files are parsed using [plump-tex][plump], and we
-recursively go through the Plump nodes transforming them into S-expressions.
+recursively go through the Plump nodes.
 
-For example, this:
+This part of the process can be thought of as filtering the semantics of the
+spec from the noise of TeX. For some nodes (those that declare formatting, or
+references, etc.), we emit a corresponding XML to the output file. For some TeX
+directives like `\defineSection`, we only produce an opening XML tag, and the
+`\endSection\ directive adds the closing tag.
 
-```tex
-Deprecated language features are not expected to appear in future \clisp\
-standards, but are required to be implemented for conformance with this
-standard; \seesection\ReqLangFeatures.
+The end result is a file, `spec/output.xml`, which has a simpler XML
+representation of the spec.
 
-\term{Conforming programs} can use deprecated features;
-however, it is considered good programming style to avoid them.
-It is permissible for the compiler to produce \term{style warnings} 
-about the use of such features at compile time, 
-but there should be no such warnings at program execution time.
-```
+XML was chosen because:
 
-Becomes this:
+1. It's easy to write from a context where you don't know the structure around
+   the node you're on.
+2. "muh s-expressions" isn't an argument.
 
-```lisp
-(:section (:title "Deprecated" :ref "DeprecatedFeatures")
-   ("Deprecated language features are not expected to appear in future"
-    (:roman "Common Lisp") "\\
-standards, but are required to be implemented for conformance with this
-standard; See"
-    (:clref (:type :secref) "ReqLangFeatures") "."
-    (:term "Conforming programs") "can use deprecated features;
-however, it is considered good programming style to avoid them.
-It is permissible for the compiler to produce"
-    (:term "style warnings") "about the use of such features at compile time, 
-but there should be no such warnings at program execution time."
-```
+# Tex Sources
 
-## Implementation
+## Structure
 
-Now, for the details. The sources in the `tex` folder are essentially divided
-into two categories:
+The sources in the `tex` folder are essentially divided into two categories:
 
 - `chapter` files: All of these structured the same way. These just import their
   content from the corresponding `concept` files.
@@ -70,14 +58,32 @@ We first parse the `chapter` files, extracting chapter numbers, titles, and the
 text from the corresponding `concept` file. Since the specification doesn't
 really change I just went through the `chapter` files and hardcoded them.
 
-Then there interesting part: Parsing the `concept` files, which contain the
-actual content. Since I didn't want to waste my time writing a TeX parser I
-looked at [this article][tex2xml] and [LaTeXML][latexml]. Eventually, however, I
-managed to [trick Shinmera][shin] into writing a TeX parser I could use.
+Since I didn't want to waste my time writing a TeX parser I looked at
+[this article][tex2xml] and [LaTeXML][latexml]. Eventually, however, I managed
+to [trick Shinmera][shin] into writing a TeX parser I could use.
+
+## Setup Files
+
+Included by the text are various files whose names are prefixed with
+`setup-`. In TeX, these define the choice of font and what have you. For our
+purposes, they are mostly noise.
+
+We are, however, interested in the following:
+
+- `setup-document.tex`: Contains macros for formatting, references, section
+style, characters, BNF notation, and some other things.
+
+- `setup-figures.tex`: Short directives that expand to figure names.
+
+- `setup-sections.tex`: Short directives that expand to section names.
+
+- `setup-tables.tex`: Table-defining macros.
+
+- `setup-terms.tex`: Tons of abbreviations and macros for text.
 
 # License
 
-Copyright (c) 2014 Fernando Borretti (eudoxiahp@gmail.com)
+Copyright (c) 2014-2015 Fernando Borretti (eudoxiahp@gmail.com)
 
 Licensed under the MIT License.
 

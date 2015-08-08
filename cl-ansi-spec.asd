@@ -6,13 +6,13 @@
   :depends-on (:plump-tex
                :uiop
                :cl-ppcre
-               :log4cl
                :split-sequence
                :anaphora)
   :components ((:module "src"
                 :components
                 ((:file "file")
-                 (:file "preprocess"))))
+                 (:file "preprocess")
+                 (:file "traverse"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description
   #.(uiop:read-file-string

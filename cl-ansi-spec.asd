@@ -15,7 +15,6 @@
                  (:file "preprocess")
                  (:file "macros")
                  (:file "traverse")
-                 (:file "emitters")
                  (:file "main"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description

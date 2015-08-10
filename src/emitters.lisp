@@ -10,6 +10,10 @@
                 :before "<i>"
                 :after "</i>")
 
+(define-emitter ("it" :requires-body t)
+                :before "<i>"
+                :after "</i>")
+
 ;;;; Sections
 
 ;;; Chapters

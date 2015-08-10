@@ -13,6 +13,7 @@
                 :components
                 ((:file "file")
                  (:file "preprocess")
+                 (:file "macros")
                  (:file "traverse")
                  (:file "emitters")
                  (:file "main"))))

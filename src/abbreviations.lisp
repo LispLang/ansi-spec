@@ -1,5 +1,11 @@
 ;;;; See setup-terms.tex
-(in-package :cl-ansi-spec)
+(in-package :cl-user)
+(defpackage ansi-spec.abbrev
+  (:use :cl)
+  (:export :expand-all)
+  (:documentation "Expand all abbreviations and custom macros in a text."))
+(in-package :ansi-spec.abbrev)
+
 
 (defparameter *abbreviations* (list))
 
@@ -11,7 +17,7 @@
              `(define-abbrev ,abbrev ,expansion)))))
 
 (defun expand-abbreviations (string)
-  (log:info "Expanding abbreviations")
+  (format t "~&  Expanding abbreviations")
   (let ((final-string string))
     (loop for (name . expansion) in *abbreviations* do
       (setf final-string
@@ -1135,3 +1141,8 @@
   "Chapter A (Appendix)")
 (define-abbrev "RemovedFeatures"
   "Section A.1 (Removed Language Features)")
+
+;;; Main interface
+
+(defun expand-all (string)
+  (expand-abbreviations string))

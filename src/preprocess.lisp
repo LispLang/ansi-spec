@@ -34,12 +34,18 @@
 
 (defun strip-unwanted (text)
   "Remove TeX we don't want."
-  (let ((regexes (list "([^\\\\]|^)%.*" ;; comments
-                       "\\\\input.*" ;; the input directive
+  (let ((regexes (list "([^\\\\])%.*" ;; comments
+                       "()%-\\*- Mode: TeX -\\*-"
+                       "()\\\\input.*" ;; the input directive
                        ))
         (output text))
     (loop for regex in regexes do
-      (setf output (ppcre:regex-replace-all regex output "")))
+      (setf output (ppcre:regex-replace-all regex
+                                            output
+                                            (lambda (match &rest regs)
+                                              (declare (ignore match))
+                                              (first regs))
+                                            :simple-calls t)))
     output))
 
 (defun ampersand-directive (text)

@@ -88,7 +88,20 @@ transcribing those macros to some kind of Lisp for for automatic compilation
 would be quite boring, we use part of the traversal machinery to take define
 macros found in the text and take care of macroexpansion.
 
-Some macros, however, we expand ourselves to have better control.
+### Implicit Bodies
+
+In text, most commands look like `\command{body}`. For some reason, probably
+because God has abandoned us, some commands can take the form of `{\command
+body}`. This is what we've been using to write documents for 40 years.
+
+This part was hard to deal with, and required some stupid as fuck Plump
+transformations.
+
+### Text Stripping
+
+Text that is written to the output file must first go through a filter, where
+backslash characters and italic corrections (`\/`, an ungoogleable TeX leftover
+from the eighties) are removed.
 
 # XML Output
 

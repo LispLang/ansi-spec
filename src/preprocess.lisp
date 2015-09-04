@@ -69,6 +69,7 @@
                            :simple-calls t))
 
 (defun preprocess (text)
+  "Pre-process a TeX file."
   (simpler-chapter-definition
    (ampersand-directive
     (strip-unwanted

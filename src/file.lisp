@@ -9,7 +9,7 @@
 (in-package :ansi-spec.file)
 
 (defparameter +tex-directory+
-  (asdf:system-relative-pathname :cl-ansi-spec #p"tex/")
+  (asdf:system-relative-pathname :ansi-spec #p"tex/")
   "The directory where the TeX sources of the spec are stored.")
 
 (defparameter +chapter-files+
@@ -17,7 +17,7 @@
   "List of pathnames of the chapter files.")
 
 (defparameter +output-directory+
-  (asdf:system-relative-pathname :cl-ansi-spec #p"spec/"))
+  (asdf:system-relative-pathname :ansi-spec #p"spec/"))
 
 (defparameter +output-file+
   (merge-pathnames #p"output.xml" +output-directory+))

@@ -1,5 +1,7 @@
 # ANSI Common Lisp Specification
 
+[![Build Status](https://travis-ci.org/LispLang/ansi-spec.svg?branch=master)](https://travis-ci.org/LispLang/ansi-spec)
+
 The ANSI Common Lisp draft specification, parsed from TeX sources, available as
 a Common Lisp library.
 

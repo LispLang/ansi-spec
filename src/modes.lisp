@@ -20,14 +20,6 @@
       ((= pos 1)
        (output (format nil "~%</title>~%"))
        (output "<body>")
-       ;; Node with the content
-       #|(let* ((children (plump:children node))
-              (rows (split-sequence:split-sequence-if
-                     #'(lambda (node)
-                         (and (plump:element-p node)
-                              (string= (plump:tag-name node)
-                                       "cr"))))))
-         t)|#
        (output "</body>")))))
 
 (define-mode ("bye" node pos :arity 0)

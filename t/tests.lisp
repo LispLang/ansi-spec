@@ -22,6 +22,24 @@
       (plump:serialize (ansi-spec.explicit-body:explicit-body node) nil))
     "<node> a b c</node>")))
 
+(test sibling-extraction
+  (let* ((node (plump:parse "<root><a/><b/><c/></root>"))
+         (a (elt (plump:children (elt (plump:children node) 0)) 0)))
+    (is
+     (equal (plump:tag-name a) "a"))
+    (let ((siblings (ansi-spec.traverse::next-nth-siblings a 1)))
+      (is
+       (equal (length siblings) 1))
+      (is
+       (equal (plump:tag-name (first siblings)) "b")))
+    (let ((siblings (ansi-spec.traverse::next-nth-siblings a 2)))
+      (is
+       (equal (length siblings) 2))
+      (is
+       (equal (plump:tag-name (first siblings)) "b"))
+      (is
+       (equal (plump:tag-name (second siblings)) "c")))))
+
 (test generate
   (finishes
     (ansi-spec:generate)))

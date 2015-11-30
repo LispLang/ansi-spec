@@ -6,6 +6,18 @@
   from others into an output XML file."))
 (in-package :ansi-spec.traverse)
 
+;;; Some utilities
+
+(defun next-nth-siblings (child n)
+  "Return the next nth siblings of this Plump node."
+  (let ((results (list))
+        (current child))
+    (loop for i from 1 to n do
+      (let ((sibling (plump:next-sibling current)))
+        (setf current sibling)
+        (push sibling results)))
+    (reverse results)))
+
 ;;; Output stream
 
 (defvar *stream*)

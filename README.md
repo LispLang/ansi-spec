@@ -78,17 +78,13 @@ The first stage of the process is preprocessing, implemented in
 TeX has a lot of constructs like this:
 
 ```tex
-\b some text
-
-\item{\tag some more text}
+{\tag some more text}
 ```
 
 Because it's easier to deal with, we want this:
 
 ```tex
-\b{some text}
-
-\item{\tag{some more text}}
+\tag{some more text}
 ```
 
 So the transformation in `explicit-body.lisp` does just that.

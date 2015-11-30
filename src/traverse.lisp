@@ -35,7 +35,8 @@
    (callback :reader mode-callback
              :initarg :callback
              :type function
-             :documentation "A function that is called on each node."))
+             :documentation "A function that takes two arguments: a node and the
+             position in the argument list of this mode."))
   (:documentation "A parser mode."))
 
 (defparameter *modes* (make-hash-table :test #'equal)
@@ -53,6 +54,7 @@
 
 (defun activate-mode (tag-name)
   "Activate a node."
+  (format t "~%Activate: ~A" tag-name)
   (push tag-name *active-nodes*)
   (setf (gethash tag-name *mode-counter*)
         (mode-arity (get-mode tag-name))))
@@ -65,22 +67,28 @@
   "Return the current active mode object, or NIL."
   (get-mode (first *active-nodes*)))
 
+(defun current-mode-arity ()
+  "Return the arity of the current mode."
+  (gethash (mode-name (current-mode)) *mode-counter*))
+
 (defun lower-mode-arity ()
   "Lower the arity of the current node."
   (decf (gethash (mode-name (current-mode)) *mode-counter*)))
 
 (defun mode-ended-p ()
   "Has the current mode consumed all the nodes it needs?"
-  (= 0 (gethash (mode-name (current-mode)) *mode-counter*)))
+  (= 0 (current-mode-arity)))
 
-(defmacro define-mode ((tag-name node &key (arity 1)) &body body)
+(defmacro define-mode ((tag-name node pos &key (arity 1)) &body body)
   "Define a mode."
-  `(setf (gethash ,tag-name *modes*)
-         (make-instance 'mode
-                        :name ,tag-name
-                        :arity ,arity
-                        :callback (lambda (,node)
-                                    ,@body))))
+  (let ((tag (gensym)))
+    `(let ((,tag ,tag-name))
+       (setf (gethash ,tag *modes*)
+             (make-instance 'mode
+                            :name ,tag
+                            :arity ,arity
+                            :callback (lambda (,node ,pos)
+                                        ,@body))))))
 
 (defun on-node (node)
   "Dispatch a node."
@@ -89,7 +97,8 @@
     (let ((tag (plump:tag-name node)))
       (if (get-mode tag)
           ;; Activate the mode
-          (activate-mode tag)
+          (when (> (mode-arity (get-mode tag)) 0)
+            (activate-mode tag))
           ;; Warn the user
           (warn "Tag ~S has no corresponding mode" tag))))
   ;; Dispatch it to the current mode
@@ -97,11 +106,14 @@
     (if mode
         ;; If we have an active mode, call its callback
         (progn
-          (funcall (mode-callback mode) node)
+          (funcall (mode-callback mode)
+                   node
+                   (- (mode-arity mode) (current-mode-arity)))
           ;; Lower the mode's arity
           (lower-mode-arity)
           ;; If the mode has consumed all the nodes it needs, shut it down
           (when (mode-ended-p)
+            (format t "~%Deactivate: ~A" (mode-name mode))
             (deactivate-current-mode)))
         ;; If we don't, and the node is a text node, write it to the output
         ;; stream

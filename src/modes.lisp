@@ -1,6 +1,6 @@
 ;;;; Define parser modes
 (in-package :ansi-spec.traverse)
-
+#|
 (define-mode ("div" node pos :arity 0)
   (declare (ignore node pos))
   nil)
@@ -26,3 +26,4 @@
   ;; For some reason tex documents end with this crap
   (declare (ignore node pos))
   nil)
+|#

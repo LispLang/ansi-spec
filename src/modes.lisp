@@ -13,7 +13,17 @@
       ;; Called on the `display{nth}` element, whose body is the title
       (output (format nil "~%<table>~%<title>~%")))
     (lambda (node)
-      (output (format nil "~%</title>~%<body>")))))
+      (output (format nil "~%</title>~%<body>~%<row>~%<cell>")))))
+
+(define-mode ("cr")
+  ;; Row separator
+  (lambda (node)
+    (output (format nil "</cell>~%</row>~%<row>~%<cell>~%"))))
+
+(define-mode ("ampersand")
+  ;; Column separator
+  (lambda (node)
+    (output (format nil "~%</cell>~%<cell>~%"))))
 
 (define-mode ("bye")
   ;; For some reason tex documents end with this crap

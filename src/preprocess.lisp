@@ -50,7 +50,7 @@
 
 (defun ampersand-directive (text)
   "Make the ampersand character into a directive."
-  (ppcre:regex-replace-all "([^\\\\])&" text "\\1\\ampersand"))
+  (ppcre:regex-replace-all "([^\\\\])&" text "\\1\\ampersand "))
 
 (defparameter +chapter-format+
 "beginchapter{} \\beginchapterindex{~A} \\beginchaptertitle{~A} \\beginchapterid{~A} \\beginchapterreftitle{~A}")

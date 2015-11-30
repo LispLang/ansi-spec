@@ -91,23 +91,26 @@ So the transformation in `explicit-body.lisp` does just that.
 
 ## Traversal
 
-After preprocessing, the files are parsed using [plump-tex][plump], and we
-recursively go through the Plump nodes.
+After preprocessing, the files are parsed using [plump-tex][plump], and we go through the document nodes.
 
-This part of the process can be thought of as filtering the semantics of the
-spec from the noise of TeX. For some nodes (those that declare formatting, or
-references, etc.), we emit a corresponding XML to the output file. For some TeX
-directives like `\defineSection`, we only produce an opening XML tag, and the
-`\endSection\ directive adds the closing tag.
+### Modes
 
-The end result is a file, `spec/output.xml`, which has a simpler XML
-representation of the spec.
+[this section will describe the parser, once I understand how it works]
 
-XML was chosen because:
+### Output
+
+The parts of the spec we want are written to an output file,
+`spec/output.xml`. XML was chosen because:
 
 1. It's easy to write from a context where you don't know the structure around
    the node you're on.
 2. "muh s-expressions" isn't an argument.
+
+### Stripping
+
+Text nodes that are written to the output file must first go through a filter,
+where backslash characters and italic corrections (`\/`, an ungoogleable TeX
+leftover from the eighties) are removed.
 
 ### Parsing Abbreviations
 
@@ -115,21 +118,6 @@ The specification makes liberal use of the TeX directive to define macros. Since
 transcribing those macros to some kind of Lisp for for automatic compilation
 would be quite boring, we use part of the traversal machinery to take define
 macros found in the text and take care of macroexpansion.
-
-### Implicit Bodies
-
-In text, most commands look like `\command{body}`. For some reason, probably
-because God has abandoned us, some commands can take the form of `{\command
-body}`. This is what we've been using to write documents for 40 years.
-
-This part was hard to deal with, and required some stupid as fuck Plump
-transformations.
-
-### Text Stripping
-
-Text that is written to the output file must first go through a filter, where
-backslash characters and italic corrections (`\/`, an ungoogleable TeX leftover
-from the eighties) are removed.
 
 # XML Output
 

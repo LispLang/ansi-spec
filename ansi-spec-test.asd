@@ -4,11 +4,10 @@
   :description "ansi-spec tests."
   :depends-on (:ansi-spec
                :plump-tex
-               :prove)
-  :defsystem-depends-on (:prove-asdf)
+               :fiveam)
   :components ((:module "t"
                 :serial t
                 :components
-                ((:test-file "tests"))))
+                ((:file "tests"))))
   :perform (test-op :after (op c)
                     (funcall (intern #.(string :run) :prove) c)))

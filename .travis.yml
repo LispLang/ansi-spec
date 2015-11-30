@@ -1,0 +1,32 @@
+language: common-lisp
+sudo: false
+
+env:
+  global:
+    - PATH=~/.roswell/bin:~/nginx/sbin:$PATH
+    - ROSWELL_INSTALL_DIR=$HOME/.roswell
+    - COVERAGE_EXCLUDE=t
+  matrix:
+    - LISP=sbcl-bin COVERALLS=true
+    - LISP=ccl-bin
+    - LISP=abcl
+    - LISP=ecl
+
+install:
+  # Roswell
+  - curl -L https://raw.githubusercontent.com/snmsts/roswell/master/scripts/install-for-ci.sh | sh
+  # prove
+  - ros install prove
+
+cache:
+  directories:
+    - $HOME/.roswell
+    - $HOME/nginx
+    - $HOME/.config/common-lisp
+
+before_script:
+  - ros --version
+  - ros config
+
+script:
+  - run-prove ansi-spec-test.asd

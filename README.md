@@ -95,19 +95,26 @@ After preprocessing, the files are parsed using [plump-tex][plump], and we go th
 
 ### Modes
 
-[this section will describe the parser, once I understand how it works]
+The parser is based on *modes*. A mode is triggered by a specific tag
+(e.g. `\displaytwo`, `\it`) and has a certain arity, which is the number of
+siblings it consumes. For instance, the `\displaytwo` macro is used like this:
 
-The traversal algorithm goes like this:
+```tex
+\displaytwo{Title of the table}{
+contents & of \cr
+the & table \cr
+}
+```
 
-Given a node,
+So, it's corresponding mode will be triggered by the string `"displaytwo"`, and
+will have an arity of 2, since it needs to use two bodies: the one with the
+title and the one with the table contents.
 
-1. If it has a tag name, see if there's a mode that correponds to it
-  1. If there is, activate this node
-  2. If there isn't, warn the user, since all tags should have modes
-2. Do we have an active mode?
-  1. If so, send the node to the current mode's callback
-  2. If not, and the node is a text node, write the text to the output stream.
-
+Each mode has a list of callbacks for each argument, with as many callbacks as
+the mode's arity. When a mode is triggered, the first *n* siblings of the node
+that triggered the mode (where *n* = the arity of the mode) are added to an `eq`
+hash table, which associates each child with the callback from the mode. Then,
+when traversal reaches a node that exists in the table, the callback is called.
 
 ### Output
 

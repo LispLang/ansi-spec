@@ -38,7 +38,7 @@
   "A map of node names to mode objects.")
 
 (defparameter *mode-counter* (make-hash-table :test #'equal)
-  "A map of node names to the number of node they have yet to consume.")
+  "A map of node names to the number of nodes they have yet to consume.")
 
 (defparameter *active-nodes* (list)
   "A list of node tags.")
@@ -86,11 +86,6 @@
         ;; stream
         (when (plump:text-node-p node)
           (output (plump:text node))))))
-
-;;; A breadth-first version of Plump's traverse
-
-(defgeneric traverse-tree (node)
-  (:documentation "Traverse a Plump document in breadth-first order."))
 
 ;;; Interface
 

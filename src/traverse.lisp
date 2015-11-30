@@ -97,11 +97,14 @@
           (let* ((mode (get-mode tag))
                  (arity (mode-arity mode)))
             (when (> arity 0)
-              ;; Find the next `arity` siblings, and attach callbacks to them
+              ;; Find the next `arity-1` siblings, and attach all but the first
+              ;; callbacks to them. The first callback is called immediately
+              ;; with the current node
+              (funcall (first (mode-callbacks mode)) node)
               (let ((siblings (next-n-siblings node (1- arity))))
-                (loop for i from 0 to (1- arity) do
+                (loop for i from 0 to (1- (length siblings)) do
                   (attach-callback (nth i siblings)
-                                   (nth i (mode-callbacks mode)))))))
+                                   (nth i (rest (mode-callbacks mode))))))))
           ;; Warn the user
           (warn "Tag ~S has no corresponding mode" tag))))
   ;; Try to call this node's callback, if any

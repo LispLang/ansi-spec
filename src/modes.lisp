@@ -9,9 +9,11 @@
   ;; '\cr' tags, and columns in each row are separated by ampersands (which were
   ;; converted to the '\ampersand' directive in a previus transform).
   (define-mode ((concatenate 'string "display" column-count))
-    #'(lambda (node)
-        ;; Called on the title
-        (print node))))
+    (lambda (node)
+      ;; Called on the `display{nth}` element, whose body is the title
+      (output (format nil "~%<table>~%<title>~%")))
+    (lambda (node)
+      (output (format nil "~%</title>~%<body>")))))
 
 (define-mode ("bye")
   ;; For some reason tex documents end with this crap

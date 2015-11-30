@@ -29,4 +29,16 @@ before_script:
   - ros config
 
 script:
-  - run-prove ansi-spec-test.asd
+  - ros -e '(ql:quickload (list :fiveam :cl-coveralls))'
+        -e '(setf fiveam:*debug-on-error* t
+                  fiveam:*debug-on-failure* t)'
+        -e '(setf *debugger-hook*
+                  (lambda (c h)
+                    (declare (ignore c h))
+                    (uiop:quit -1)))'
+        -e '(ql:quickload :ansi-spec-test)'
+        -e '(ansi-spec-test:run-tests)'
+
+notifications:
+  email:
+    - eudoxiahp@gmail.com

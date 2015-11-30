@@ -39,57 +39,30 @@
          :initarg :name
          :type string
          :documentation "The name that triggers the mode.")
-   (arity :reader mode-arity
-          :initarg :arity
-          :initform 0
-          :type integer
-          :documentation "The number of blocks, or bodies, the mode consumes.")
-   (callback :reader mode-callback
-             :initarg :callback
-             :type function
-             :documentation "A function that takes two arguments: a node and the
-             position in the argument list of this mode."))
-  (:documentation "A parser mode."))
+   (callbacks :reader mode-callbacks
+              :initarg :callbacks
+              :initform (list)
+              :type list
+              :documentation "A list of functions that take a node as their sole argument."))
+  (:documentation "A parser mode.")
 
 (defparameter *modes* (make-hash-table :test #'equal)
   "A map of node names to mode objects.")
-
-(defparameter *mode-counter* (make-hash-table :test #'equal)
-  "A map of node names to the number of nodes they have yet to consume.")
-
-(defparameter *active-nodes* (list)
-  "A list of node tags.")
 
 (defun get-mode (tag-name)
   "Find a node by tag-name. Return NIL if none is found."
   (gethash tag-name *modes*))
 
-(defun activate-mode (tag-name)
-  "Activate a node."
-  (format t "~%Activate: ~A" tag-name)
-  (push tag-name *active-nodes*)
-  (setf (gethash tag-name *mode-counter*)
-        (mode-arity (get-mode tag-name))))
+(defparameter *node-callbacks* (make-hash-table :test #'eq)
+  "A map of Plump nodes to functions.")
 
-(defun deactivate-current-mode ()
-  "Turn off the current active node."
-  (pop *active-nodes*))
+(defun attach-callback (node callback)
+  "Attach a callback to a Plump node."
+  (setf (gethash node *node-callbacks*) callback))
 
-(defun current-mode ()
-  "Return the current active mode object, or NIL."
-  (get-mode (first *active-nodes*)))
-
-(defun current-mode-arity ()
-  "Return the arity of the current mode."
-  (gethash (mode-name (current-mode)) *mode-counter*))
-
-(defun lower-mode-arity ()
-  "Lower the arity of the current node."
-  (decf (gethash (mode-name (current-mode)) *mode-counter*)))
-
-(defun mode-ended-p ()
-  "Has the current mode consumed all the nodes it needs?"
-  (= 0 (current-mode-arity)))
+(defun detach-callback (node)
+  "Remove a callback from a Plump node."
+  (remhash node *node-callbacks*))
 
 (defmacro define-mode ((tag-name node pos &key (arity 1)) &body body)
   "Define a mode."

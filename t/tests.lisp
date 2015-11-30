@@ -22,5 +22,9 @@
       (plump:serialize (ansi-spec.explicit-body:explicit-body node) nil))
     "<node> a b c</node>")))
 
+(test generate
+  (finishes
+    (ansi-spec:generatE)))
+
 (defun run-tests ()
   (run! 'tests))

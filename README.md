@@ -53,13 +53,23 @@ style, characters, BNF notation, and some other things.
 
 # Implementation
 
-## Parser
+## Preprocessing
 
-The first stage of the parser is preprocess, which does the following:
+The first stage of the process is preprocessing, implemented in
+`preprocess.lisp`. This includes:
 
-1. Strip comments (otherwise these would be interpreted as text by the parser).
+1. Stripping TeX comments, that is, lines that start with `%`. Otherwise these
+   would be interpreted as text by the parser.
+
 2. Include files. Some files have an `\input` directive, which is used to
-include the contents of others.
+   include the contents of other files.
+
+3. Strip some unwanted character sequences that comment stripping doesn't delete
+   for some reason.
+
+4. Turn the ampersand character into a directive.
+
+5. Simplify some complex directives, like chapter definitions.
 
 ## Traversal
 

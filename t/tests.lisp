@@ -27,12 +27,12 @@
          (a (elt (plump:children (elt (plump:children node) 0)) 0)))
     (is
      (equal (plump:tag-name a) "a"))
-    (let ((siblings (ansi-spec.traverse::next-nth-siblings a 1)))
+    (let ((siblings (ansi-spec.traverse::next-n-siblings a 1)))
       (is
        (equal (length siblings) 1))
       (is
        (equal (plump:tag-name (first siblings)) "b")))
-    (let ((siblings (ansi-spec.traverse::next-nth-siblings a 2)))
+    (let ((siblings (ansi-spec.traverse::next-n-siblings a 2)))
       (is
        (equal (length siblings) 2))
       (is

@@ -8,8 +8,8 @@
 
 ;;; Some utilities
 
-(defun next-nth-siblings (child n)
-  "Return the next nth siblings of this Plump node."
+(defun next-n-siblings (child n)
+  "Return the next n siblings of this Plump node."
   (let ((results (list))
         (current child))
     (loop for i from 1 to n do
@@ -43,8 +43,13 @@
               :initarg :callbacks
               :initform (list)
               :type list
-              :documentation "A list of functions that take a node as their sole argument."))
-  (:documentation "A parser mode.")
+              :documentation "A list of functions that take a node as their sole
+              argument."))
+  (:documentation "A parser mode."))
+
+(defun mode-arity (mode)
+  "Return the arity of the mode."
+  (length (mode-callbacks mode)))
 
 (defparameter *modes* (make-hash-table :test #'equal)
   "A map of node names to mode objects.")
@@ -64,16 +69,23 @@
   "Remove a callback from a Plump node."
   (remhash node *node-callbacks*))
 
-(defmacro define-mode ((tag-name node pos &key (arity 1)) &body body)
+(defun try-callback (node)
+  "If this mode has an associated callback, call it, and detach the callback."
+  (multiple-value-bind (callback found)
+      (gethash node *node-callbacks*)
+    (when found
+      (funcall callback node)
+      (detach-callback node))))
+
+(defmacro define-mode ((tag-name) &body callbacks)
   "Define a mode."
   (let ((tag (gensym)))
     `(let ((,tag ,tag-name))
        (setf (gethash ,tag *modes*)
              (make-instance 'mode
                             :name ,tag
-                            :arity ,arity
-                            :callback (lambda (,node ,pos)
-                                        ,@body))))))
+                            :callbacks
+                            (list ,@callbacks))))))
 
 (defun on-node (node)
   "Dispatch a node."
@@ -81,29 +93,22 @@
   (when (plump:element-p node)
     (let ((tag (plump:tag-name node)))
       (if (get-mode tag)
-          ;; Activate the mode
-          (when (> (mode-arity (get-mode tag)) 0)
-            (activate-mode tag))
+          ;; Trigger the mode
+          (let* ((mode (get-mode tag))
+                 (arity (mode-arity mode)))
+            (when (> arity 0)
+              ;; Find the next `arity` siblings, and attach callbacks to them
+              (let ((siblings (next-n-siblings node (1- arity))))
+                (loop for i from 0 to (1- arity) do
+                  (attach-callback (nth i siblings)
+                                   (nth i (mode-callbacks mode)))))))
           ;; Warn the user
           (warn "Tag ~S has no corresponding mode" tag))))
-  ;; Dispatch it to the current mode
-  (let ((mode (current-mode)))
-    (if mode
-        ;; If we have an active mode, call its callback
-        (progn
-          (funcall (mode-callback mode)
-                   node
-                   (- (mode-arity mode) (current-mode-arity)))
-          ;; Lower the mode's arity
-          (lower-mode-arity)
-          ;; If the mode has consumed all the nodes it needs, shut it down
-          (when (mode-ended-p)
-            (format t "~%Deactivate: ~A" (mode-name mode))
-            (deactivate-current-mode)))
-        ;; If we don't, and the node is a text node, write it to the output
-        ;; stream
-        (when (plump:text-node-p node)
-          (output (plump:text node))))))
+  ;; Try to call this node's callback, if any
+  (try-callback node)
+  ;; If the node is a text node, write it to the output stream
+  (when (plump:text-node-p node)
+    (output (plump:text node))))
 
 ;;; Interface
 

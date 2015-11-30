@@ -71,6 +71,26 @@ The first stage of the process is preprocessing, implemented in
 
 5. Simplify some complex directives, like chapter definitions.
 
+## Explicit body transformation
+
+TeX has a lot of constructs like this:
+
+```tex
+\b some text
+
+\item{\tag some more text}
+```
+
+Because it's easier to deal with, we want this:
+
+```tex
+\b{some text}
+
+\item{\tag{some more text}}
+```
+
+So the transformation in `explicit-body.lisp` does just that.
+
 ## Traversal
 
 After preprocessing, the files are parsed using [plump-tex][plump], and we

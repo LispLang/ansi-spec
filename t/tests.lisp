@@ -24,7 +24,7 @@
 
 (test generate
   (finishes
-    (ansi-spec:generatE)))
+    (ansi-spec:generate)))
 
 (defun run-tests ()
   (run! 'tests))

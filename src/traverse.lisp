@@ -23,12 +23,16 @@
 ;;; Modes
 
 (defclass mode ()
-  ((arity :reader arity
+  ((name :reader mode-name
+         :initarg :name
+         :type string
+         :documentation "The name that triggers the mode.")
+   (arity :reader mode-arity
           :initarg :arity
           :initform 0
           :type integer
           :documentation "The number of blocks, or bodies, the mode consumes.")
-   (callback :reader callback
+   (callback :reader mode-callback
              :initarg :callback
              :type function
              :documentation "A function that is called on each node."))
@@ -49,9 +53,11 @@
 
 (defun activate-mode (tag-name)
   "Activate a node."
-  (push tag-name *active-nodes*))
+  (push tag-name *active-nodes*)
+  (setf (gethash tag-name *mode-counter*)
+        (mode-arity (get-mode tag-name))))
 
-(defun deactivate-last-mode ()
+(defun deactivate-current-mode ()
   "Turn off the current active node."
   (pop *active-nodes*))
 
@@ -59,10 +65,19 @@
   "Return the current active mode object, or NIL."
   (get-mode (first *active-nodes*)))
 
+(defun lower-mode-arity ()
+  "Lower the arity of the current node."
+  (decf (gethash (mode-name (current-mode)) *mode-counter*)))
+
+(defun mode-ended-p ()
+  "Has the current mode consumed all the nodes it needs?"
+  (= 0 (gethash (mode-name (current-mode)) *mode-counter*)))
+
 (defmacro define-mode ((tag-name node &key (arity 1)) &body body)
   "Define a mode."
   `(setf (gethash ,tag-name *modes*)
          (make-instance 'mode
+                        :name ,tag-name
                         :arity ,arity
                         :callback (lambda (,node)
                                     ,@body))))
@@ -72,7 +87,7 @@
   ;; If it has a tag, see if there's a corresponding mode.
   (when (plump:element-p node)
     (let ((tag (plump:tag-name node)))
-      (if (get-mode node)
+      (if (get-mode tag)
           ;; Activate the mode
           (activate-mode tag)
           ;; Warn the user
@@ -81,7 +96,13 @@
   (let ((mode (current-mode)))
     (if mode
         ;; If we have an active mode, call its callback
-        (funcall (callback mode) node)
+        (progn
+          (funcall (mode-callback mode) node)
+          ;; Lower the mode's arity
+          (lower-mode-arity)
+          ;; If the mode has consumed all the nodes it needs, shut it down
+          (when (mode-ended-p)
+            (deactivate-current-mode)))
         ;; If we don't, and the node is a text node, write it to the output
         ;; stream
         (when (plump:text-node-p node)

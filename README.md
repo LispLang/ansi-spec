@@ -97,6 +97,18 @@ After preprocessing, the files are parsed using [plump-tex][plump], and we go th
 
 [this section will describe the parser, once I understand how it works]
 
+The traversal algorithm goes like this:
+
+Given a node,
+
+1. If it has a tag name, see if there's a mode that correponds to it
+  1. If there is, activate this node
+  2. If there isn't, warn the user, since all tags should have modes
+2. Do we have an active mode?
+  1. If so, send the node to the current mode's callback
+  2. If not, and the node is a text node, write the text to the output stream.
+
+
 ### Output
 
 The parts of the spec we want are written to an output file,

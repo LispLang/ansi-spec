@@ -1,22 +1,6 @@
 ;;;; setup-document.tex
 (in-package :ansi-spec.traverse)
 
-;;; Macros
-
-(defmacro define-string-mode (tag-name before-string after-string)
-  `(define-mode (,tag-name)
-     :callbacks
-     ((()
-       (output ,before-string)))
-     :after
-     (()
-      (output ,after-string))))
-
-(defmacro define-trivial-mode (tag-name xml-tag)
-  `(define-string-mode ,tag-name
-     (format nil "<~A>" ,xml-tag)
-     (format nil "</~A>" ,xml-tag)))
-
 ;;; Formatting
 
 (define-trivial-mode "b" "b")
@@ -192,3 +176,11 @@
   ;; Sweet Jesus why does this exist
   ""
   "<tex>-</tex>")
+
+;;; BNF
+
+;;; BNF shorthand
+
+;;; Document-related shorthand
+
+;;; Glossary

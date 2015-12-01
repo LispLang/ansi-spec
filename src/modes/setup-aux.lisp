@@ -31,18 +31,47 @@
 
 ;;; Lists
 ;;;
+;;; Please take a seat.
+;;;
 ;;; So, here's the deal. Unordered lists work like this:
 ;;;
 ;;; \beginlist
-;;;   \itemitem{\bull} blah blah
-;;;   \itemitem{\bull} yada yada
+;;;   \item{\bull} blah blah
+;;;   \item{\bull} yada yada
 ;;; \endlist
 ;;;
 ;;; Ordered lists work like this:
 ;;;
 ;;; \beginlist
-;;;   \itemitem{1.} blah blah
-;;;   \itemitem{2.} yada yada
+;;;   \item{1.} blah blah
+;;;   \item{2.} yada yada
 ;;; \endlist
 ;;;
 ;;; At this point the abyss begins to stare back.
+;;;
+;;; Also there's different kinds of \item tags, there's \item, \itemitem, and
+;;; \itemitemitem. The last one is never actually used. So, what's the
+;;; difference between the first two?
+;;;
+;;; Well, \item is used like this:
+;;;
+;;; \beginlist
+;;;   \item{bull}
+;;;     blah blah blah
+;;;   \item{bull}
+;;;     item two
+;;;   ...
+;;; \endlist
+;;;
+;;; While \itemitem is used like this:
+;;;
+;;; \beginlist
+;;;   \itemitem{something}
+;;;     its definition
+;;;   \itemitem{something else}
+;;;     what it's about
+;;; \endlist
+;;;
+;;; So, \item is a regular list, while \itemitem is a definition list. And how
+;;; do we actually emit code? Well, we have to look at the siblings of a
+;;; \beginlist element.

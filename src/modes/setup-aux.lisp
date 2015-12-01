@@ -87,24 +87,6 @@
 ;;; And how do we actually emit code? Well, we have to look at the siblings of a
 ;;; \beginlist element.
 
-(defun siblings-until (node test)
-  "Find all siblings until a certain element."
-  (let ((siblings (plump:children (plump:parent node)))
-        (start-pos nil)
-        (end-pos nil))
-    (loop for i from 0 to (1- (length siblings)) do
-      (let ((sibling (elt siblings i)))
-        (when (eq node sibling)
-          ;; Found the start position
-          (setf start-pos i))
-        (when (funcall test sibling)
-          ;; Found the end node
-          (setf end-pos i))))
-    (unless end-pos
-      ;; If we didn't find the end position, set it to the last element
-      (setf end-pos (1- (length siblings))))
-    (subseq siblings (1+ start-pos) end-pos)))
-
 (defparameter *list-context* (list))
 
 (defun list-type-tag (list-type)
@@ -151,12 +133,12 @@
                   ((and (= (length body) 1)
                         (plump:text-node-p (elt body 0)))
                    (setf list-type :ordered))
-                  ((plump:element-p (elt body 0))
-                   (setf list-type :definition))
                   (t
-                   (error "Unknown list type."))))
+                   (setf list-type :definition))))
               (return)))
           (output (format nil "<~A>" (list-type-tag list-type)))
+          (unless list-type
+            (format t "~%~%~%~%~%~%Unknown list type~%~%~%~%~%~%~%~%~%"))
           (push list-type *list-context*)))))))
 
 (defun on-list-node (node)

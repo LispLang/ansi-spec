@@ -19,6 +19,24 @@
         (push sibling results)))
     (remove-if #'null (reverse results))))
 
+(defun siblings-until (node test)
+  "Find all siblings until a certain element."
+  (let ((siblings (plump:children (plump:parent node)))
+        (start-pos nil)
+        (end-pos nil))
+    (loop for i from 0 to (1- (length siblings)) do
+      (let ((sibling (elt siblings i)))
+        (when (eq node sibling)
+          ;; Found the start position
+          (setf start-pos i))
+        (when (funcall test sibling)
+          ;; Found the end node
+          (setf end-pos i))))
+    (unless end-pos
+      ;; If we didn't find the end position, set it to the last element
+      (setf end-pos (1- (length siblings))))
+    (subseq siblings (1+ start-pos) end-pos)))
+
 (defmacro replace-text (text old new)
   `(ppcre:regex-replace-all ,old ,text ,new))
 

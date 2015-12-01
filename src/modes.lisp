@@ -36,6 +36,19 @@
   "⌊"
   "⌋")
 
+(define-trivial-mode "underlined" "u")
+
+(define-string-mode "metavar"
+  ;; A metavar is rendered as <<content>> in the CLHS. Because we're fancy, we
+  ;; use guillemets.
+  "«"
+  "»")
+
+(define-string-mode "metaparam"
+  ;; This is a metavar with a param inside
+  "«<param>"
+  "»</param>")
+
 ;;; Tables
 
 (loop for column-count in (list "two" "three" "four" "five") do

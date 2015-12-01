@@ -97,6 +97,24 @@
 
 ;;; Languages, OSs, etc.
 
+;FIXME: remove these \rm's
+(define-term "clisp" "\rm Common Lisp")
+(define-term "Lisp" "\rm Lisp")
+(define-term "maclisp" "\rm MacLisp")
+(define-term "apl" "\rm APL")
+(define-term "lmlisp" "\rm ZetaLisp")
+(define-term "scheme" "\rm Scheme")
+(define-term "interlisp" "\rm InterLisp")
+(define-term "slisp" "\rm Spice Lisp")
+(define-term "newlisp" "\rm Nil")
+(define-term "sOnelisp" "\rm S-1 Common Lisp")
+(define-term "fortran" "\rm Fortran")
+(define-term "stdlisp" "\rm Standard Lisp")
+(define-term "psl" "\rm Portable Standard Lisp")
+(define-term "Unix" "\rm Unix")
+(define-term "algol" "\tt Algol")
+(define-term "TopsTwenty" "\tt TOPS-20")
+
 ;;; Important names
 
 ;;; General phrases

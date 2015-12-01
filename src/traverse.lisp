@@ -16,7 +16,7 @@
       (let ((sibling (plump:next-sibling current)))
         (setf current sibling)
         (push sibling results)))
-    (reverse results)))
+    (remove-if #'null (reverse results))))
 
 ;;; Output stream
 
@@ -70,6 +70,8 @@
 
 (defun attach-callback (store node callback)
   "Attach a callback to a Plump node."
+  (unless callback
+    (break))
   (setf (gethash node store) callback))
 
 (defun detach-callback (store node)
@@ -123,25 +125,27 @@
               ;; callbacks to them. The first callback is called immediately
               ;; with the current node
               (funcall (first (mode-callbacks mode)) node)
-              (let ((siblings (next-n-siblings node (1- arity))))
+              (let ((siblings (next-n-siblings node arity)))
                 (loop for i from 0 to (1- (length siblings)) do
-                  (attach-callback *node-callbacks*
-                                   (nth i siblings)
-                                   (nth i (rest (mode-callbacks mode)))))
+                  (let ((callback (nth i (rest (mode-callbacks mode)))))
+                    (when callback
+                      (attach-callback *node-callbacks*
+                                       (nth i siblings)
+                                       callback))))
                 ;; Attach the last sibling to the after callback
-                (when (mode-after-callback mode)
+                (when (and siblings (mode-after-callback mode))
                   (attach-callback *after-callbacks*
                                    (first (last siblings))
                                    (mode-after-callback mode))))))
           ;; Warn the user
-          (warn "Tag ~S has no corresponding mode" tag))))
+          nil #|(warn "Tag ~S has no corresponding mode" tag)|#)))
+  ;; Do we have an after callback?
+  (try-callback *after-callbacks* node)
   ;; Try to call this node's callback, if any
   (try-callback *node-callbacks* node)
   ;; If the node is a text node, write it to the output stream
   (when (plump:text-node-p node)
-    (output (plump:text node)))
-  ;; Do we have an after callback?
-  (try-callback *after-callbacks* node))
+    (output (plump:text node))))
 
 ;;; Interface
 

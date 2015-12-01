@@ -15,7 +15,11 @@
                  (:file "preprocess")
                  (:file "explicit-body")
                  (:file "traverse")
-                 (:file "modes")
+                 (:module "modes"
+                  :serial t
+                  :components
+                  ((:file "setup-document")
+                   (:file "others")))
                  (:file "main"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."
   :long-description

@@ -91,6 +91,26 @@
 
 (define-trivial-mode "term" "term")
 
+;; Special symbols
+
+;; Subscripts
+
+(macrolet ((define-sub-mode (tag-name sub)
+             `(define-string-mode ,tag-name
+                ""
+                ,(format nil "<sub>~A</sub>" sub))))
+  (define-sub-mode "ssso" "1")
+  (define-sub-mode "ssst" "2")
+  (define-sub-mode "ssse" "8")
+  (define-sub-mode "ssss" "16")
+
+  (define-sub-mode "sssi" "i")
+  (define-sub-mode "sssk" "k")
+  (define-sub-mode "sssn" "n")
+  (define-sub-mode "sssx" "x")
+  (define-sub-mode "sssy" "y")
+  (define-sub-mode "sssz" "z"))
+
 ;;; Tables
 
 (loop for column-count in (list "two" "three" "four" "five") do

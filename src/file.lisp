@@ -13,7 +13,10 @@
   "The directory where the TeX sources of the spec are stored.")
 
 (defparameter +chapter-files+
-  (sort (directory (merge-pathnames #p"chap-*.tex" +tex-directory+))
+  (sort (remove-if #'(lambda (path)
+                       (string= "chap-0-edit-history"
+                                (pathname-name path)))
+                   (directory (merge-pathnames #p"chap-*.tex" +tex-directory+)))
         #'<
         :key #'(lambda (pathname)
                  (let ((string (remove-if #'(lambda (char)

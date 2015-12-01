@@ -173,3 +173,22 @@
   ;; Seriously? A macro for fucking backquotes?
   ""
   "`")
+
+;; FIXME: others
+
+(define-string-mode "underscore"
+  ""
+  "_")
+
+(define-string-mode "lbracket"
+  ""
+  "<tex>[</tex>")
+
+(define-string-mode "rbracket"
+  ""
+  "<tex>]</tex>")
+
+(define-string-mode "minussign"
+  ;; Sweet Jesus why does this exist
+  ""
+  "<tex>-</tex>")

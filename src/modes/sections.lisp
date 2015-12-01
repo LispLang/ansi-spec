@@ -6,6 +6,15 @@
 ;;; \DefineSection{reference title}
 ;;; ...
 ;;; \end[subsub...]Section
+;;;
+;;; Chapters are like this:
+;;;
+;;; \beginchapter[index=... id=... ref=...]{}
+;;; \chaptertitle{...}
+;;; ...
+;;; \endchapter{}
+
+;;; Sections
 
 (defparameter +start-section-tags+
   (list "beginSection"
@@ -42,3 +51,17 @@
     :callbacks
     ((()
       (output "</section>")))))
+
+;;; Chapters
+
+(define-mode ("beginchapter")
+    :callbacks
+  (((node)
+    (output (format nil "<chapter index=~S id=~S ref=~S>"
+                    (plump:attribute node "index")
+                    (plump:attribute node "id")
+                    (plump:attribute node "ref"))))))
+
+(define-trivial-mode "chaptertitle" "title")
+
+(define-alias "endchapter" "</chapter>")

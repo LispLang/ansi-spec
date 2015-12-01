@@ -51,4 +51,6 @@
               "vskip"
               "Vskip"
               "noindent"
-              "hfil"))
+              "hfil"
+              "hrule"
+              "bull"))

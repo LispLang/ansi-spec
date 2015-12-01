@@ -87,8 +87,6 @@
 ;;; And how do we actually emit code? Well, we have to look at the siblings of a
 ;;; \beginlist element.
 
-(defparameter *list-context* (list))
-
 (defun siblings-until (node test)
   "Find all siblings until a certain element."
   (let ((siblings (plump:children (plump:parent node)))
@@ -106,6 +104,14 @@
       ;; If we didn't find the end position, set it to the last element
       (setf end-pos (1- (length siblings))))
     (subseq siblings (1+ start-pos) end-pos)))
+
+(defparameter *list-context* (list))
+
+(defun list-type-tag (list-type)
+  (ccase list-type
+    (:ordered "ol")
+    (:unordered "ul")
+    (:definition "dl")))
 
 (define-mode ("beginlist")
   :callbacks
@@ -150,4 +156,25 @@
                   (t
                    (error "Unknown list type."))))
               (return)))
-          (print list-type)))))))
+          (output (format nil "<~A>" (list-type-tag list-type)))
+          (push list-type *list-context*)))))))
+
+(defun on-list-node (node)
+  )
+
+(define-mode ("item")
+  :callbacks
+  (((node)
+    (on-list-node node))))
+
+(define-mode ("itemitem")
+  :callbacks
+  (((node)
+    (on-list-node node))))
+
+(define-mode ("endlist")
+  :callbacks
+  ((()
+    (output
+     (format nil "</~A>"
+             (list-type-tag (pop *list-context*)))))))

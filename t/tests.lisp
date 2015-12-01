@@ -40,6 +40,12 @@
       (is
        (equal (plump:tag-name (second siblings)) "c")))))
 
+(test traversal
+  (is
+   (equal
+    (ansi-spec.traverse:traverse-string "``text''")
+    "“text”")))
+
 (test generate
   (finishes
     (ansi-spec:generate)))

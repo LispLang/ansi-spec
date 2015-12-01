@@ -64,21 +64,24 @@
 (defparameter *node-callbacks* (make-hash-table :test #'eq)
   "A map of Plump nodes to functions.")
 
-(defun attach-callback (node callback)
+(defparameter *after-callbacks* (make-hash-table :test #'eq)
+  "A map of Plump nodes to functions.")
+
+(defun attach-callback (store node callback)
   "Attach a callback to a Plump node."
-  (setf (gethash node *node-callbacks*) callback))
+  (setf (gethash node store) callback))
 
-(defun detach-callback (node)
+(defun detach-callback (store node)
   "Remove a callback from a Plump node."
-  (remhash node *node-callbacks*))
+  (remhash node store))
 
-(defun try-callback (node)
+(defun try-callback (store node)
   "If this mode has an associated callback, call it, and detach the callback."
   (multiple-value-bind (callback found)
-      (gethash node *node-callbacks*)
+      (gethash node store)
     (when found
       (funcall callback node)
-      (detach-callback node))))
+      (detach-callback store node))))
 
 (defmacro define-mode ((tag-name) &key callbacks)
   "Define a mode."
@@ -106,12 +109,13 @@
               (funcall (first (mode-callbacks mode)) node)
               (let ((siblings (next-n-siblings node (1- arity))))
                 (loop for i from 0 to (1- (length siblings)) do
-                  (attach-callback (nth i siblings)
+                  (attach-callback *node-callbacks*
+                                   (nth i siblings)
                                    (nth i (rest (mode-callbacks mode))))))))
           ;; Warn the user
           (warn "Tag ~S has no corresponding mode" tag))))
   ;; Try to call this node's callback, if any
-  (try-callback node)
+  (try-callback *node-callbacks* node)
   ;; If the node is a text node, write it to the output stream
   (when (plump:text-node-p node)
     (output (plump:text node))))

@@ -119,4 +119,8 @@
 
 ;;; General phrases
 
+(define-term "etc." "<i>etc.</i>")
+(define-term "ie" "<i>i.e.</i>, ")
+(define-term "eg" "<i>e.g.</i>, ")
+
 ;;; Domain-specific phrases

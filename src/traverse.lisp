@@ -185,12 +185,15 @@
 
 ;;; Interface
 
+(defun traverse-node (node)
+  (ansi-spec.file:with-output-file (*stream*)
+    (tree-traverse node
+                   #'(lambda (node)
+                       (on-node node)))))
+
 (defun traverse (pathname)
   "Traverse the document in pathname."
   (format t "~&Traversing '~A.tex'" (pathname-name pathname))
-  (ansi-spec.file:with-output-file (*stream*)
-    (tree-traverse (plump-tex:parse
-                    (ansi-spec.preprocess:preprocess
-                     (uiop:read-file-string pathname)))
-                   #'(lambda (node)
-                       (on-node node)))))
+  (traverse-node (plump-tex:parse
+                  (ansi-spec.preprocess:preprocess
+                   (uiop:read-file-string pathname)))))

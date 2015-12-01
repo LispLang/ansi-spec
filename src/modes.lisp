@@ -8,29 +8,32 @@
   ;; converted to the '\ampersand' directive in a previus transform).
   (define-mode ((concatenate 'string "display" column-count))
     :callbacks
-    ((lambda (node)
-       ;; Called on the `display{nth}` element, whose body is the title
-       (output (format nil "~%<table>~%<title>~%")))
-     (lambda (node)
-       (output (format nil "~%</title>~%<body>~%<row>~%<cell>"))))))
+    ((()
+      ;; Called on the `display{nth}` element, whose body is the title
+      (output (format nil "~%<table>~%<title>~%")))
+     (()
+      (output (format nil "~%</title>~%<body>~%<row>~%<cell>"))))))
 
 (define-mode ("cr")
   ;; Row separator
   :callbacks
-  ((lambda (node)
-     (output (format nil "</cell>~%</row>~%<row>~%<cell>~%")))))
+  ((()
+    (output (format nil "</cell>~%</row>~%<row>~%<cell>~%")))))
 
 (define-mode ("ampersand")
   ;; Column separator
   :callbacks
-  ((lambda (node)
-     (output (format nil "~%</cell>~%<cell>~%")))))
+  ((()
+    (output (format nil "~%</cell>~%<cell>~%")))))
 
 (define-mode ("param")
   ;; A parameter to an operator
   :callbacks
-  ((lambda (node)
-     (output "<param>"))))
+  ((()
+    (output "<param>")))
+  :after
+  (()
+   (output "</param>")))
 
 ;;; Meaningless no-ops
 

@@ -86,14 +86,28 @@
 
 (defmacro define-mode ((tag-name) &key callbacks after)
   "Define a mode."
-  (let ((tag (gensym)))
-    `(let ((,tag ,tag-name))
-       (setf (gethash ,tag *modes*)
-             (make-instance 'mode
-                            :name ,tag
-                            :callbacks
-                            (list ,@callbacks)
-                            :after-callback ,after)))))
+  (flet ((process-function (form)
+           (destructuring-bind (arglist &rest body)
+               form
+             (if arglist
+                 ;; Uses the node argument
+                 `(lambda (,(first arglist))
+                    ,@body)
+                 ;; Ignores the node
+                 (let ((node (gensym)))
+                   `(lambda (,node)
+                      (declare (ignore ,node))
+                      ,@body))))))
+    (let ((tag (gensym)))
+      `(let ((,tag ,tag-name))
+         (setf (gethash ,tag *modes*)
+               (make-instance 'mode
+                              :name ,tag
+                              :callbacks
+                              (list ,@(mapcar #'process-function callbacks))
+                              :after-callback ,(if after
+                                                   (process-function after)
+                                                   nil)))))))
 
 (defun on-node (node)
   "Dispatch a node."
@@ -116,9 +130,9 @@
                                    (nth i (rest (mode-callbacks mode)))))
                 ;; Attach the last sibling to the after callback
                 (when (mode-after-callback mode)
-                  (attach-callback *after-callback*
+                  (attach-callback *after-callbacks*
                                    (first (last siblings))
-                                   (mode-after-callback))))))
+                                   (mode-after-callback mode))))))
           ;; Warn the user
           (warn "Tag ~S has no corresponding mode" tag))))
   ;; Try to call this node's callback, if any

@@ -72,6 +72,15 @@
 
 ;; Standards
 
+(define-term "IEEEFloatingPoint"
+  "<i>IEEE Standard for Binary Floating-Point Arithmetic</i>")
+
+(define-term "IEEEScheme"
+  "<i>IEEE Standard for the Scheme Programming Language</i>")
+
+;; FIXME: what does \rm do?
+(define-term "ISOChars" "ISO 6937/2")
+
 ;; Papers
 
 ;;; Languages, OSs, etc.

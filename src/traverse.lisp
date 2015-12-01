@@ -125,7 +125,7 @@
               ;; callbacks to them. The first callback is called immediately
               ;; with the current node
               (funcall (first (mode-callbacks mode)) node)
-              (let ((siblings (next-n-siblings node arity)))
+              (let ((siblings (next-n-siblings node (1- arity))))
                 (loop for i from 0 to (1- (length siblings)) do
                   (let ((callback (nth i (rest (mode-callbacks mode)))))
                     (when callback
@@ -133,19 +133,39 @@
                                        (nth i siblings)
                                        callback))))
                 ;; Attach the last sibling to the after callback
-                (when (and siblings (mode-after-callback mode))
-                  (attach-callback *after-callbacks*
-                                   (first (last siblings))
-                                   (mode-after-callback mode))))))
+                (when (mode-after-callback mode)
+                  (if siblings
+                      (attach-callback *after-callbacks*
+                                       (first (last siblings))
+                                       (mode-after-callback mode))
+                      (attach-callback *after-callbacks*
+                                       node
+                                       (mode-after-callback mode)))))))
           ;; Warn the user
-          nil #|(warn "Tag ~S has no corresponding mode" tag)|#)))
-  ;; Do we have an after callback?
-  (try-callback *after-callbacks* node)
-  ;; Try to call this node's callback, if any
+          (warn "Tag ~S has no corresponding mode" tag))))
+  ;; Try to call this node's callback
   (try-callback *node-callbacks* node)
   ;; If the node is a text node, write it to the output stream
   (when (plump:text-node-p node)
     (output (plump:text node))))
+
+;;; Traversal
+
+(defgeneric tree-traverse (node function)
+  (:documentation "Depth-first tree traversal. Plump has a function to do this,
+  but it doesn't quite meet my needs. Sigh.")
+
+  (:method ((node plump:node) function)
+    (funcall function node)
+    node)
+
+  (:method ((node plump:nesting-node) function)
+    (call-next-method)
+    (loop for child across (plump:children node) do
+      (tree-traverse child function))
+    ;; Do we have an after callback?
+    (try-callback *after-callbacks* node)
+    node))
 
 ;;; Interface
 
@@ -153,8 +173,8 @@
   "Traverse the document in pathname."
   (format t "~&Traversing '~A.tex'" (pathname-name pathname))
   (ansi-spec.file:with-output-file (*stream*)
-    (plump:traverse (plump-tex:parse
-                     (ansi-spec.preprocess:preprocess
-                      (uiop:read-file-string pathname)))
-                    #'(lambda (node)
-                        (on-node node)))))
+    (tree-traverse (plump-tex:parse
+                    (ansi-spec.preprocess:preprocess
+                     (uiop:read-file-string pathname)))
+                   #'(lambda (node)
+                       (on-node node)))))

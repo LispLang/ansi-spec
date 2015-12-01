@@ -167,6 +167,11 @@
   (define-char-mode "RuboutChar" "Rubout")
   (define-char-mode "WhitespaceChar" "Whitespace"))
 
+(define-string-mode "bq"
+  ;; Seriously? A macro for fucking backquotes?
+  ""
+  "`")
+
 ;;; Tables
 
 (loop for column-count in (list "two" "three" "four" "five") do

@@ -21,6 +21,7 @@
                   ((:file "macros")
                    (:file "setup-document")
                    (:file "setup-figures")
+                   (:file "setup-title")
                    (:file "others")))
                  (:file "main"))))
   :description "The ANSI Common Lisp draft specification, parsed from TeX sources."

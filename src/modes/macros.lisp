@@ -14,7 +14,7 @@
      (format nil "<~A>" ,xml-tag)
      (format nil "</~A>" ,xml-tag)))
 
-(defmacro define-alias (tag alias)
+(defmacro define-alias (tag-name alias)
   `(define-string-more ,tag-name
      ""
      ,alias))

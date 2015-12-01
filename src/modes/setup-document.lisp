@@ -1,4 +1,7 @@
+;;;; setup-document.tex
 (in-package :ansi-spec.traverse)
+
+;;; Macros
 
 (defmacro define-string-mode (tag-name before-string after-string)
   `(define-mode (,tag-name)
@@ -14,7 +17,7 @@
      (format nil "<~A>" ,xml-tag)
      (format nil "</~A>" ,xml-tag)))
 
-;;; setup-document.tex
+;;; Formatting
 
 (define-trivial-mode "b" "b")
 (define-trivial-mode "i" "i")
@@ -52,7 +55,7 @@
 
 ;; FIXME: dummy
 
-;; References
+;;; References
 
 (define-trivial-mode "clref" "ref")
 
@@ -90,7 +93,7 @@
 
 (define-trivial-mode "term" "term")
 
-;; Special symbols
+;;; Special symbols
 
 ;; Subscripts
 

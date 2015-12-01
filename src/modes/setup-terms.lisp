@@ -83,6 +83,18 @@
 
 ;; Papers
 
+(define-term "PrincipalValues" "Principal Values and Branch Cuts in Complex APL")
+
+(define-term "RevisedCubedScheme" "Revised$^3$ Report on the Algorithmic Language Scheme")
+
+(define-term "StandardLispReport" "Standard LISP Report")
+
+(define-term "NILReport" "NIL---A Perspective")
+
+(define-term "SOneCLPaper" "S-1 Common Lisp Implementation")
+
+(define-term "CLOSPaper" "Common Lisp Object System Specification")
+
 ;;; Languages, OSs, etc.
 
 ;;; Important names

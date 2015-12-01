@@ -24,6 +24,7 @@
                    (:file "setup-figures")
                    (:file "setup-title")
                    (:file "setup-version")
+                   (:file "setup-aux")
                    (:file "setup-terms")
                    (:file "others")))
                  (:file "main"))))

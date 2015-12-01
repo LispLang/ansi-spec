@@ -132,8 +132,22 @@
           (loop for elem across nodes do
             (when (and (plump:element-p elem)
                        (or (string= (plump:tag-name elem) "item")
-                           (string= (plump:tag-name elem) "item")))
+                           (string= (plump:tag-name elem) "itemitem")))
               ;; Determine the type of list
               (let ((body (plump:children elem)))
-                (print body)
-              (return))))))))))
+                (cond
+                  ((or (uiop:emptyp body)
+                       (and (= (length body) 1)
+                            (let ((elem (elt body 0)))
+                              (and (plump:element-p elem)
+                                   (string= (plump:tag-name elem) "bull")))))
+                   (setf list-type :unordered))
+                  ((and (= (length body) 1)
+                        (plump:text-node-p (elt body 0)))
+                   (setf list-type :ordered))
+                  ((plump:element-p (elt body 0))
+                   (setf list-type :definition))
+                  (t
+                   (error "Unknown list type."))))
+              (return)))
+          (print list-type)))))))

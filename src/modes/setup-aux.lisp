@@ -70,14 +70,21 @@
 ;;; While \itemitem is used like this:
 ;;;
 ;;; \beginlist
-;;;   \itemitem{something}
+;;;   \item{something}
 ;;;     its definition
 ;;;   \itemitem{something else}
 ;;;     what it's about
 ;;; \endlist
 ;;;
-;;; So, \item is a regular list, while \itemitem is a definition list. And how
-;;; do we actually emit code? Well, we have to look at the siblings of a
+;;; So, \item is a regular list, ordered or unordered, while \itemitem is a
+;;; definition list, but also \item can also be a definition list. The key
+;;; discriminant is in the content of the \item or \itemitem tag: If it's a
+;;; string, it's an enumerated list, if it's a node that isn't \bull or
+;;; something, it's a definition list, it's an ordered list of the node is \bull
+;;; or something, and if the item tag is empty, then, fuck it, it's unordered,
+;;; why not.
+;;;
+;;; And how do we actually emit code? Well, we have to look at the siblings of a
 ;;; \beginlist element.
 
 (defparameter *list-context* (list))
@@ -118,7 +125,15 @@
                             t
                             nil))))
                    nil)))
-        (let ((nodes (siblings-until node #'list-end-p)))
+        (let ((nodes (siblings-until node #'list-end-p))
+              (list-type nil))
           ;; `nodes` is every node between the beginlist and endlist, excluding
           ;; the endings
-          ))))))
+          (loop for elem across nodes do
+            (when (and (plump:element-p elem)
+                       (or (string= (plump:tag-name elem) "item")
+                           (string= (plump:tag-name elem) "item")))
+              ;; Determine the type of list
+              (let ((body (plump:children elem)))
+                (print body)
+              (return))))))))))

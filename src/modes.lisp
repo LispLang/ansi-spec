@@ -146,6 +146,27 @@
   ;; fancy CSS.
   )
 
+;; Characters
+
+(define-string-mode "CRLF"
+    ;; A newline
+  ""
+  "↩")
+
+(macrolet ((define-char-mode (tag-name name)
+             `(define-string-mode ,tag-name
+                (format nil "<~A" ,name)
+                ">")))
+  (define-char-mode "NewlineChar" "Newline")
+  (define-char-mode "SpaceChar" "Space")
+  (define-char-mode "TabChar" "Tab")
+  (define-char-mode "ReturnChar" "Return")
+  (define-char-mode "LinefeedChar" "Linefeed")
+  (define-char-mode "BackspaceChar" "Backspace")
+  (define-char-mode "PageChar" "Page")
+  (define-char-mode "RuboutChar" "Rubout")
+  (define-char-mode "WhitespaceChar" "Whitespace"))
+
 ;;; Tables
 
 (loop for column-count in (list "two" "three" "four" "five") do

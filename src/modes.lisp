@@ -31,6 +31,11 @@
   "<"
   ">")
 
+(define-string-mode "flr"
+  ;; Surrounded by floor characters
+  "⌊"
+  "⌋")
+
 ;;; Tables
 
 (loop for column-count in (list "two" "three" "four" "five") do

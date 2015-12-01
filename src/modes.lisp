@@ -1,6 +1,25 @@
 ;;;; Define parser modes
 (in-package :ansi-spec.traverse)
 
+(defmacro define-trivial-mode (tag-name xml-tag)
+  `(define-mode (,tag-name)
+     :callbacks
+     ((()
+       (output (format nil "<~A>" ,xml-tag))))
+     :after
+     (()
+      (output (format nil "</~A>" ,xml-tag)))))
+
+;;; Formatting
+
+(define-trivial-mode "b" "b")
+(define-trivial-mode "i" "i")
+(define-trivial-mode "j" "i") ;; Spec says this is 'italic + kerning'. What.
+(define-trivial-mode "f" "c") ;; f as in fixed-width, as in monospace, as in
+                              ;; code.
+
+;;; Tables
+
 (loop for column-count in (list "two" "three" "four" "five") do
   ;; Each 'display{two|three|four|five}' macro takes two arguments: A title and
   ;; the contents of the table. In the table contents, rows are separated by

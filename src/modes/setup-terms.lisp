@@ -11,7 +11,7 @@
      (setf (gethash ,tag-name *terms*)
            ,source)
      (define-alias ,tag-name
-         ,(format nil "<macro id=~S/>" ,tag-name))))
+       ,(format nil "<macro id=~S/>" tag-name))))
 
 ;;; References
 

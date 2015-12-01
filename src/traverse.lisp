@@ -192,7 +192,7 @@
 
 (defun traverse-string (string)
   (with-output-to-string (*stream*)
-    (tree-traverse (plump:parse string) #'on-node)))
+    (tree-traverse (plump-tex:parse string) #'on-node)))
 
 (defun traverse (pathname)
   "Traverse the document in pathname."

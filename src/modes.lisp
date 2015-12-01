@@ -7,26 +7,30 @@
   ;; '\cr' tags, and columns in each row are separated by ampersands (which were
   ;; converted to the '\ampersand' directive in a previus transform).
   (define-mode ((concatenate 'string "display" column-count))
-    (lambda (node)
-      ;; Called on the `display{nth}` element, whose body is the title
-      (output (format nil "~%<table>~%<title>~%")))
-    (lambda (node)
-      (output (format nil "~%</title>~%<body>~%<row>~%<cell>")))))
+    :callbacks
+    ((lambda (node)
+       ;; Called on the `display{nth}` element, whose body is the title
+       (output (format nil "~%<table>~%<title>~%")))
+     (lambda (node)
+       (output (format nil "~%</title>~%<body>~%<row>~%<cell>"))))))
 
 (define-mode ("cr")
   ;; Row separator
-  (lambda (node)
-    (output (format nil "</cell>~%</row>~%<row>~%<cell>~%"))))
+  :callbacks
+  ((lambda (node)
+     (output (format nil "</cell>~%</row>~%<row>~%<cell>~%")))))
 
 (define-mode ("ampersand")
   ;; Column separator
-  (lambda (node)
-    (output (format nil "~%</cell>~%<cell>~%"))))
+  :callbacks
+  ((lambda (node)
+     (output (format nil "~%</cell>~%<cell>~%")))))
 
 (define-mode ("param")
   ;; A parameter to an operator
-  (lambda (node)
-    (output "<param>")))
+  :callbacks
+  ((lambda (node)
+     (output "<param>"))))
 
 ;;; Meaningless no-ops
 

@@ -41,10 +41,13 @@
          :documentation "The name that triggers the mode.")
    (callbacks :reader mode-callbacks
               :initarg :callbacks
-              :initform (list)
               :type list
               :documentation "A list of functions that take a node as their sole
-              argument."))
+              argument.")
+   (final-callback :reader mode-final-callback
+                   :type function
+                   :documentation "A function that takes a node as its argument
+                   and is called after all callbacks are processed."))
   (:documentation "A parser mode."))
 
 (defun mode-arity (mode)
@@ -77,7 +80,7 @@
       (funcall callback node)
       (detach-callback node))))
 
-(defmacro define-mode ((tag-name) &body callbacks)
+(defmacro define-mode ((tag-name) &key callbacks)
   "Define a mode."
   (let ((tag (gensym)))
     `(let ((,tag ,tag-name))

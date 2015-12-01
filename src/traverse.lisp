@@ -44,8 +44,9 @@
               :type list
               :documentation "A list of functions that take a node as their sole
               argument.")
-   (final-callback :reader mode-final-callback
-                   :type function
+   (after-callback :reader mode-after-callback
+                   :initarg :after-callback
+                   :type (or function null)
                    :documentation "A function that takes a node as its argument
                    and is called after all callbacks are processed."))
   (:documentation "A parser mode."))
@@ -83,7 +84,7 @@
       (funcall callback node)
       (detach-callback store node))))
 
-(defmacro define-mode ((tag-name) &key callbacks)
+(defmacro define-mode ((tag-name) &key callbacks after)
   "Define a mode."
   (let ((tag (gensym)))
     `(let ((,tag ,tag-name))
@@ -91,7 +92,8 @@
              (make-instance 'mode
                             :name ,tag
                             :callbacks
-                            (list ,@callbacks))))))
+                            (list ,@callbacks)
+                            :after-callback ,after)))))
 
 (defun on-node (node)
   "Dispatch a node."
@@ -111,14 +113,21 @@
                 (loop for i from 0 to (1- (length siblings)) do
                   (attach-callback *node-callbacks*
                                    (nth i siblings)
-                                   (nth i (rest (mode-callbacks mode))))))))
+                                   (nth i (rest (mode-callbacks mode)))))
+                ;; Attach the last sibling to the after callback
+                (when (mode-after-callback mode)
+                  (attach-callback *after-callback*
+                                   (first (last siblings))
+                                   (mode-after-callback))))))
           ;; Warn the user
           (warn "Tag ~S has no corresponding mode" tag))))
   ;; Try to call this node's callback, if any
   (try-callback *node-callbacks* node)
   ;; If the node is a text node, write it to the output stream
   (when (plump:text-node-p node)
-    (output (plump:text node))))
+    (output (plump:text node)))
+  ;; Do we have an after callback?
+  (try-callback *after-callbacks* node))
 
 ;;; Interface
 

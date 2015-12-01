@@ -13,7 +13,15 @@
   "The directory where the TeX sources of the spec are stored.")
 
 (defparameter +chapter-files+
-  (directory (merge-pathnames #p"chap-*.tex" +tex-directory+))
+  (sort (directory (merge-pathnames #p"chap-*.tex" +tex-directory+))
+        #'<
+        :key #'(lambda (pathname)
+                 (let ((string (remove-if #'(lambda (char)
+                                              (not (digit-char-p char)))
+                                          (pathname-name pathname))))
+                   (if (string= string "")
+                       100000000000
+                       (parse-integer string)))))
   "List of pathnames of the chapter files.")
 
 (defparameter +output-directory+

@@ -19,6 +19,7 @@
                   :serial t
                   :components
                   ((:file "macros")
+                   (:file "sections")
                    (:file "setup-document")
                    (:file "setup-figures")
                    (:file "setup-title")

@@ -36,6 +36,8 @@
   (()
    (output "</param>")))
 
+(define-trivial-mode "sub" "sub")
+
 ;;; Meaningless no-ops
 
 (mapcar #'(lambda (op)
@@ -43,4 +45,9 @@
         (list "div"
               "bye"
               "vfill"
-              "eject"))
+              "eject"
+              "hbox"
+              "noalign"
+              "vskip"
+              "VSkip"
+              "noindent"))

@@ -3,6 +3,10 @@
 
 (define-alias "sc" "scaled")
 
+;;; Formatting
+
+(define-trivial-mode "tt" "c")
+
 ;;; Issues
 ;;;
 ;;; References to issues look like this:

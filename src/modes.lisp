@@ -133,6 +133,19 @@
   ""
   "≡")
 
+;; Contexts
+
+(define-string-mode "OUT"
+  ;; Output: CLHS renders this as ">>", the TeX source says this should be a
+  ;; `\triangleright`. Thankfully there's a Unicode character just for this.
+  ""
+  "▷")
+
+(define-trivial-mode "IN" "input"
+  ;; User input. The CLHS doesn't render this at all. We can render it with
+  ;; fancy CSS.
+  )
+
 ;;; Tables
 
 (loop for column-count in (list "two" "three" "four" "five") do

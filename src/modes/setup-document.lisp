@@ -183,4 +183,8 @@
 
 ;;; Document-related shorthand
 
+(define-alias "code" "<code>")
+
+(define-alias "endcode" "</code>")
+
 ;;; Glossary

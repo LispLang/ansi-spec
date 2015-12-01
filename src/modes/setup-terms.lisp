@@ -124,3 +124,7 @@
 (define-term "eg" "<i>e.g.</i>, ")
 
 ;;; Domain-specific phrases
+
+(define-term "defmethod" "defmethod")
+(define-term "CLOS" "object system")
+(define-term "OS" "object system")

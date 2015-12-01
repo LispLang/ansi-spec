@@ -204,3 +204,19 @@
     (output "</code>"))))
 
 ;;; Glossary
+
+(define-alias "harda" "ā")
+
+(define-alias "nasala" "â")
+
+(define-alias "softa" "ä")
+
+(define-alias "harde" "ē")
+
+(define-alias "hardi" "ī")
+
+(define-alias "hardo" "ō")
+
+(define-alias "hardp" "p̄")
+
+(define-alias "nasalo" "ô")

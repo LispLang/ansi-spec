@@ -22,16 +22,18 @@
 (define-mode ("issue")
   :callbacks
   (((node)
-    (let ((text (elt (plump:children node) 0)))
-      (output (format nil "<issueref id=~S>" (plump:text text)))
-      (plump:remove-child text)))))
+    (when (> (length (plump:children node)) 0)
+      (let ((text (elt (plump:children node) 0)))
+        (output (format nil "<issueref id=~S>" (plump:text text)))
+        (plump:remove-child text))))))
 
 (define-mode ("endissue")
   :callbacks
   (((node)
-    (let ((text (elt (plump:children node) 0)))
-      (plump:remove-child text))
-    (output "</issueref>"))))
+    (when (> (length (plump:children node)) 0)
+      (let ((text (elt (plump:children node) 0)))
+        (plump:remove-child text))
+      (output "</issueref>")))))
 
 ;;; Lists
 ;;;

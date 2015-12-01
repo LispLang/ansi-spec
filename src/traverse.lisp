@@ -19,6 +19,9 @@
         (push sibling results)))
     (remove-if #'null (reverse results))))
 
+(defmacro replace-text (text old new)
+  `(ppcre:regex-replace-all ,old ,text ,new))
+
 ;;; Output stream
 
 (defvar *stream*)
@@ -27,14 +30,22 @@
   "Whether or not to apply text transforms. Disabled when emitting code.")
 
 (defun transform-text (string)
-  "Apply some transformations to text when outputting this."
+  "Apply some transformations to the TeX text nodes."
   (flet ((left-quote (text)
-           "Replace `` with a proper quote character."
-           (ppcre:regex-replace-all "``" text "“"))
+           (replace-text text "``" "“"))
          (right-quote (text)
-           "Replace '' with a proper quote character."
-           (ppcre:regex-replace-all "''" text "”")))
-    (right-quote (left-quote string))))
+           (replace-text text "''" "”"))
+         (tilde-to-space (text)
+           (replace-text text "~" " "))
+         (triple-hyphen-to-mdash (text)
+           (replace-text text "---" "—"))
+         (double-hyphen-to-ndash (text)
+           (replace-text text "--" "–")))
+    (double-hyphen-to-ndash ;; Maintain the relative order of these first two
+     (triple-hyphen-to-mdash
+      (tilde-to-space
+       (right-quote
+        (left-quote string)))))))
 
 (defun output (string)
   "Write a string to the output stream."

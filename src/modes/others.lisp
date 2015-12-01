@@ -49,5 +49,5 @@
               "hbox"
               "noalign"
               "vskip"
-              "VSkip"
+              "Vskip"
               "noindent"))

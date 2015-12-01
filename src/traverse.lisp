@@ -1,7 +1,8 @@
 (in-package :cl-user)
 (defpackage ansi-spec.traverse
   (:use :cl)
-  (:export :traverse)
+  (:export :traverse
+           :traverse-string)
   (:documentation "Traverse a TeX document, ignoring some nodes, extracting info
   from others into an output XML file."))
 (in-package :ansi-spec.traverse)
@@ -187,9 +188,11 @@
 
 (defun traverse-node (node)
   (ansi-spec.file:with-output-file (*stream*)
-    (tree-traverse node
-                   #'(lambda (node)
-                       (on-node node)))))
+    (tree-traverse node #'on-node)))
+
+(defun traverse-string (string)
+  (with-output-to-string (*stream*)
+    (tree-traverse (plump:parse string) #'on-node)))
 
 (defun traverse (pathname)
   "Traverse the document in pathname."

@@ -50,4 +50,5 @@
               "noalign"
               "vskip"
               "Vskip"
-              "noindent"))
+              "noindent"
+              "hfil"))

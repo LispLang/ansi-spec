@@ -6,8 +6,16 @@
 (define-trivial-mode "b" "b")
 (define-trivial-mode "i" "i")
 (define-trivial-mode "j" "i") ;; Spec says this is 'italic + kerning'. What.
-(define-trivial-mode "f" "c") ;; f as in fixed-width, as in monospace, as in
-                              ;; code.
+(define-mode ("f")
+  ;; f as in fixed-width, as in monospace, as in code
+  :callbacks
+  ((()
+    (setf *transform-text* nil)
+    (output "<c>")))
+  :after
+  (()
+   (setf *transform-text* t)
+   (output "</c>")))
 
 ;; FIXME: ff
 

@@ -71,7 +71,25 @@
   (define-clref-mode "kwdref" :before ":#")
   (define-clref-mode "packref"
     :before "<uppercase>"
-    :after "</uppercase>"))
+    :after "</uppercase>")
+  (define-clref-mode "loopref")
+
+  (define-clref-mode "keyref"
+    :before "&")
+
+  (define-clref-mode "typeref")
+  (define-clref-mode "misc")
+  (define-clref-mode "miscref")
+  (define-clref-mode "declref")
+  (define-clref-mode "funref")
+  (define-clref-mode "macref")
+  (define-clref-mode "specref")
+  (define-clref-mode "varref")
+
+  ;; FIXME: add a bunch
+  )
+
+(define-trivial-mode "term" "term")
 
 ;;; Tables
 

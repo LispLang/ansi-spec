@@ -54,6 +54,13 @@
 
 ;;; Meaningless no-ops
 
+(define-mode ("pageno")
+  ;; Adsorb another
+  :callbacks
+  (((node)
+    (let ((next (plump:next-sibling node)))
+      (plump:remove-child next)))))
+
 (mapcar #'(lambda (op)
             (define-mode (op)))
         (list "div"

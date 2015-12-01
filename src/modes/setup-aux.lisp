@@ -79,3 +79,46 @@
 ;;; So, \item is a regular list, while \itemitem is a definition list. And how
 ;;; do we actually emit code? Well, we have to look at the siblings of a
 ;;; \beginlist element.
+
+(defparameter *list-context* (list))
+
+(defun siblings-until (node test)
+  "Find all siblings until a certain element."
+  (let ((siblings (plump:children (plump:parent node)))
+        (start-pos nil)
+        (end-pos nil))
+    (loop for i from 0 to (1- (length siblings)) do
+      (let ((sibling (elt siblings i)))
+        (when (eq node sibling)
+          ;; Found the start position
+          (setf start-pos i))
+        (when (funcall test sibling)
+          ;; Found the end node
+          (setf end-pos i))))
+    (unless end-pos
+      ;; If we didn't find the end position, set it to the last element
+      (setf end-pos (1- (length siblings))))
+    (subseq siblings (1+ start-pos) end-pos)))
+
+(define-mode ("beginlist")
+  :callbacks
+  (((node)
+    ;; Find all nodes until the `\endlist' node
+    (let ((counter 0))
+      (flet ((list-end-p (node)
+               (if (plump:element-p node)
+                   (let ((name (plump:tag-name node)))
+                     (cond
+                       ((string= name "beginlist")
+                        (incf counter)
+                        nil)
+                       ((string= name "endlist")
+                        (decf counter)
+                        (if (= counter 0)
+                            t
+                            nil))))
+                   nil)))
+        (let ((nodes (siblings-until node #'list-end-p)))
+          ;; `nodes` is every node between the beginlist and endlist, excluding
+          ;; the endings
+          ))))))

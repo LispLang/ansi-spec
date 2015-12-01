@@ -112,7 +112,7 @@
 (define-string-mode "NV"
   ;; Does not evaluate to
   ""
-  "not ⇏")
+  "⇏")
 
 (define-string-mode "EQ"
   ;; Equivalence

@@ -38,6 +38,20 @@
 
 (define-trivial-mode "sub" "sub")
 
+;;; Macro definition
+
+(define-mode ("def")
+  ;; Just destroy everything
+  :callbacks
+  (((node)
+    (let ((nodes (siblings-until
+                  node
+                  #'(lambda (node)
+                      (and (plump:element-p node)
+                           (string= (plump:tag-name node) "div"))))))
+      (loop for def-node across nodes do
+        (plump:remove-child def-node))))))
+
 ;;; Meaningless no-ops
 
 (mapcar #'(lambda (op)
@@ -53,4 +67,8 @@
               "noindent"
               "hfil"
               "hrule"
-              "bull"))
+              "bull"
+              "halign"
+              "hsize"
+              "iskip"
+              "leftskip"))

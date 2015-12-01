@@ -111,6 +111,28 @@
   (define-sub-mode "sssy" "y")
   (define-sub-mode "sssz" "z"))
 
+;; Relations
+
+(define-string-mode "EV"
+  ;; Evaluates to
+  ""
+  "⇒")
+
+(define-string-mode "OV"
+    ;; Alternative evaluation "or evaluates to..."
+  ""
+  "or ⇒")
+
+(define-string-mode "NV"
+  ;; Does not evaluate to
+  ""
+  "not ⇏")
+
+(define-string-mode "EQ"
+  ;; Equivalence
+  ""
+  "≡")
+
 ;;; Tables
 
 (loop for column-count in (list "two" "three" "four" "five") do

@@ -52,7 +52,15 @@
   (is
    (equal
     (ansi-spec.traverse:traverse-string "\\code{}``a b c''\\endcode{}")
-    "<code>``a b c''</code>")))
+    "<code>``a b c''</code>"))
+  (is
+   (equal
+    (ansi-spec.traverse:traverse-string "\\f{a b c}")
+    "<c>a b c</c>"))
+  (is
+   (equal
+    (ansi-spec.traverse:traverse-string "\\f{``a b c''}")
+    "<c>``a b c''</c>")))
 
 (test generate
   (finishes

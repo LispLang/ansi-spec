@@ -1,22 +1,35 @@
 ;;;; Define parser modes
 (in-package :ansi-spec.traverse)
 
-(defmacro define-trivial-mode (tag-name xml-tag)
+(defmacro define-string-mode (tag-name before-string after-string)
   `(define-mode (,tag-name)
      :callbacks
      ((()
-       (output (format nil "<~A>" ,xml-tag))))
+       (output ,before-string)))
      :after
      (()
-      (output (format nil "</~A>" ,xml-tag)))))
+      (output ,after-string))))
 
-;;; Formatting
+(defmacro define-trivial-mode (tag-name xml-tag)
+  `(define-string-mode ,tag-name
+     (format nil "<~A>" ,xml-tag)
+     (format nil "</~A>" ,xml-tag)))
+
+;;; setup-document.tex
 
 (define-trivial-mode "b" "b")
 (define-trivial-mode "i" "i")
 (define-trivial-mode "j" "i") ;; Spec says this is 'italic + kerning'. What.
 (define-trivial-mode "f" "c") ;; f as in fixed-width, as in monospace, as in
                               ;; code.
+
+(define-trivial-mode "ital" "i") ;; why
+(define-trivial-mode "bold" "b") ;; a very idiosyncratic contributor?
+
+(define-string-mode "ang"
+  ;; Surrounded by angular brackets
+  "<"
+  ">")
 
 ;;; Tables
 

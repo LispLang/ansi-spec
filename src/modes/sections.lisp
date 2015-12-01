@@ -26,14 +26,14 @@
     :callbacks
     ((()
       ;;; Callback for the `\begin...` tag
-      (output "<section>~%<title>"))
+      (output (format nil "<section>~%<title>")))
      (()
       ;;; Callback called on the `\DefineSection` tag
       (output "</title>")))))
 
 (define-mode ("DefineSection")
   ;; Do nothing
-             )
+  )
 
 (loop for tag in +end-section-tags+ do
   (define-mode (tag)

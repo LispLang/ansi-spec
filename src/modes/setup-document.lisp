@@ -183,8 +183,16 @@
 
 ;;; Document-related shorthand
 
-(define-alias "code" "<code>")
+(define-mode ("code")
+  :callbacks
+  ((()
+    (setf *transform-text* nil)
+    (output "<code>"))))
 
-(define-alias "endcode" "</code>")
+(define-mode ("endcode")
+  :callbacks
+  ((()
+    (setf *transform-text* t)
+    (output "</code>"))))
 
 ;;; Glossary

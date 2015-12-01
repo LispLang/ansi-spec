@@ -53,7 +53,7 @@
   (ppcre:regex-replace-all "([^\\\\])&" text "\\1\\ampersand "))
 
 (defparameter +chapter-format+
-"beginchapter{} \\beginchapterindex{~A} \\beginchaptertitle{~A} \\beginchapterid{~A} \\beginchapterreftitle{~A}")
+  "beginchapter[index=~A id=~A ref=~A]{} \\chaptertitle{~A}")
 
 (defun simpler-chapter-definition (text)
   "The \\beginchapter directive has four bodies. We move some of those to attributes."
@@ -61,11 +61,13 @@
                            text
                            (lambda (match &rest regs)
                              (declare (ignore match))
-                             (format nil +chapter-format+
-                                     (first regs)
-                                     (second regs)
-                                     (third regs)
-                                     (fourth regs)))
+                             (destructuring-bind (index title id ref)
+                                 regs
+                               (format nil +chapter-format+
+                                       index
+                                       id
+                                       ref
+                                       title)))
                            :simple-calls t))
 
 (defun preprocess (text)

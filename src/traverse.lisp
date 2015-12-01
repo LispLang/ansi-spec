@@ -22,9 +22,25 @@
 
 (defvar *stream*)
 
+(defvar *transform-text* t
+  "Whether or not to apply text transforms. Disabled when emitting code.")
+
+(defun transform-text (string)
+  "Apply some transformations to text when outputting this."
+  (flet ((left-quote (text)
+           "Replace `` with a proper quote character."
+           (ppcre:regex-replace-all "``" text "“"))
+         (right-quote (text)
+           "Replace '' with a proper quote character."
+           (ppcre:regex-replace-all "''" text "”")))
+    (right-quote (left-quote string))))
+
 (defun output (string)
   "Write a string to the output stream."
-  (write-string string *stream*))
+  (write-string (if *transform-text*
+                    (transform-text string)
+                    string)
+                *stream*))
 
 (defun strip-text (text)
   "Remove some text nonsense from some text."

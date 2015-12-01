@@ -52,12 +52,6 @@
   "Make the ampersand character into a directive."
   (ppcre:regex-replace-all "([^\\\\])&" text "\\1\\ampersand "))
 
-(defun pretty-quotes (text)
-  "Replace `` and '' with proper quotes."
-  (ppcre:regex-replace-all "''"
-                           (ppcre:regex-replace-all "``" text "“")
-                           "”"))
-
 (defparameter +chapter-format+
   "beginchapter[index=~A id=~A ref=~A]{} \\chaptertitle{~A}")
 
@@ -79,7 +73,6 @@
 (defun preprocess (text)
   "Pre-process a TeX file."
   (simpler-chapter-definition
-   (pretty-quotes
-    (ampersand-directive
-     (strip-unwanted
-      (include-inputs text))))))
+   (ampersand-directive
+    (strip-unwanted
+     (include-inputs text)))))

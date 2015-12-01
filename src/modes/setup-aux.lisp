@@ -28,3 +28,21 @@
     (let ((text (elt (plump:children node) 0)))
       (plump:remove-child text))
     (output "</issueref>"))))
+
+;;; Lists
+;;;
+;;; So, here's the deal. Unordered lists work like this:
+;;;
+;;; \beginlist
+;;;   \itemitem{\bull} blah blah
+;;;   \itemitem{\bull} yada yada
+;;; \endlist
+;;;
+;;; Ordered lists work like this:
+;;;
+;;; \beginlist
+;;;   \itemitem{1.} blah blah
+;;;   \itemitem{2.} yada yada
+;;; \endlist
+;;;
+;;; At this point the abyss begins to stare back.

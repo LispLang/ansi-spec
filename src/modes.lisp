@@ -23,6 +23,8 @@
 (define-trivial-mode "f" "c") ;; f as in fixed-width, as in monospace, as in
                               ;; code.
 
+;; FIXME: ff
+
 (define-trivial-mode "ital" "i") ;; why
 (define-trivial-mode "bold" "b") ;; a very idiosyncratic contributor?
 
@@ -48,6 +50,28 @@
   ;; This is a metavar with a param inside
   "«<param>"
   "»</param>")
+
+;; FIXME: dummy
+
+;; References
+
+(define-trivial-mode "clref" "ref")
+
+(macrolet ((define-clref-mode (tag-name &key before after)
+             `(define-string-mode ,tag-name
+                ,(concatenate 'string
+                              "<c><ref>"
+                              (or before ""))
+                ,(concatenate 'string
+                              "</ref></c>"
+                              (or after "")))))
+  (define-clref-mode "ttref")
+
+  (define-clref-mode "kwd" :before ":")
+  (define-clref-mode "kwdref" :before ":#")
+  (define-clref-mode "packref"
+    :before "<uppercase>"
+    :after "</uppercase>"))
 
 ;;; Tables
 

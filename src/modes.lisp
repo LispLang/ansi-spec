@@ -1,8 +1,6 @@
 ;;;; Define parser modes
 (in-package :ansi-spec.traverse)
 
-(define-mode ("div"))
-
 (loop for column-count in (list "two" "three" "four" "five") do
   ;; Each 'display{two|three|four|five}' macro takes two arguments: A title and
   ;; the contents of the table. In the table contents, rows are separated by
@@ -25,6 +23,16 @@
   (lambda (node)
     (output (format nil "~%</cell>~%<cell>~%"))))
 
-(define-mode ("bye")
-  ;; For some reason tex documents end with this crap
-  )
+(define-mode ("param")
+  ;; A parameter to an operator
+  (lambda (node)
+    (output "<param>")))
+
+;;; Meaningless no-ops
+
+(mapcar #'(lambda (op)
+            (define-mode (op)))
+        (list "div"
+              "bye"
+              "vfill"
+              "eject"))

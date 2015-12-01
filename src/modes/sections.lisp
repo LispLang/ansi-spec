@@ -10,6 +10,7 @@
 (defparameter +start-section-tags+
   (list "beginSection"
         "beginsubsection"
+        "beginsubSection"
         "beginsubsubsection"
         "beginsubsubsubsection"
         "beginsubsubsubsubsection"))
@@ -17,6 +18,7 @@
 (defparameter +end-section-tags+
   (list "endSection"
         "endsubsection"
+        "endsubSection"
         "endsubsubsection"
         "endsubsubsubsection"
         "endsubsubsubsubsection"))

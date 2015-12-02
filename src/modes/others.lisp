@@ -36,6 +36,10 @@
   (()
    (output "</param>")))
 
+(define-alias "goodbreak" "
+
+")
+
 (define-trivial-mode "sub" "sub")
 
 ;;; Macro definition

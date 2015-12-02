@@ -162,3 +162,31 @@
     (output
      (format nil "</~A>"
              (list-type-tag (pop *list-context*)))))))
+
+;;; Index commands
+
+(loop for elem in (list "ref" "keyref" "code" "kwd" "text" "term" "example" "packref") do
+  (let ((fullname (concatenate 'string "idx" elem)))
+    (define-trivial-mode fullname fullname)))
+
+#|
+(let ((map `((:name "ref" :type "R")
+             (:name "keyref" :type "R" :pre "&")
+             (:name "code" :type "C")
+             (:name "kwd" :type "K")
+             (:name "text" :type "T")
+             (:name "term" :type "G")
+             (:name "example" :type "E")
+             (:name "packref" :type "P"))))
+  (loop for macro in map do
+    (define-mode ((concatenate 'string "idx" (getf macro :name)))
+      :callbacks
+      (((node)
+        ;; The first node contains a letter
+        (let ((letter (plump:text (elt (plump:children node) 0))))
+          (output (format nil "<index type=~S " letter))))
+   ((node)
+    ;; This node contains the entry
+    (let ((entry (plump:text (elt (plump:children node) 0))))
+      (output (format nil " entry~S/>" entry))))))
+|#

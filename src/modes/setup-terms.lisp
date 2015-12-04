@@ -8,7 +8,7 @@
 
 (defmacro define-macro (tag-name source)
   `(progn
-     (setf (gethash ,tag-name *macro*)
+     (setf (gethash ,tag-name *macros*)
            ,source)
      (define-alias ,tag-name
        ,(format nil "<macro id=~S/>" tag-name))))

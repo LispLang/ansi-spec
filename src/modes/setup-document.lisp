@@ -300,6 +300,10 @@
 (define-macro "meaning"
   "$\sub{#1}$")
 
+(define-macro "schwa" "FIXME")
+(define-macro "Stress" "FIXME")
+(define-macro "pronounced" "FIXME")
+
 ;;; From concept-glossary.tex
 
 (define-macro "gentry" "<entry>")

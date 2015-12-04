@@ -280,3 +280,19 @@
 
 (define-macro "meaning"
   "$\sub{#1}$")
+
+;;; From concept-glossary.tex
+
+(define-macro "Noun" "\\i{n.}")
+(define-macro "Verb" "\\i{v.}")
+(define-macro "TransitiveVerb" "\\i{v.t.}")
+(define-macro "Adjective" "\\i{adj.}")
+(define-macro "Adverb" "\\i{adv.}")
+
+(define-macro "ANSI" "\\i{ANSI}")
+(define-macro "IEEE" "\\i{IEEE}")
+(define-macro "ISO" "\\i{ISO}")
+(define-macro "Traditional" "\\i{Trad.}")
+(define-macro "Mathematics" "\\i{Math.}")
+(define-macro "Idiomatic" "\\i{Idiom.}")
+(define-macro "Computers" "\\i{Comp.}")

@@ -18,65 +18,65 @@
 ;; Books
 
 (define-macro "CLtL"
-  "<i>Common Lisp: The Language</i>")
+  "\it{Common Lisp: The Language</i>")
 
 (define-macro "CLtLTwo"
-  "<i>Common Lisp: The Language, Second Edition</i>")
+  "\it{Common Lisp: The Language, Second Edition</i>")
 
 (define-macro "RandomHouseDictionary"
-  "<i>The Random House Dictionary of
- the English Language, Second Edition, Unabridged</i>")
+  "\it{The Random House Dictionary of
+ the English Language, Second Edition, Unabridged}")
 
 (define-macro "WebstersDictionary"
-  "<i>Webster's Third New International Dictionary
- the English Language, Unabridged</i>")
+  "\it{Webster's Third New International Dictionary
+ the English Language, Unabridged}")
 
 (define-macro "CondSysPaper"
-  "<i>Exceptional Situations in Lisp</i>")
+  "\it{Exceptional Situations in Lisp}")
 
 (define-macro "GabrielBenchmarks"
-  "<i>Performance and Evaluation of Lisp Programs</i>")
+  "\it{Performance and Evaluation of Lisp Programs}")
 
 (define-macro "KnuthVolThree"
-  "<i>The Art of Computer Programming, Volume 3</i>")
+  "\it{The Art of Computer Programming, Volume 3}")
 
 (define-macro "MetaObjectProtocol"
-  "<i>The Art of the Metaobject Protocol</i>")
+  "\it{The Art of the Metaobject Protocol}")
 
 (define-macro "AnatomyOfLisp"
-  "<i>The Anatomy of Lisp</i>")
+  "\it{The Anatomy of Lisp}")
 
 (define-macro "FlavorsPaper"
-  "<i>Flavors: A Non-Hierarchical Approach to Object-Oriented Programming</i>")
+  "\it{Flavors: A Non-Hierarchical Approach to Object-Oriented Programming}")
 
 (define-macro "LispOnePointFive"
-  "<i>Lisp 1.5 Programmer's Manual</i>")
+  "\it{Lisp 1.5 Programmer's Manual}")
 
 (define-macro "Moonual"
-  "<i>Maclisp Reference Manual, Revision 0</i>")
+  "\it{Maclisp Reference Manual, Revision 0}")
 
 (define-macro "Pitmanual"
-  "<i>The Revised Maclisp Manual</i>")
+  "\it{The Revised Maclisp Manual}")
 
 (define-macro "InterlispManual"
-  "<i>Interlisp Reference Manual</i>")
+  "\it{Interlisp Reference Manual}")
 
 (define-macro "Chinual"
-  "<i>Lisp Machine Manual</i>")
+  "\it{Lisp Machine Manual}")
 
 (define-macro "SmalltalkBook"
-  "<i>Smalltalk-80: The Language and its Implementation</i>")
+  "\it{Smalltalk-80: The Language and its Implementation}")
 
 (define-macro "XPPaper"
-  "<i>XP: A Common Lisp Pretty Printing System</i>")
+  "\it{XP: A Common Lisp Pretty Printing System}")
 
 ;; Standards
 
 (define-macro "IEEEFloatingPoint"
-  "<i>IEEE Standard for Binary Floating-Point Arithmetic</i>")
+  "\it{IEEE Standard for Binary Floating-Point Arithmetic}")
 
 (define-macro "IEEEScheme"
-  "<i>IEEE Standard for the Scheme Programming Language</i>")
+  "\it{IEEE Standard for the Scheme Programming Language}")
 
 ;; FIXME: what does \rm do?
 (define-macro "ISOChars" "ISO 6937/2")
@@ -119,9 +119,9 @@
 
 ;;; General phrases
 
-(define-macro "etc." "<i>etc.</i>")
-(define-macro "ie" "<i>i.e.</i>, ")
-(define-macro "eg" "<i>e.g.</i>, ")
+(define-macro "etc." "\it{etc.}")
+(define-macro "ie" "\it{i.e.}, ")
+(define-macro "eg" "\it{e.g.}, ")
 
 ;;; Domain-specific phrases
 

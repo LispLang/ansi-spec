@@ -301,6 +301,7 @@
   "$\sub{#1}$")
 
 (define-macro "schwa" "FIXME")
+(define-macro "stress" "FIXME")
 (define-macro "Stress" "FIXME")
 (define-macro "pronounced" "FIXME")
 

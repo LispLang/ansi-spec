@@ -39,10 +39,6 @@
       (let ((next (plump:next-sibling node)))
         (plump:remove-child next))))))
 
-(define-alias "lbr" "[")
-
-(define-alias "hat" "^")
-
 (define-alias "quad" "") ;; fuck it
 
 (mapcar #'(lambda (op)
@@ -55,6 +51,7 @@
               "noalign"
               "vskip"
               "Vskip"
+              "span"
               "noindent"
               "hfil"
               "hrule"

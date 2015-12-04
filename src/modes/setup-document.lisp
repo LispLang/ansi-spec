@@ -167,6 +167,14 @@
   ""
   "`")
 
+(define-alias "lbr" "{")
+(define-alias "rbr" "}")
+(define-alias "hat" "^")
+(define-alias "dot" ".")
+(define-alias "vert" "|")
+(define-alias "centerdot" "·")
+;(define-alias "surd" "√") not used
+
 ;; FIXME: others
 
 (define-string-mode "underscore"

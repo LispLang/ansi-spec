@@ -144,7 +144,8 @@
           (push list-type *list-context*)))))))
 
 (defun on-list-node (node)
-  )
+  (declare (ignore node))
+  nil)
 
 (define-mode ("item")
   :callbacks

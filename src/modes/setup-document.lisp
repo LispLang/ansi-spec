@@ -78,6 +78,7 @@
   (define-clref-mode "funref")
   (define-clref-mode "macref")
   (define-clref-mode "specref")
+  (define-clref-mode "conref")
   (define-clref-mode "varref")
 
   ;; FIXME: add a bunch

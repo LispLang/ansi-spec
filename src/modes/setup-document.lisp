@@ -269,6 +269,8 @@
     (setf *transform-text* t)
     (output "</code>"))))
 
+(define-trivial-mode "editornote" "editornote")
+
 ;;; Glossary
 
 (define-alias "harda" "ā")

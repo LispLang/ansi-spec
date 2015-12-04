@@ -160,9 +160,13 @@
 (define-mode ("endlist")
   :callbacks
   ((()
-    (output
-     (format nil "</~A>"
-             (list-type-tag (pop *list-context*)))))))
+    (let ((type (pop *list-context*)))
+      (when type
+        ;; There's an error in the spec with an \endlist that doesn't correspond
+        ;; to any \beginlist
+        (output
+         (format nil "</~A>"
+                 (list-type-tag type))))))))
 
 ;;; Index commands
 

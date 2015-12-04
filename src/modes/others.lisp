@@ -38,6 +38,8 @@
     (let ((next (plump:next-sibling node)))
       (plump:remove-child next)))))
 
+(define-alias "lbr" "[")
+
 (mapcar #'(lambda (op)
             (define-mode (op)))
         (list "div"

@@ -199,9 +199,9 @@
                    (concatenate 'string
                                 (string
                                  (if capitalize
-                                     ,(char-upcase (elt tag 0))
-                                     ,(elt tag 0)))
-                                ,(subseq tag 1))))))
+                                     ,(char-upcase (elt expansion 0))
+                                     ,(elt expansion 0)))
+                                ,(subseq expansion 1))))))
 
   (define-doc-shorthand "seefun"
     "see the \term{function} \funref{#1}")
@@ -236,7 +236,7 @@
   (define-doc-shorthand "seeterm"
     "see \term{#1}")
 
-  (define-doc-shorthand "seetermalso"
+  (define-doc-shorthand "seetermAlso"
     "see also \term{#1}"))
 
 (define-macro "eval"
@@ -282,6 +282,20 @@
   "$\sub{#1}$")
 
 ;;; From concept-glossary.tex
+
+(define-macro "gentry" "<entry>")
+
+(define-macro "gexample"
+  "``#1''")
+
+(define-macro "indextab"
+  "FIXME")
+
+(define-macro "firstindextab"
+  "FIXME")
+
+(define-macro "indextabnote"
+  "FIXME")
 
 (define-macro "Noun" "\\i{n.}")
 (define-macro "Verb" "\\i{v.}")

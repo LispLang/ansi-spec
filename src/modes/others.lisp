@@ -31,14 +31,19 @@
 
 ;;; Meaningless no-ops
 
-(define-mode ("pageno")
-  ;; Adsorb another
-  :callbacks
-  (((node)
-    (let ((next (plump:next-sibling node)))
-      (plump:remove-child next)))))
+(loop for tag in (list "pageno" "dimen0") do
+  (define-mode (tag)
+    ;; Adsorb another
+    :callbacks
+    (((node)
+      (let ((next (plump:next-sibling node)))
+        (plump:remove-child next))))))
 
 (define-alias "lbr" "[")
+
+(define-alias "hat" "^")
+
+(define-alias "quad" "") ;; fuck it
 
 (mapcar #'(lambda (op)
             (define-mode (op)))

@@ -3,6 +3,8 @@
 
 (define-alias "ldots" "\\ldots")
 
+(define-alias "le" "\\le")
+
 (define-alias "leq" "\\leq")
 
 (define-alias "geq" "\\geq")

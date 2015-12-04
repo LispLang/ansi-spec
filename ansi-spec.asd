@@ -27,6 +27,7 @@
                    (:file "setup-terms")
                    (:file "setup-document")
                    (:file "setup-sections")
+                   (:file "setup-tables")
                    (:file "math")
                    (:file "others")))
                  (:file "main"))))

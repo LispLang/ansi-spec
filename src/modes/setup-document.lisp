@@ -239,6 +239,15 @@
   (define-doc-shorthand "seetermalso"
     "see also \term{#1}"))
 
+(define-macro "eval"
+  "evaluated")
+
+(define-macro "noeval"
+  "not evaluated")
+
+(define-macro "evalspecial"
+  "evaluated as described below")
+
 (define-mode ("code")
   :callbacks
   ((()
@@ -268,3 +277,6 @@
 (define-alias "hardp" "p̄")
 
 (define-alias "nasalo" "ô")
+
+(define-macro "meaning"
+  "$\sub{#1}$")

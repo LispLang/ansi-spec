@@ -250,6 +250,12 @@
 (define-macro "evalspecial"
   "evaluated as described below")
 
+(define-macro "Thenextfigure"
+  "Figure \\chapno -- \\capno")
+
+(define-macro "thenextfigure"
+  "Figure \\chapno -- \\capno")
+
 (define-mode ("code")
   :callbacks
   ((()

@@ -37,7 +37,8 @@
     :callbacks
     (((node)
       (let ((next (plump:next-sibling node)))
-        (plump:remove-child next))))))
+        (when next
+          (plump:remove-child next)))))))
 
 (define-alias "quad" "") ;; fuck it
 

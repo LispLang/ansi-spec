@@ -9,8 +9,6 @@ env:
   matrix:
     - LISP=sbcl-bin
     - LISP=ccl-bin
-    - LISP=abcl
-    - LISP=ecl
 
 install:
   # Roswell

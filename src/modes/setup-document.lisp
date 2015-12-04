@@ -191,53 +191,55 @@
 
 ;;; Document-related shorthand
 
-(macrolet ((define-doc-shorthand (tag expansion)
-             `(loop for capitalize in (list t nil) do
-               (define-macro (if capitalize
-                                 ,(string-capitalize tag)
-                                 ,tag)
-                   (concatenate 'string
-                                (string
-                                 (if capitalize
-                                     ,(char-upcase (elt expansion 0))
-                                     ,(elt expansion 0)))
-                                ,(subseq expansion 1))))))
+(defmacro define-doc-shorthand (tag expansion)
+  `(loop for capitalize in (list t nil) do
+    (define-macro (if capitalize
+                      ,(concatenate 'string
+                                    (string (char-upcase (elt tag 0)))
+                                    (subseq tag 1))
+                      ,tag)
+        (concatenate 'string
+                     (string
+                      (if capitalize
+                          ,(char-upcase (elt expansion 0))
+                          ,(elt expansion 0)))
+                     ,(subseq expansion 1)))))
 
-  (define-doc-shorthand "seefun"
-    "see the \term{function} \funref{#1}")
+(define-doc-shorthand "seefun"
+  "see the \term{function} \funref{#1}")
 
-  (define-doc-shorthand "seefuns"
-    "see the \term{functions} \funref{#1}")
+(define-doc-shorthand "seefuns"
+  "see the \term{functions} \funref{#1}")
 
-  (define-doc-shorthand "seespec"
-    "see the \term{special operator} \specref{#1}")
+(define-doc-shorthand "seespec"
+  "see the \term{special operator} \specref{#1}")
 
-  (define-doc-shorthand "seemac"
-    "see the \term{macro} \macref{#1}")
+(define-doc-shorthand "seemac"
+  "see the \term{macro} \macref{#1}")
 
-  (define-doc-shorthand "seevar"
-    "see the \term{variable} \varref{#1}")
+(define-doc-shorthand "seevar"
+  "see the \term{variable} \varref{#1}")
 
-  (define-doc-shorthand "seetype"
-    "see the \term{type} \typeref{#1}")
+(define-doc-shorthand "seetype"
+  "see the \term{type} \typeref{#1}")
 
-  (define-doc-shorthand "seemisc"
-    "see \miscref{#1}")
+(define-doc-shorthand "seemisc"
+  "see \miscref{#1}")
 
-  (define-doc-shorthand "seesection"
-    "see \secref{#1}")
+(define-doc-shorthand "seesection"
+  "see \secref{#1}")
 
-  (define-doc-shorthand "seechapter"
-    "see \chapref{#1}")
+(define-doc-shorthand "seechapter"
+  "see \chapref{#1}")
 
-  (define-doc-shorthand "seefigure"
-    "see \figref#1")
+(define-doc-shorthand "seefigure"
+  "see \figref#1")
 
-  (define-doc-shorthand "seeterm"
-    "see \term{#1}")
+(define-doc-shorthand "seeterm"
+  "see \term{#1}")
 
-  (define-doc-shorthand "seetermAlso"
-    "see also \term{#1}"))
+(define-doc-shorthand "seetermAlso"
+  "see also \term{#1}")
 
 (define-macro "eval"
   "evaluated")

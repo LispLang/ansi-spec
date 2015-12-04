@@ -293,28 +293,36 @@
   "Should be prepared to signal an error \\oftype{type-error} if any \\param{#1} is #2.")
 (define-macro "checktype"
   "signals an error \\oftype{type-error} if \\param{#1} is not #2.")
-(define-macro "checkanytype" "signals an error \\oftype{type-error} if any \\param{#1} is not #2.}")
-(define-macro "shouldchecktype" "should signal an error \\oftype{type-error}
-			   if \\param{#1} is not #2.}")
-(define-macro "shouldcheckanytype" "should signal an error \\oftype{type-error}
-			      if any \\param{#1} is not #2.}")
+(define-macro "checkanytype"
+  "signals an error \\oftype{type-error} if any \\param{#1} is not #2.")
+(define-macro "shouldchecktype"
+  "should signal an error \\oftype{type-error} if \\param{#1} is not #2.")
+(define-macro "shouldcheckanytype"
+  "should signal an error \\oftype{type-error} if any \\param{#1} is not #2.}")
 (define-macro "lazychecktype"
   "should be prepared to signal an error \\oftype{type-error} if \\param{#1} is not #2.}")
 (define-macro "lazycheckanytype"
   "should be prepared to signal an error \\oftype{type-error} if any \\param{#1} is not #2.}")
-(define-macro "Default" "The default is #1.")
-(define-macro "DefaultFor" "The default for #1 is #2.")
-(define-macro "DefaultIn" "The default in #1 is #2.")
-(define-macro "Defaults" "The defaults for #1 are #2, respectively.")
-(define-macro "DefaultEach" "The defaults for each of #1 is #2.")
-(define-macro "DefaultsIn" "The defaults for #2 in #1 are #3, respectively.")
-(define-macro "HairyDefault" "Complicated defaulting behavior; see below")
-(define-macro "MentionMetaObjects" "\\issue{SLOT-VALUE-METACLASSES:LESS-MINIMAL}
+(define-macro "Default"
+  "The default is #1.")
+(define-macro "DefaultFor"
+  "The default for #1 is #2.")
+(define-macro "DefaultIn"
+  "The default in #1 is #2.")
+(define-macro "Defaults"
+  "The defaults for #1 are #2, respectively.")
+(define-macro "DefaultEach"
+  "The defaults for each of #1 is #2.")
+(define-macro "DefaultsIn"
+  "The defaults for #2 in #1 are #3, respectively.")
+(define-macro "HairyDefault"
+  "Complicated defaulting behavior; see below")
+(define-macro "MentionMetaObjects"
+  "\\issue{SLOT-VALUE-METACLASSES:LESS-MINIMAL}
   Although no \\term{implementation} is required to do so,
   implementors are strongly encouraged to implement \\thefunction{#1} using
   the \\term{function} \\f{#2} described in the \\term{Metaobject Protocol}.
-\\endissue{SLOT-VALUE-METACLASSES:LESS-MINIMAL}}
-")
+\\endissue{SLOT-VALUE-METACLASSES:LESS-MINIMAL}}")
 (define-macro "symbolnamedesignator"
   "string designator")
 (define-macro "symbolnamedesignators"

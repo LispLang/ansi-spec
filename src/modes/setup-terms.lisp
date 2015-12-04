@@ -117,6 +117,42 @@
 
 ;;; Important names
 
+(define-macro "t"
+  "\misc{t}")
+
+(define-macro "nil"
+  "\misc{nil}")
+
+(define-macro "empty"
+  "\c{()}")
+
+(define-macro "allowotherkeys"
+  "\keyword{&allow-other-keys}")
+
+(define-macro "aux"
+  "\keyword{&aux}")
+
+(define-macro "body"
+  "\keyword{&body}")
+
+(define-macro "environment"
+  "\keyword{&environment}")
+
+(define-macro "key"
+  "\keyword{&key}")
+
+(define-macro "opt"
+  "\keyword{&optional}")
+
+(define-macro "optional"
+  "\keyword{&optional}")
+
+(define-macro "rest"
+  "\keyword{&rest}")
+
+(define-macro "whole"
+  "\keyword{&whole}")
+
 ;;; General phrases
 
 (define-macro "etc." "\it{etc.}")
@@ -128,3 +164,24 @@
 (define-macro "defmethod" "defmethod")
 (define-macro "CLOS" "object system")
 (define-macro "OS" "object system")
+
+(define-macro "SETFof"
+  "\macref{setf} of \misc{#1}")
+
+(define-macro "objectoftype"
+  "\term{object} of \term{type} \f{#1}")
+
+(define-macro "objectsoftype"
+  "\term{objects} of \term{type} \f{#1}")
+
+(define-macro "Objectsoftype"
+  "\term{Objects} of \term{type} \f{#1}")
+
+(define-macro "oftype"
+  "of \term{type} \typeref{#1}")
+
+(define-macro "ofclass"
+  "of \term{class} \typeref{#1}")
+
+(define-macro "oftypes"
+  "of \term{type} \typeref{#1} or a \term{subtype} of \term{type} \typeref{#1}")

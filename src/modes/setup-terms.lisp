@@ -2,13 +2,13 @@
 ;;;; User-defined macros
 (in-package :ansi-spec.traverse)
 
-(defparameter *terms*
+(defparameter *macros*
   (make-hash-table :test #'equal)
-  "A map of term names to their result string.")
+  "A map of macro names to their result string.")
 
-(defmacro define-term (tag-name source)
+(defmacro define-macro (tag-name source)
   `(progn
-     (setf (gethash ,tag-name *terms*)
+     (setf (gethash ,tag-name *macro*)
            ,source)
      (define-alias ,tag-name
        ,(format nil "<macro id=~S/>" tag-name))))
@@ -17,114 +17,114 @@
 
 ;; Books
 
-(define-term "CLtL"
+(define-macro "CLtL"
   "<i>Common Lisp: The Language</i>")
 
-(define-term "CLtLTwo"
+(define-macro "CLtLTwo"
   "<i>Common Lisp: The Language, Second Edition</i>")
 
-(define-term "RandomHouseDictionary"
+(define-macro "RandomHouseDictionary"
   "<i>The Random House Dictionary of
  the English Language, Second Edition, Unabridged</i>")
 
-(define-term "WebstersDictionary"
+(define-macro "WebstersDictionary"
   "<i>Webster's Third New International Dictionary
  the English Language, Unabridged</i>")
 
-(define-term "CondSysPaper"
+(define-macro "CondSysPaper"
   "<i>Exceptional Situations in Lisp</i>")
 
-(define-term "GabrielBenchmarks"
+(define-macro "GabrielBenchmarks"
   "<i>Performance and Evaluation of Lisp Programs</i>")
 
-(define-term "KnuthVolThree"
+(define-macro "KnuthVolThree"
   "<i>The Art of Computer Programming, Volume 3</i>")
 
-(define-term "MetaObjectProtocol"
+(define-macro "MetaObjectProtocol"
   "<i>The Art of the Metaobject Protocol</i>")
 
-(define-term "AnatomyOfLisp"
+(define-macro "AnatomyOfLisp"
   "<i>The Anatomy of Lisp</i>")
 
-(define-term "FlavorsPaper"
+(define-macro "FlavorsPaper"
   "<i>Flavors: A Non-Hierarchical Approach to Object-Oriented Programming</i>")
 
-(define-term "LispOnePointFive"
+(define-macro "LispOnePointFive"
   "<i>Lisp 1.5 Programmer's Manual</i>")
 
-(define-term "Moonual"
+(define-macro "Moonual"
   "<i>Maclisp Reference Manual, Revision 0</i>")
 
-(define-term "Pitmanual"
+(define-macro "Pitmanual"
   "<i>The Revised Maclisp Manual</i>")
 
-(define-term "InterlispManual"
+(define-macro "InterlispManual"
   "<i>Interlisp Reference Manual</i>")
 
-(define-term "Chinual"
+(define-macro "Chinual"
   "<i>Lisp Machine Manual</i>")
 
-(define-term "SmalltalkBook"
+(define-macro "SmalltalkBook"
   "<i>Smalltalk-80: The Language and its Implementation</i>")
 
-(define-term "XPPaper"
+(define-macro "XPPaper"
   "<i>XP: A Common Lisp Pretty Printing System</i>")
 
 ;; Standards
 
-(define-term "IEEEFloatingPoint"
+(define-macro "IEEEFloatingPoint"
   "<i>IEEE Standard for Binary Floating-Point Arithmetic</i>")
 
-(define-term "IEEEScheme"
+(define-macro "IEEEScheme"
   "<i>IEEE Standard for the Scheme Programming Language</i>")
 
 ;; FIXME: what does \rm do?
-(define-term "ISOChars" "ISO 6937/2")
+(define-macro "ISOChars" "ISO 6937/2")
 
 ;; Papers
 
-(define-term "PrincipalValues" "Principal Values and Branch Cuts in Complex APL")
+(define-macro "PrincipalValues" "Principal Values and Branch Cuts in Complex APL")
 
-(define-term "RevisedCubedScheme" "Revised$^3$ Report on the Algorithmic Language Scheme")
+(define-macro "RevisedCubedScheme" "Revised$^3$ Report on the Algorithmic Language Scheme")
 
-(define-term "StandardLispReport" "Standard LISP Report")
+(define-macro "StandardLispReport" "Standard LISP Report")
 
-(define-term "NILReport" "NIL---A Perspective")
+(define-macro "NILReport" "NIL---A Perspective")
 
-(define-term "SOneCLPaper" "S-1 Common Lisp Implementation")
+(define-macro "SOneCLPaper" "S-1 Common Lisp Implementation")
 
-(define-term "CLOSPaper" "Common Lisp Object System Specification")
+(define-macro "CLOSPaper" "Common Lisp Object System Specification")
 
 ;;; Languages, OSs, etc.
 
 ;FIXME: remove these \rm's
-(define-term "clisp" "\rm Common Lisp")
-(define-term "Lisp" "\rm Lisp")
-(define-term "maclisp" "\rm MacLisp")
-(define-term "apl" "\rm APL")
-(define-term "lmlisp" "\rm ZetaLisp")
-(define-term "scheme" "\rm Scheme")
-(define-term "interlisp" "\rm InterLisp")
-(define-term "slisp" "\rm Spice Lisp")
-(define-term "newlisp" "\rm Nil")
-(define-term "sOnelisp" "\rm S-1 Common Lisp")
-(define-term "fortran" "\rm Fortran")
-(define-term "stdlisp" "\rm Standard Lisp")
-(define-term "psl" "\rm Portable Standard Lisp")
-(define-term "Unix" "\rm Unix")
-(define-term "algol" "\tt Algol")
-(define-term "TopsTwenty" "\tt TOPS-20")
+(define-macro "clisp" "\rm Common Lisp")
+(define-macro "Lisp" "\rm Lisp")
+(define-macro "maclisp" "\rm MacLisp")
+(define-macro "apl" "\rm APL")
+(define-macro "lmlisp" "\rm ZetaLisp")
+(define-macro "scheme" "\rm Scheme")
+(define-macro "interlisp" "\rm InterLisp")
+(define-macro "slisp" "\rm Spice Lisp")
+(define-macro "newlisp" "\rm Nil")
+(define-macro "sOnelisp" "\rm S-1 Common Lisp")
+(define-macro "fortran" "\rm Fortran")
+(define-macro "stdlisp" "\rm Standard Lisp")
+(define-macro "psl" "\rm Portable Standard Lisp")
+(define-macro "Unix" "\rm Unix")
+(define-macro "algol" "\tt Algol")
+(define-macro "TopsTwenty" "\tt TOPS-20")
 
 ;;; Important names
 
 ;;; General phrases
 
-(define-term "etc." "<i>etc.</i>")
-(define-term "ie" "<i>i.e.</i>, ")
-(define-term "eg" "<i>e.g.</i>, ")
+(define-macro "etc." "<i>etc.</i>")
+(define-macro "ie" "<i>i.e.</i>, ")
+(define-macro "eg" "<i>e.g.</i>, ")
 
 ;;; Domain-specific phrases
 
-(define-term "defmethod" "defmethod")
-(define-term "CLOS" "object system")
-(define-term "OS" "object system")
+(define-macro "defmethod" "defmethod")
+(define-macro "CLOS" "object system")
+(define-macro "OS" "object system")

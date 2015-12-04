@@ -20,12 +20,12 @@
                   :components
                   ((:file "macros")
                    (:file "sections")
-                   (:file "setup-document")
                    (:file "setup-figures")
                    (:file "setup-title")
                    (:file "setup-version")
                    (:file "setup-aux")
                    (:file "setup-terms")
+                   (:file "setup-document")
                    (:file "setup-sections")
                    (:file "others")))
                  (:file "main"))))

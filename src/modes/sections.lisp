@@ -17,51 +17,54 @@
 ;;; Sections
 
 (defparameter +start-section-tags+
-  (list "beginSection"
-        "beginsubsection"
-        "beginsubSection"
-        "beginsubsubsection"
-        "beginsubsubsubsection"
-        "beginsubsubsubsubsection"))
+  (list '("beginSection" "section")
+        '("beginsubsection" "subsection")
+        '("beginSubsection" "subsection")
+        '("beginsubsubsection" "subsubsection")
+        '("beginsubsubsubsection" "subsubsubsection")
+        '("beginsubsubsubsubsection" "subsubsubsubsection")))
 
 (defparameter +end-section-tags+
-  (list "endSection"
-        "endsubsection"
-        "endsubSection"
-        "endsubsubsection"
-        "endsubsubsubsection"
-        "endsubsubsubsubsection"))
+  (list '("endSection" "section")
+        '("endsubsection" "subsection")
+        '("endSubsection" "subsection")
+        '("endsubsubsection" "subsubsection")
+        '("endsubsubsubsection" "subsubsubsection")
+        '("endsubsubsubsubsection" "subsubsubsubsection")))
 
 (loop for tag in +start-section-tags+ do
-  (define-mode (tag)
-    :callbacks
-    ((()
+  (let ((mname (car tag))
+        (tname (cadr tag)))
+    (define-mode (mname)
+                 :callbacks
+                 ((()
       ;;; Callback for the `\begin...` tag
-      (output (format nil "<section>~%<title>")))
-     (()
+                   (output (format nil "<~a title=\"" tname)))
+                  (()
       ;;; Callback called on the `\DefineSection` tag
-      (output "</title>")))))
+                   (output "\">"))))))
 
 (define-mode ("DefineSection")
   ;; Do nothing
   )
 
 (loop for tag in +end-section-tags+ do
-  (define-mode (tag)
-    :callbacks
-    ((()
-      (output "</section>")))))
+  (let ((mname (car tag))
+        (tname (cadr tag)))
+    (define-mode (mname)
+                 :callbacks
+                 ((()
+                   (output (format nil "</~a>" tname)))))))
 
 ;;; Chapters
 
 (define-mode ("beginchapter")
     :callbacks
   (((node)
-    (output (format nil "<chapter index=~S id=~S ref=~S>"
+    (output (format nil "<chapter index=~S id=~S ref=~S title=~S>"
                     (plump:attribute node "index")
                     (plump:attribute node "id")
-                    (plump:attribute node "ref"))))))
-
-(define-trivial-mode "chaptertitle" "title")
+                    (plump:attribute node "ref")
+                    (plump:attribute node "title"))))))
 
 (define-alias "endchapter" "</chapter>")

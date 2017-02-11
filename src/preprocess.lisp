@@ -53,7 +53,7 @@
   (ppcre:regex-replace-all "([^\\\\])&" text "\\1\\ampersand "))
 
 (defparameter +chapter-format+
-  "beginchapter[index=~A id=~A ref=~A]{} \\chaptertitle{~A}")
+  "beginchapter[index=~A id=~A ref=~A title=~A]{}")
 
 (defun simpler-chapter-definition (text)
   "The \\beginchapter directive has four bodies. We move some of those to attributes."

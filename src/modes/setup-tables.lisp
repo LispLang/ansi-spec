@@ -9,32 +9,34 @@
 ;;; converted to the '\ampersand' directive in a previus transform).
 
 (loop for column-count in (list "two" "three" "four" "five") do
-  (define-mode ((concatenate 'string "display" column-count))
-    :callbacks
-    ((()
-      ;; Called on the `display{nth}` element, whose body is the title
-      (output (format nil "~%<table>~%<title>~%")))
-     (()
-      (output (format nil "~%</title>~%<body>~%<row>~%<cell>"))))))
+  (let ((column-count column-count))
+    (define-mode ((concatenate 'string "display" column-count))
+                 :callbacks
+                 ((()
+                   ;; Called on the `display{nth}` element, whose body is the title
+                   (output (format nil "~%<table count=~S title=\"" column-count)))
+                  (()
+                   (output (format nil "\">~%<cell>")))))))
 
 (loop for column-count in (list "two" "three" "four" "five") do
-  (define-mode ((concatenate 'string "show" column-count))
-    :callbacks
-    ((()
-      ;; Called on the `display{nth}` element, whose body is the title
-      (output (format nil "~%<table class=\"borderless\">~%<title>~%")))
-     (()
-      (output (format nil "~%</title>~%<body>~%<row>~%<cell>"))))))
+  (let ((column-count column-count))
+    (define-mode ((concatenate 'string "show" column-count))
+                 :callbacks
+                 ((()
+                   ;; Called on the `display{nth}` element, whose body is the title
+                   (output (format nil "~%<table count=~S class=\"borderless\" title=\"" column-count)))
+                  (()
+                   (output (format nil "\">~%<cell>")))))))
 
 
 (define-mode ("cr")
   ;; Row separator
   :callbacks
   ((()
-    (output (format nil "</cell>~%</row>~%<row>~%<cell>~%")))))
+    (output (format nil "</cell>~%<cell>")))))
 
 (define-mode ("ampersand")
   ;; Column separator
   :callbacks
   ((()
-    (output (format nil "~%</cell>~%<cell>~%")))))
+    (output (format nil "</cell>~%<cell>")))))

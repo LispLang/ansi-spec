@@ -84,7 +84,7 @@
   ;; FIXME: add a bunch
   )
 
-(define-trivial-mode "term" "term")
+(define-string-mode "term" "<term name=\"" "\" />")
 
 ;;; Special symbols
 

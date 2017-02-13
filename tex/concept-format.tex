@@ -184,12 +184,12 @@ For example,
 if the \term{character} requires unusual shift keys on the keyboard to type it,
 this fact is mentioned.  For example,
 
-\begingroup
-\def\Partial{$\partial$}
-\code
- (format nil "~:@C" #\\Control-Partial) \EV "Control-{\Partial} (Top-F)"  
-\endcode
-\endgroup
+%\begingroup
+%\def\Partial{$\partial$}
+%\code
+ %(format nil "~:@C" #\\Control-Partial) \EV "Control-{\Partial} (Top-F)"  
+%\endcode
+%\endgroup
 
 This is the format used for telling the user about a key he is expected to type,
 in prompts, for instance.  The precise output may depend not only

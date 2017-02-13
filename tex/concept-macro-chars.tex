@@ -562,44 +562,44 @@ are described later in this section and summarized in \thenextfigure.
 % \caption{Standard \# Dispatching Macro Character Syntax}
 % \endfig
 
-{\def\u{undefined}
-\def\s{signals error}
-\def\ia{infix argument}
-\tablefigfour{Standard \# Dispatching Macro Character Syntax}{dispatch char}{purpose}{dispatch char}{purpose}{
-Backspace&\s&\f{\{}&\u*\cr
-Tab&\s&\f{\}}&\u*\cr
-Newline&\s&+&read-time conditional\cr
-Linefeed&\s&-&read-time conditional\cr
-Page&\s&.&read-time evaluation\cr
-Return&\s&/&\u\cr
-Space&\s&A, a&array\cr
-!&\u*&B, b&binary rational\cr
-\f{"}&\u&C, c&complex number\cr
-\#&reference to = label&D, d&\u\cr
-\$&\u&E, e&\u\cr
-\%&\u&F, f&\u\cr      
-\&&\u&G, g&\u\cr
-'&function abbreviation&H, h&\u\cr
-(&simple vector&I, i&\u\cr
-)&\s&J, j&\u\cr
-{\tt *}&bit vector&K, k&\u\cr
-,&\u&L, l&\u\cr
-:&uninterned symbol&M, m&\u\cr
-;&\u&N, n&\u\cr
-\f{<}&\s&O, o&octal rational\cr
-\f{=}&labels following object&P, p&pathname\cr
-\f{>}&\u&Q, q&\u\cr
-?&\u*&R, r&radix-$n$ rational\cr
-@&\u&S, s&structure\cr
-[&\u*&T, t&\u\cr
-\f{\\}&character object&U, u&\u\cr
-]&\u*&V, v&\u\cr
-{\hat}&\u&W, w&\u\cr
-\f{\_}&\u&X, x&hexadecimal rational\cr
-`&\u&Y, y&\u\cr
-\f{|}&balanced comment&Z, z&\u\cr
-\f{~}&\u&Rubout&\u\cr
-}}
+%{\def\u{undefined}
+%\def\s{signals error}
+%\def\ia{infix argument}
+%\tablefigfour{Standard \# Dispatching Macro Character Syntax}{dispatch char}{purpose}{dispatch char}{purpose}{
+%Backspace&\s&\f{\{}&\u*\cr
+%Tab&\s&\f{\}}&\u*\cr
+%Newline&\s&+&read-time conditional\cr
+%Linefeed&\s&-&read-time conditional\cr
+%Page&\s&.&read-time evaluation\cr
+%Return&\s&/&\u\cr
+%Space&\s&A, a&array\cr
+%!&\u*&B, b&binary rational\cr
+%\f{"}&\u&C, c&complex number\cr
+%\#&reference to = label&D, d&\u\cr
+%\$&\u&E, e&\u\cr
+%\%&\u&F, f&\u\cr      
+%\&&\u&G, g&\u\cr
+%'&function abbreviation&H, h&\u\cr
+%(&simple vector&I, i&\u\cr
+%)&\s&J, j&\u\cr
+%{\tt *}&bit vector&K, k&\u\cr
+%,&\u&L, l&\u\cr
+%:&uninterned symbol&M, m&\u\cr
+%;&\u&N, n&\u\cr
+%\f{<}&\s&O, o&octal rational\cr
+%\f{=}&labels following object&P, p&pathname\cr
+%\f{>}&\u&Q, q&\u\cr
+%?&\u*&R, r&radix-$n$ rational\cr
+%@&\u&S, s&structure\cr
+%[&\u*&T, t&\u\cr
+%\f{\\}&character object&U, u&\u\cr
+%]&\u*&V, v&\u\cr
+%{\hat}&\u&W, w&\u\cr
+%\f{\_}&\u&X, x&hexadecimal rational\cr
+%`&\u&Y, y&\u\cr
+%\f{|}&balanced comment&Z, z&\u\cr
+%\f{~}&\u&Rubout&\u\cr
+%}}
 
 %* The combinations marked by an asterisk are explicitly reserved to the
 % user and will never be defined by the \clisp\ standard.

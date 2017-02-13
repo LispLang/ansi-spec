@@ -11,6 +11,7 @@
   (labels ((valid-input-p (file-name)
              (and (not (search "fig" file-name))
                   (not (search ".tc" file-name))
+                  (not (equal file-name "concept-glossary"))
                   (not (equal file-name "index.idx"))))
            (include-file (name)
              (let ((input-pathname

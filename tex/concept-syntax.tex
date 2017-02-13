@@ -269,13 +269,13 @@ lists the \term{syntax type} of each \term{character} in \term{standard syntax}.
 
 \DefineFigure{CharSyntaxTypesInStdSyntax}
 %% 22.1.1 36
-{\def\w{\term{whitespace}\meaning{2}}
-\def\n{\term{non-terminating} \term{macro char}} %cheat on "char" => "character" to make fit
-\def\t{\term{terminating} \term{macro char}}     %ditto
-\def\c{\term{constituent}}
-\def\C{\term{constituent}*}
-\def\SE{\term{single escape}}
-\def\ME{\term{multiple escape}}
+%{\def\w{\term{whitespace}\meaning{2}}
+%\def\n{\term{non-terminating} \term{macro char}} %cheat on "char" => "character" to make fit
+%\def\t{\term{terminating} \term{macro char}}     %ditto
+%\def\c{\term{constituent}}
+%\def\C{\term{constituent}*}
+%\def\SE{\term{single escape}}
+%\def\ME{\term{multiple escape}}
 \tablefigfour{Character Syntax Types in Standard Syntax}{character}{syntax type}{character}{syntax type}{
 Backspace&\c&0--9&\c\cr
 Tab&\w&:&\c\cr
@@ -383,58 +383,58 @@ otherwise the \term{character} is \term{alphabetic}\meaning{2}.
 Any \term{character} quoted by a \term{single escape} 
 is treated as an \term{alphabetic}\meaning{2} constituent, regardless of its normal syntax.
 
-\DefineFigure{ConstituentTraitsOfStdChars}
-\boxfig
-{\dimen0=.75pc
-\def\a{\term{alphabetic}\meaning{2}}
-\def\ad{alphadigit}
-\def\i{\term{invalid}}
-\def\pm{\term{package marker}}
-\tabskip \dimen0
-\halign to \hsize {#\hfil\tabskip \dimen0&#\hfil\tabskip 0pt plus 1fil
-&#\hfil\tabskip \dimen0&#\hfil\cr
-\noalign{\vskip -9pt}
-\bf constituent&\bf traits&\bf constituent&\bf traits\cr
-\bf character&&\bf character\cr
-\noalign{\vskip 2pt\hrule\vskip 2pt}
-Backspace&\i&\f{\{}&\a\cr
-Tab&\i*&\f{\}}&\a\cr
-Newline&\i*&+&\a, plus sign\cr
-Linefeed&\i*&-&\a, minus sign\cr
-Page&\i*&.&\a, dot, decimal point\cr
-Return&\i*&/&\a, \term{ratio marker}\cr
-Space&\i*&A, a&\ad\cr
-! &\a&B, b&\ad\cr
-{\tt "}&\a*&C, c&\ad\cr
-\#&\a*&D, d&\ad, double-float \term{exponent marker}\cr
-\$&\a&E, e&\ad, float \term{exponent marker}\cr
-\%&\a&F, f&\ad, single-float \term{exponent marker}\cr
-\&&\a&G, g&\ad\cr
-'&\a*&H, h&\ad\cr
-(&\a*&I, i&\ad\cr
-)&\a*&J, j&\ad\cr
-{\tt *}&\a&K, k&\ad\cr
-,&\a*&L, l&\ad, long-float \term{exponent marker}\cr
-0-9&\ad&M, m&\ad\cr
-:&\pm&N, n&\ad\cr
-;&\a*&O, o&\ad\cr
-{\tt<}&\a&P, p&\ad\cr
-=&\a&Q, q&\ad\cr
-{\tt>}&\a&R, r&\ad\cr
-?&\a&S, s&\ad, short-float \term{exponent marker}\cr
-\f{@}&\a&T, t&\ad\cr
-\f{[}&\a&U, u&\ad\cr
-\f{\\}&\a*&V, v&\ad\cr
-\f{]}&\a&W, w&\ad\cr
-\hat&\a&X, x&\ad\cr
-\f{\_}&\a&Y, y&\ad\cr
-`&\a*&Z, z&\ad\cr
-\f{|}&\a*&Rubout&\i\cr
-\f{~}&\a\cr
-\noalign{\vskip -9pt}
-}}
-\caption{Constituent Traits of Standard Characters and Semi-Standard Characters}
-\endfig
+%\DefineFigure{ConstituentTraitsOfStdChars}
+%\boxfig
+%{\dimen0=.75pc
+%\def\a{\term{alphabetic}\meaning{2}}
+%\def\ad{alphadigit}
+%\def\i{\term{invalid}}
+%\def\pm{\term{package marker}}
+%\tabskip \dimen0
+%\halign to \hsize {#\hfil\tabskip \dimen0&#\hfil\tabskip 0pt plus 1fil
+%&#\hfil\tabskip \dimen0&#\hfil\cr
+%\noalign{\vskip -9pt}
+%\bf constituent&\bf traits&\bf constituent&\bf traits\cr
+%\bf character&&\bf character\cr
+%\noalign{\vskip 2pt\hrule\vskip 2pt}
+%Backspace&\i&\f{\{}&\a\cr
+%Tab&\i*&\f{\}}&\a\cr
+%Newline&\i*&+&\a, plus sign\cr
+%Linefeed&\i*&-&\a, minus sign\cr
+%Page&\i*&.&\a, dot, decimal point\cr
+%Return&\i*&/&\a, \term{ratio marker}\cr
+%Space&\i*&A, a&\ad\cr
+%! &\a&B, b&\ad\cr
+%{\tt "}&\a*&C, c&\ad\cr
+%\#&\a*&D, d&\ad, double-float \term{exponent marker}\cr
+%\$&\a&E, e&\ad, float \term{exponent marker}\cr
+%\%&\a&F, f&\ad, single-float \term{exponent marker}\cr
+%\&&\a&G, g&\ad\cr
+%'&\a*&H, h&\ad\cr
+%(&\a*&I, i&\ad\cr
+%)&\a*&J, j&\ad\cr
+%{\tt *}&\a&K, k&\ad\cr
+%,&\a*&L, l&\ad, long-float \term{exponent marker}\cr
+%0-9&\ad&M, m&\ad\cr
+%:&\pm&N, n&\ad\cr
+%;&\a*&O, o&\ad\cr
+%{\tt<}&\a&P, p&\ad\cr
+%=&\a&Q, q&\ad\cr
+%{\tt>}&\a&R, r&\ad\cr
+%?&\a&S, s&\ad, short-float \term{exponent marker}\cr
+%\f{@}&\a&T, t&\ad\cr
+%\f{[}&\a&U, u&\ad\cr
+%\f{\\}&\a*&V, v&\ad\cr
+%\f{]}&\a&W, w&\ad\cr
+%\hat&\a&X, x&\ad\cr
+%\f{\_}&\a&Y, y&\ad\cr
+%`&\a*&Z, z&\ad\cr
+%\f{|}&\a*&Rubout&\i\cr
+%\f{~}&\a\cr
+%\noalign{\vskip -9pt}
+%}}
+%\caption{Constituent Traits of Standard Characters and Semi-Standard Characters}
+%\endfig
                    
 The interpretations in this table apply only to \term{characters}
 whose \term{syntax type} is \term{constituent}.

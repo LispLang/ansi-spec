@@ -47,8 +47,10 @@
                    (output "\">"))))))
 
 (define-mode ("DefineSection")
-  ;; Do nothing
-  )
+             :callbacks
+             (((node)
+               ;; kill all child nodes to suppress output
+               (plump:clear node))))
 
 (loop for tag in +end-section-tags+ do
   (let ((mname (car tag))

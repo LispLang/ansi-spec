@@ -18,19 +18,21 @@
 
 (defparameter +start-section-tags+
   (list '("beginSection" "section")
-        '("beginsubsection" "subsection")
+        '("beginsubsection" "subsection") '("beginsubSection" "subsection")
         '("beginSubsection" "subsection")
-        '("beginsubsubsection" "subsubsection")
-        '("beginsubsubsubsection" "subsubsubsection")
-        '("beginsubsubsubsubsection" "subsubsubsubsection")))
+        '("beginsubsubsection" "subsubsection") '("beginsubsubSection" "subsubsection")
+        '("beginsubsubsubsection" "subsubsubsection") '("beginsubsubsubSection" "subsubsubsection")
+        '("beginsubsubsubsubsection" "subsubsubsubsection") '("beginsubsubsubsubSection" "subsubsubsubsection")
+        ))
 
 (defparameter +end-section-tags+
   (list '("endSection" "section")
-        '("endsubsection" "subsection")
+        '("endsubsection" "subsection") '("endsubSection" "subsection")
         '("endSubsection" "subsection")
-        '("endsubsubsection" "subsubsection")
-        '("endsubsubsubsection" "subsubsubsection")
-        '("endsubsubsubsubsection" "subsubsubsubsection")))
+        '("endsubsubsection" "subsubsection") '("endsubsubSection" "subsubsection")
+        '("endsubsubsubsection" "subsubsubsection") '("endsubsubsubSection" "subsubsubsection")
+        '("endsubsubsubsubsection" "subsubsubsubsection") '("endsubsubsubsubSection" "subsubsubsubsection")
+        ))
 
 (loop for tag in +start-section-tags+ do
   (let ((mname (car tag))

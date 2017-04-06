@@ -19,3 +19,13 @@
              :after
              (()
               (output "↓")))
+
+(define-mode ("curly")
+             :callbacks
+             ((()
+               (output "{ ")
+              ))
+             :after
+             (()
+              (output " }"))
+              )

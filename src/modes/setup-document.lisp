@@ -87,6 +87,21 @@
 (define-string-mode "term" "<term name=\"" "\" />")
 (define-string-mode "newterm" "<term type=\"new\" name=\"" "\" />")
 
+(define-mode ("newtermidx")
+             :callbacks
+             (((node)
+               ;; (format t "node: ~a" (plump:serialize (plump:parent node)))
+               (output (format nil "<term type=\"new\" text=~s"
+                               (plump:text node)))
+              (plump:clear node))
+              ((node)
+               (output (format nil " name=~s" (plump:text node)))
+               (plump:clear node))
+              )
+             :after
+             (()
+              (output " />")))
+
 ;;; Special symbols
 
 ;; Subscripts

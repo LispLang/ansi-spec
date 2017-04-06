@@ -8,3 +8,14 @@
 (define-alias "leq" "\\leq")
 
 (define-alias "geq" "\\geq")
+
+;; just silence or silly implement all the formula stuff
+(define-alias "xparen" "")
+
+(define-mode ("down")
+             :callbacks
+             ((()
+               ))
+             :after
+             (()
+              (output "↓")))

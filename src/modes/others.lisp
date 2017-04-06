@@ -60,4 +60,5 @@
               "halign"
               "hsize"
               "iskip"
+              "let"
               "leftskip"))

@@ -293,6 +293,8 @@
     (setf *transform-text* t)
     (output "</code>"))))
 
+
+(define-trivial-mode "reviewer" "reviewer")
 (define-trivial-mode "editornote" "editornote")
 
 ;;; Glossary

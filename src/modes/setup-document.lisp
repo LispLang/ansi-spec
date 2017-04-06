@@ -85,6 +85,7 @@
   )
 
 (define-string-mode "term" "<term name=\"" "\" />")
+(define-string-mode "newterm" "<term type=\"new\" name=\"" "\" />")
 
 ;;; Special symbols
 

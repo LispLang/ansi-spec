@@ -16,7 +16,7 @@
                    ;; Called on the `display{nth}` element, whose body is the title
                    (output (format nil "~%<table count=~S title=\"" column-count)))
                   (()
-                   (output (format nil "\">~%<cell>")))))))
+                   (output (format nil "\">~%<row><cell>")))))))
 
 (loop for column-count in (list "two" "three" "four" "five") do
   (let ((column-count column-count))
@@ -26,16 +26,20 @@
                    ;; Called on the `display{nth}` element, whose body is the title
                    (output (format nil "~%<table count=~S class=\"borderless\" title=\"" column-count)))
                   (()
-                   (output (format nil "\">~%<cell>")))))))
+                   (output (format nil "\">~%<row><cell>")))))))
 
 
 (loop for mode in (list "cr" "ampersand") do
-  (define-mode (mode)
-               ;; Row separator
-               :callbacks
-               (((node)
-                 (output (format nil "</cell>"))
-                 (if (plump:next-element node)
-                     (output (format nil "~%<cell>"))
-                     (output (format nil "</table>"))
-                     )))))
+  (let ((mode mode))
+    (define-mode (mode)
+                 ;; Row separator
+                 :callbacks
+                 (((node)
+                   (output (format nil "</cell>"))
+                   (when (string= mode "cr") (output (format nil "</row>")))
+                   (if (plump:next-element node)
+                       (progn
+                         (when (string= mode "cr") (output (format nil "<row>")))
+                         (output (format nil "~%<cell>")))
+                       (output (format nil "</table>"))
+                       ))))))

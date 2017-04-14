@@ -45,6 +45,9 @@
 (mapcar #'(lambda (op)
             (define-mode (op)))
         (list "div"
+              "kern" ;; this one should absorb a text node after the tag
+              "break"
+              "smallbreak"
               "medbreak"
               "bye"
               "vfill"

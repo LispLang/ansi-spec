@@ -34,8 +34,8 @@
                        )))
   `(define-mode ((concatenate 'string "tablefig" ,type))
                 :callbacks
-                ((()
-                  (output (format nil "~%<table count=~S class=\"borderless\" title=\"" ,type)))
+                (((node)
+                  (output (format nil "~%<table count=~S id=~S class=\"borderless\"\" title=\"" ,type (or (plump:get-attribute node "figure-id") ""))))
                  (()
                   (output (format nil "\">~%<row type=\"header\">~%<cell>")))
                  ,@headers

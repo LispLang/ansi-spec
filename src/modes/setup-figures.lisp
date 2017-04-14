@@ -45,3 +45,12 @@
                :after
                (()
                 (output "</figref>"))))
+
+(define-mode ("DefineFigure")
+             :callbacks
+             (((node)
+               (let ((figure-id (plump:text node))
+                     (next (plump:next-element node)))
+                 (plump:clear node)
+                 (when next
+                   (plump:set-attribute next "figure-id" figure-id))))))

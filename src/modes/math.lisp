@@ -17,6 +17,9 @@
 (define-alias "rangle" " &gt; ")
 (define-alias "dots" " ... ")
 (define-alias "neq" " != ")
+(define-alias "in" " in ") ;; inclusion in the set
+(define-alias "pi" "pi") ;; Math pi
+(define-alias "bigcup" " union ")
 
 ;; yeah, lot's of duplication
 (define-mode ("auxbnf")

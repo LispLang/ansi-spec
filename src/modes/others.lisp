@@ -41,12 +41,12 @@
           (plump:remove-child next)))))))
 
 (define-alias "quad" "") ;; fuck it
-(define-alias "in" " in ") ;; inclusion in the set
 
 (mapcar #'(lambda (op)
             (define-mode (op)))
         (list "div"
               "kern" ;; this one should absorb a text node after the tag
+              "tabskip" ;; this one should absorb a text node after the tag
               "break"
               "smallbreak"
               "medbreak"

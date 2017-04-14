@@ -31,7 +31,7 @@
 
 ;;; Meaningless no-ops
 
-(loop for tag in (list "pageno" "dimen0") do
+(loop for tag in (list "pageno" "dimen0" "vbox") do
   (define-mode (tag)
     ;; Adsorb another
     :callbacks
@@ -45,6 +45,7 @@
 (mapcar #'(lambda (op)
             (define-mode (op)))
         (list "div"
+              "medbreak"
               "bye"
               "vfill"
               "eject"

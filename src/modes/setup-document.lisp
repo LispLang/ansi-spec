@@ -275,6 +275,9 @@
 (define-macro "evalspecial"
   "evaluated as described below")
 
+(define-macro "thissection"
+  "evaluated as described below")
+
 (define-macro "Thenextfigure"
   "Figure \\chapno -- \\capno")
 

@@ -28,6 +28,26 @@
                   (()
                    (output (format nil "\">~%<row><cell>")))))))
 
+(defmacro tablefig (type colnum)
+  (let ((headers (loop for i from 1 to (- colnum 1)
+                       collect '(() (output (format nil "</cell>~%<cell>")))
+                       )))
+  `(define-mode ((concatenate 'string "tablefig" ,type))
+                :callbacks
+                ((()
+                  (output (format nil "~%<table count=~S class=\"borderless\" title=\"" ,type)))
+                 (()
+                  (output (format nil "\">~%<row type=\"header\">~%<cell>")))
+                 ,@headers
+                 (()
+                  (output (format nil "</cell></row>~%<row><cell>")))
+                 ))))
+
+(tablefig "two" 2)
+(tablefig "three" 3)
+(tablefig "four" 4)
+(tablefig "five" 5)
+(tablefig "six" 6)
 
 (loop for mode in (list "cr" "ampersand") do
   (let ((mode mode))

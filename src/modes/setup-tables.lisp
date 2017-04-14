@@ -29,14 +29,13 @@
                    (output (format nil "\">~%<cell>")))))))
 
 
-(define-mode ("cr")
-  ;; Row separator
-  :callbacks
-  ((()
-    (output (format nil "</cell>~%<cell>")))))
-
-(define-mode ("ampersand")
-  ;; Column separator
-  :callbacks
-  ((()
-    (output (format nil "</cell>~%<cell>")))))
+(loop for mode in (list "cr" "ampersand") do
+  (define-mode (mode)
+               ;; Row separator
+               :callbacks
+               (((node)
+                 (output (format nil "</cell>"))
+                 (if (plump:next-element node)
+                     (output (format nil "~%<cell>"))
+                     (output (format nil "</table>"))
+                     )))))

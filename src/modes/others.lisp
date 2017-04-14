@@ -41,6 +41,7 @@
           (plump:remove-child next)))))))
 
 (define-alias "quad" "") ;; fuck it
+(define-alias "in" " in ") ;; inclusion in the set
 
 (mapcar #'(lambda (op)
             (define-mode (op)))
@@ -68,5 +69,7 @@
               "prmseven"
               "bf"
               "strut"
+              "CR" ;; big one is used in the formulas
+              "simplecaption" ;; used under a few figures
               "negthinspace"
               "leftskip"))

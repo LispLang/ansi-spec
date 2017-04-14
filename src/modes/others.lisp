@@ -65,4 +65,8 @@
               "hsize"
               "iskip"
               "let"
+              "prmseven"
+              "bf"
+              "strut"
+              "negthinspace"
               "leftskip"))

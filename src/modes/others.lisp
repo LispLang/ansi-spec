@@ -31,7 +31,7 @@
 
 ;;; Meaningless no-ops
 
-(loop for tag in (list "pageno" "dimen0") do
+(loop for tag in (list "pageno" "dimen0" "vbox") do
   (define-mode (tag)
     ;; Adsorb another
     :callbacks
@@ -45,6 +45,11 @@
 (mapcar #'(lambda (op)
             (define-mode (op)))
         (list "div"
+              "kern" ;; this one should absorb a text node after the tag
+              "tabskip" ;; this one should absorb a text node after the tag
+              "break"
+              "smallbreak"
+              "medbreak"
               "bye"
               "vfill"
               "eject"
@@ -60,4 +65,11 @@
               "halign"
               "hsize"
               "iskip"
+              "let"
+              "prmseven"
+              "bf"
+              "strut"
+              "CR" ;; big one is used in the formulas
+              "simplecaption" ;; used under a few figures
+              "negthinspace"
               "leftskip"))

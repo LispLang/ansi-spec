@@ -1,46 +1,56 @@
 ;;;; setup-figures.tex
 (in-package :ansi-spec.traverse)
 
-(define-alias "StdCharsThree" "Figure 2--5")
+(defparameter +figure-ref-captions+
+  (list '("StdCharsThree" "Figure 2--5")
+        '("PossibleSyntaxTypes" "Figure~2--6")
+        '("CharSyntaxTypesInStdSyntax" "Figure~2--7")
+        '("ConstituentTraitsOfStdChars" "Figure~2--8")
+        '("SyntaxForNumericTokens" "Figure~2--9")
+        '("CLSpecialOps" "Figure~3--2")
+        '("TypeInfoXrefs" "Figure~4--1")
+        '("StandardizedAtomicTypeSpecs" "Figure~4--2")
+        '("StandardizedCompoundTypeSpecNames" "Figure~4--3")
+        '("TypesAndDeclsNames" "Figure~4--5")
+        '("StandardizedTypeSpecifierNames" "Figure~4--6")
+        '("ObjectSystemClasses" "Figure 4--7")
+        '("ClassTypeCorrespondence" "Figure 4--8")
+        '("StdMethDefOps" "Figure 7--1")
+        '("StandardizedConditionTypes" "Figure 9--1")
+        '("SequenceFunctions" "Figure 17--1")
+        '("PathnameCaseFuns" "Figure 19--2")
+        '("InputStreamOps" "Figure 21--2")
+        '("OutputStreamOps" "Figure 21--3")
+        '("StandardizedStreamVars" "Figure 21--6")
+        '("OpenOrClosedStreamOps" "Figure 21--7")
+        '("StdPrinterControlVars" "Figure 22--1")))
 
-(define-alias "PossibleSyntaxTypes" "Figure~2--6")
+(loop for name in (list "figref" "Figref") do
+  (define-mode (name)
+               :callbacks
+               ((()
+                 (output "<figref "))
+                ((node)
+                 (let* ((ref (plump:tag-name node))
+                        (caption (cadr
+                                  (find ref +figure-ref-captions+
+                                        :key #'first
+                                        :test #'string=))))
+                   ;; (format t "node ~a" (plump:serialize node))
+                   ;; (format t "figref ref=~s caption=~s" ref caption)
+                   (output (format nil "ref=~s>~a" ref caption))
+                   ;; (plump:remove-child node)
+                   ))
+                )
+               :after
+               (()
+                (output "</figref>"))))
 
-(define-alias "CharSyntaxTypesInStdSyntax" "Figure~2--7")
-
-(define-alias "ConstituentTraitsOfStdChars" "Figure~2--8")
-
-(define-alias "SyntaxForNumericTokens" "Figure~2--9")
-
-(define-alias "CLSpecialOps" "Figure~3--2")
-
-(define-alias "TypeInfoXrefs" "Figure~4--1")
-
-(define-alias "StandardizedAtomicTypeSpecs" "Figure~4--2")
-
-(define-alias "StandardizedCompoundTypeSpecNames" "Figure~4--3")
-
-(define-alias "TypesAndDeclsNames" "Figure~4--5")
-
-(define-alias "StandardizedTypeSpecifierNames" "Figure~4--6")
-
-(define-alias "ObjectSystemClasses" "Figure 4--7")
-
-(define-alias "ClassTypeCorrespondence" "Figure 4--8")
-
-(define-alias "StdMethDefOps" "Figure 7--1")
-
-(define-alias "StandardizedConditionTypes" "Figure 9--1")
-
-(define-alias "SequenceFunctions" "Figure 17--1")
-
-(define-alias "PathnameCaseFuns" "Figure 19--2")
-
-(define-alias "InputStreamOps" "Figure 21--2")
-
-(define-alias "OutputStreamOps" "Figure 21--3")
-
-(define-alias "StandardizedStreamVars" "Figure 21--6")
-
-(define-alias "OpenOrClosedStreamOps" "Figure 21--7")
-
-(define-alias "StdPrinterControlVars" "Figure 22--1")
+(define-mode ("DefineFigure")
+             :callbacks
+             (((node)
+               (let ((figure-id (plump:text node))
+                     (next (plump:next-element node)))
+                 (plump:clear node)
+                 (when next
+                   (plump:set-attribute next "figure-id" figure-id))))))

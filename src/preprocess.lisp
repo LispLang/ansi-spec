@@ -11,6 +11,7 @@
   (labels ((valid-input-p (file-name)
              (and (not (search "fig" file-name))
                   (not (search ".tc" file-name))
+                  (not (equal file-name "concept-glossary"))
                   (not (equal file-name "index.idx"))))
            (include-file (name)
              (let ((input-pathname
@@ -53,7 +54,7 @@
   (ppcre:regex-replace-all "([^\\\\])&" text "\\1\\ampersand "))
 
 (defparameter +chapter-format+
-  "beginchapter[index=~A id=~A ref=~A]{} \\chaptertitle{~A}")
+  "beginchapter[index=~A id=~A ref=~A title=~A]{}")
 
 (defun simpler-chapter-definition (text)
   "The \\beginchapter directive has four bodies. We move some of those to attributes."

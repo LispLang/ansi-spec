@@ -143,7 +143,7 @@ This section will document the format of the XML output file.
 
 # License
 
-Copyright (c) 2014-2015 Fernando Borretti (eudoxiahp@gmail.com)
+Copyright (c) 2014-2019 Fernando Borretti (fernando@borretti.me)
 
 Licensed under the MIT License.
 

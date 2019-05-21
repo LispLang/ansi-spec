@@ -31,8 +31,7 @@ text from the corresponding `concept` file. Since the specification doesn't
 really change I just went through the `chapter` files and hardcoded them.
 
 Since I didn't want to waste my time writing a TeX parser I looked at
-[this article][tex2xml] and [LaTeXML][latexml]. Eventually, however, I managed
-to [trick Shinmera][shin] into writing a TeX parser I could use.
+[this article][tex2xml] and [LaTeXML][latexml].
 
 ## Setup Files
 
@@ -152,4 +151,3 @@ Licensed under the MIT License.
 [plump]: https://github.com/Shinmera/plump-tex
 [tex2xml]: http://jblevins.org/log/xml-tools
 [latexml]: http://dlmf.nist.gov/LaTeXML/
-[shin]: https://twitter.com/eudxa/status/512783348398186496
